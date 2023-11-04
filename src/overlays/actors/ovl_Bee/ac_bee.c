@@ -48,7 +48,10 @@ void aBEE_actor_ct(Actor* thisx, Game_Play* game_play) {
     func_80A94450_jp(this, 0, game_play);
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A93DD0_jp.s")
+// #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A93DD0_jp.s")
+void func_80A93DD0_jp(Actor* thisx, Game_Play* game_play) {
+
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A93DE0_jp.s")
 
