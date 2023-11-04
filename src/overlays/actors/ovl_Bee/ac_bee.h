@@ -20,7 +20,9 @@ typedef struct Bee {
     s_xyz jointTable[3]; // 0x1f0
     s8 unk_202[0x6];
     s_xyz morphTable[3]; // 0x208
-    s8 unk_21A[0x216];
+    s8 unk_21A[0x206];
+    xyz_t unk_420;
+    s8 unk_42C[0x4];
     f32 unk_430;
     s8 unk_434[0xE];
     s16 unk_442;
