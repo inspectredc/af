@@ -24,7 +24,29 @@ ActorProfile Bee_Profile = {
 };
 #endif
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/aBEE_actor_ct.s")
+void func_80A94450_jp(Actor*, s32, Game_Play*);          /* extern */
+extern BaseAnimationR* D_60008E4;
+extern BaseSkeletonR* D_6000928;
+extern xyz_t D_80A94974_jp;
+
+// #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/aBEE_actor_ct.s")
+void aBEE_actor_ct(Actor* thisx, Game_Play* game_play) {
+    Bee *this = thisx;
+    SkeletonInfoR *tmp = &this->skeletonInfo;
+    xyz_t sp34;
+    sp34 = D_80A94974_jp;
+    cKF_SkeletonInfo_R_ct(&this->skeletonInfo, &D_6000928, &D_60008E4, this->jointTable, this->morphTable);
+    cKF_SkeletonInfo_R_init_standard_repeat(&this->skeletonInfo, Lib_SegmentedToVirtual(&D_60008E4), 0);
+    tmp->frameControl.currentFrame = 90.0f;
+    cKF_SkeletonInfo_R_play(tmp);
+    tmp->frameControl.speed = 0.0f;
+    this->unk_442 = -0x8000;
+    this->unk_430 = 90.0f;
+    xyz_t_move(&this->actor.scale, &sp34);
+    this->unk_178 = (void *) game_play->objectExchangeBank.status[this->actor.unk_026].segment;
+    this->actor.update = aBEE_actor_move;
+    func_80A94450_jp(this, 0, game_play);
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A93DD0_jp.s")
 
