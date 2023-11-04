@@ -69,7 +69,12 @@ void func_80A93E38_jp(Bee* this, Game_Play* game_play) {
 
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A93E48_jp.s")
+// #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A93E48_jp.s")
+void func_80A93E48_jp(Bee* this, Game_Play* game_play) {
+    
+    this->actor.speed = 9.7f;
+    this->actor.shape.rot.x = this->actor.shape.rot.z = 0;
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A93E6C_jp.s")
 
