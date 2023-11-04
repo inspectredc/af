@@ -64,7 +64,10 @@ void func_80A93DE0_jp(Bee* this, Game_Play* game_play) {
     common_data.unk107E6[0x253] = 1;
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A93E38_jp.s")
+// #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A93E38_jp.s")
+void func_80A93E38_jp(Bee* this, Game_Play* game_play) {
+
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A93E48_jp.s")
 
