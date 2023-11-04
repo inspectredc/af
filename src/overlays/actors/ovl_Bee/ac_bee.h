@@ -24,7 +24,9 @@ typedef struct Bee {
     xyz_t unk_420;
     s8 unk_42C[0x4];
     f32 unk_430;
-    s8 unk_434[0xE];
+    f32 unk_434;
+    s32 unk_438;
+    s8 unk_43C[0x6];
     s16 unk_442;
     s8 unk_444[0xC];
 } Bee;

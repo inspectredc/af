@@ -2,6 +2,7 @@
 #include "m_actor_dlftbls.h"
 #include "m_object.h"
 #include "overlays/gamestates/ovl_play/m_play.h"
+#include "overlays/actors/player_actor/m_player.h"
 
 void aBEE_actor_ct(Actor* thisx, Game_Play* game_play);
 void func_80A93DD0_jp(Actor* thisx, Game_Play* game_play);
@@ -76,7 +77,21 @@ void func_80A93E48_jp(Bee* this, Game_Play* game_play) {
     this->actor.shape.rot.x = this->actor.shape.rot.z = 0;
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A93E6C_jp.s")
+// #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A93E6C_jp.s")
+void func_80A93E6C_jp(Bee* this, Game_Play* game_play) {
+    Player* player = get_player_actor_withoutCheck(game_play);
+    s32 *var = &this->unk_438;
+    this->unk_434 = player->actor.world.pos.y + 50.0f;
+    this->unk_438 += 6;
+    if (this->unk_438 >= 0xFF) {
+        this->unk_438 = 0xFF;
+    }
+    this->actor.shape.rot.x = 0x7FFF;
+    this->actor.shape.rot.z += 0x1000;
+    if (*var == 0xFF) {
+        func_80A94450_jp(this, 1, game_play);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A93EFC_jp.s")
 
