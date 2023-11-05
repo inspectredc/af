@@ -3,6 +3,8 @@
 #include "m_object.h"
 #include "overlays/gamestates/ovl_play/m_play.h"
 #include "overlays/actors/player_actor/m_player.h"
+#include "m_field_info.h"
+#include "libc/math.h"
 
 void aBEE_actor_ct(Actor* thisx, Game_Play* game_play);
 void func_80A93DD0_jp(Actor* thisx, Game_Play* game_play);
@@ -133,6 +135,44 @@ void func_80A9449C_jp(Bee* this, Game_Play* game_play) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/aBEE_actor_move.s")
+// #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/aBEE_actor_move.s")
+extern f32 D_80A949A4_jp[3];
+extern f32 D_80A949B0_jp[4];
+extern void func_800D1D08_jp(Actor*, s32, PosRot*);
+
+void aBEE_actor_move(Actor* thisx, Game_Play* game_play) {
+    SkeletonInfoR* sp30;
+    Bee* this = (Bee*)thisx;
+    f32 f_var;
+
+    sp30 = &this->skeletonInfo;
+    func_80A9449C_jp(this, game_play);
+    func_800D1D08_jp(&this->actor, 0x30, &this->actor.world);
+    if (!(this->actor.world.pos.x < 0.0f) || !(this->actor.world.pos.z < 0.0f)) {
+        if ((this->unk_446 == 2) || (func_8008C120_jp() == 0)) {
+            Actor_position_moveF(&this->actor);
+        }
+        this->unk_174(this, game_play);
+        if ((this->unk_17C == 0) || (this->unk_17C == 2)) {
+            add_calc(&this->actor.scale.x, this->unk_420.x, D_80A949A4_jp[this->unk_17C], D_80A949B0_jp[this->unk_17C], 0.0f);
+            add_calc(&this->actor.scale.y, this->unk_420.y, D_80A949A4_jp[this->unk_17C], D_80A949B0_jp[this->unk_17C], 0.0f);
+            add_calc(&this->actor.scale.z, this->unk_420.z, D_80A949A4_jp[this->unk_17C], D_80A949B0_jp[this->unk_17C], 0.0f);
+        } else {
+            f_var = fabsf(90.0f - this->unk_430);
+            this->unk_420.x = ((f_var / 360.0f) + 0.75f) * 0.01f;
+            this->unk_420.y = ((f_var / 360.0f) + 0.75f) * 0.01f;
+            this->unk_420.z = ((1.5f - (f_var / 180.0f)) * 0.01f);
+            add_calc(&this->actor.scale.x, this->unk_420.x, 0.2f, 0.01f, 0.0f);
+            add_calc(&this->actor.scale.y, this->unk_420.y, 0.2f, 0.01f, 0.0f);
+            add_calc(&this->actor.scale.z, this->unk_420.z, 0.2f, 0.01f, 0.0f);
+        }
+        this->unk_440 += 0x3E8;
+        this->unk_442 -= 0x3E8;
+        sp30->frameControl.currentFrame = this->unk_430;
+        cKF_SkeletonInfo_R_play(sp30);
+        sp30->frameControl.speed = 0.0f;
+        add_calc(&this->actor.world.pos.y, this->unk_434, 0.3f, 3.0f, 0.0f);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/aBEE_actor_draw.s")

@@ -13,7 +13,7 @@ typedef void (*BeeActionFunc)(struct Bee*, struct Game_Play*);
 
 typedef struct Bee {
     Actor actor;
-    void* unk_174;
+    BeeActionFunc unk_174;
     void* unk_178;
     s32 unk_17C;
     SkeletonInfoR skeletonInfo; // 0x180
@@ -28,10 +28,11 @@ typedef struct Bee {
     s32 unk_438;
     s16 unk_43C;
     s16 unk_43E;
-    s8 unk_440[0x2];
+    s16 unk_440;
     s16 unk_442;
     s16 unk_444;
-    s16 unk_446;
+    u8 unk_446;
+    s8 unk_447[0x1];
     s32 unk_448;
     s8 unk_44C[0x4];
 } Bee; // size 0x450
