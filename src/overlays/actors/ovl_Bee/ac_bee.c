@@ -95,7 +95,17 @@ void func_80A93E6C_jp(Bee* this, Game_Play* game_play) {
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A93EFC_jp.s")
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A94408_jp.s")
+void func_80A94408_jp(Bee* this, Game_Play* game_play) {
+
+    this->unk_420.x = 0.03f;
+    this->unk_420.z = 0.03f;
+    this->unk_420.y = 0.03f;
+    this->unk_438 -= 0x1E;
+    if (this->unk_438 < 0) {
+        this->unk_438 = 0;
+        Actor_delete(&this->actor);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A94450_jp.s")
 
