@@ -25,7 +25,7 @@ ActorProfile Bee_Profile = {
 };
 #endif
 
-void func_80A94450_jp(Actor*, s32, Game_Play*);          /* extern */
+void func_80A94450_jp(Bee*, s32, Game_Play*);          /* extern */
 extern BaseAnimationR* D_60008E4;
 extern BaseSkeletonR* D_6000928;
 extern xyz_t D_80A94974_jp;
@@ -107,9 +107,31 @@ void func_80A94408_jp(Bee* this, Game_Play* game_play) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A94450_jp.s")
+// #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A94450_jp.s")
+extern void(*D_80A9498C_jp[])(Bee*, Game_Play*);
+extern void(*D_80A94998_jp[]);
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A9449C_jp.s")
+void func_80A94450_jp(Bee* this, s32 arg0, Game_Play* game_play) {
+    this->unk_17C = arg0;
+    this->unk_174 = D_80A94998_jp[this->unk_17C];
+    D_80A9498C_jp[this->unk_17C](this, game_play);
+}
+
+
+// #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A9449C_jp.s")
+void func_80A9449C_jp(Bee* this, Game_Play* game_play) {
+    s32 pad;
+    void* sp20;
+    SkeletonInfoR* sp18;
+
+    sp20 = game_play->objectExchangeBank.status[this->actor.unk_026].segment;
+    if (sp20 != this->unk_178) {
+        sp18 = &this->skeletonInfo;
+        sp18->skeleton = Lib_SegmentedToVirtual(&D_6000928);
+        sp18->animation = Lib_SegmentedToVirtual(&D_60008E4);
+        this->unk_178 = sp20;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/aBEE_actor_move.s")
 
