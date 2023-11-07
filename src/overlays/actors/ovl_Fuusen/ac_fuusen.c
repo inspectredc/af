@@ -118,7 +118,9 @@ void func_80AAD270_jp(Fuusen* this, Game_Play* game_play) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Fuusen/ac_fuusen/func_80AAD490_jp.s")
+void func_80AAD490_jp(Fuusen* this, Game_Play* game_play) {
+    this->unk_1A4 = 0;
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Fuusen/ac_fuusen/func_80AAD4A0_jp.s")
 
