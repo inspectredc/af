@@ -17,7 +17,9 @@ typedef struct Fuusen {
     void* unk_178;
     s8 unk_17C[0x8];
     s32 unk_184;
-    s8 unk_188[0x18];
+    s8 unk_188[0x8];
+    s32 unk_190;
+    s8 unk_194[0xC];
     f32 unk_1A0;
     s8 unk_1A4[0x4];
     SkeletonInfoR skeletonInfo; // 0x1A8

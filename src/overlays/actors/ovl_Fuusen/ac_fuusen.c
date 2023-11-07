@@ -54,7 +54,17 @@ void aFSN_actor_ct(Actor* thisx, Game_Play* game_play) {
     func_80AADEC4_jp(this, 0, game_play);
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Fuusen/ac_fuusen/aFSN_actor_dt.s")
+extern void func_80092B7C_jp();
+extern void func_80092B8C_jp();
+
+void aFSN_actor_dt(Actor* thisx, Game_Play* game_play) {
+    Fuusen* this = (Fuusen*)thisx;
+    if (this->unk_190 != 0) {
+        func_80092B8C_jp();
+        return;
+    }
+    func_80092B7C_jp();
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Fuusen/ac_fuusen/func_80AAD270_jp.s")
 
