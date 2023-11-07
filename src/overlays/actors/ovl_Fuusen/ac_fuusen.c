@@ -4,6 +4,7 @@
 #include "m_object.h"
 #include "overlays/gamestates/ovl_play/m_play.h"
 #include "overlays/actors/player_actor/m_player.h"
+#include "libc/math.h"
 
 void aFSN_actor_ct(Actor* thisx, Game_Play* game_play);
 void aFSN_actor_dt(Actor* thisx, Game_Play* game_play);
@@ -27,7 +28,7 @@ ActorProfile Fuusen_Profile = {
 #endif
 
 extern void mAc_ActorShadowCircle(Actor*, LightsN*, Game_Play*);
-extern f32 func_80072F9C_jp(PosRot*);
+extern f32 func_80072F9C_jp(xyz_t*);
 extern BaseAnimationR D_6000F44;
 extern BaseSkeletonR D_6000F88;
 extern xyz_t D_80AAE4D4_jp;
@@ -38,7 +39,7 @@ void aFSN_actor_ct(Actor* thisx, Game_Play* game_play) {
     xyz_t sp34;
     f32 sp30;
     sp34 = D_80AAE4D4_jp;
-    sp30 = func_80072F9C_jp(&this->actor.world);
+    sp30 = func_80072F9C_jp(&this->actor.world.pos);
     this->unk_184 = 0x3E8;
     cKF_SkeletonInfo_R_ct(skeletonInfo, &D_6000F88, &D_6000F44, this->jointTable, this->morphTable);
     cKF_SkeletonInfo_R_init_standard_repeat(skeletonInfo, Lib_SegmentedToVirtual(&D_6000F44), NULL);
@@ -66,7 +67,56 @@ void aFSN_actor_dt(Actor* thisx, Game_Play* game_play) {
     func_80092B7C_jp();
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Fuusen/ac_fuusen/func_80AAD270_jp.s")
+s16 func_8009895C_jp();                             /* extern */
+extern s32 D_80AAE4E0_jp[16];
+extern xyz_t D_80AAE520_jp[8];
+extern xyz_t D_FLT_80AAE580_jp[8];
+
+void func_80AAD270_jp(Fuusen* this, Game_Play* game_play) {
+    s16 var_v0;
+    f32 temp_fa1;
+    f32 temp_fv0_2;
+    f32 sp30;
+    f32 temp_fv0;
+    s32 var_v1;
+
+    sp30 = func_80072F9C_jp(&this->actor.world.pos);
+    this->actor.world.rot.y = func_8009895C_jp();
+    var_v0 = this->actor.world.rot.y & 0xF000;
+    this->unk_194 = (var_v0 >> 0xC) & 0xF;
+    this->unk_194 = D_80AAE4E0_jp[this->unk_194];
+    xyz_t_move(&this->actor.world.pos, &D_80AAE520_jp[this->unk_194]);
+    this->actor.world.pos.y = (f32) (sp30 + 200.0f);
+    this->unk_180 = (u32) ((u32) game_play->unk_1EA0 % 5U);
+    this->unk_188 = 0xA;
+    var_v1 = false;
+    if ((D_FLT_80AAE580_jp[this->unk_194].x != 0.0f) && (D_FLT_80AAE580_jp[this->unk_194].z != 0.0f)) {
+        var_v1 = game_play->unk_1EA0 & 1;
+    } else if (D_FLT_80AAE580_jp[this->unk_194].z != 0.0f) {
+        var_v1 = true;
+    }
+    if (!var_v1) {
+        if (D_FLT_80AAE580_jp[this->unk_194].x != 0.0f) {
+            temp_fa1 = fqrand();
+            temp_fv0 = fabsf(D_FLT_80AAE580_jp[this->unk_194].x);
+            if (D_FLT_80AAE580_jp[this->unk_194].x > 0.0f) {
+                this->actor.world.pos.x += temp_fv0 * temp_fa1;
+            } else {
+                this->actor.world.pos.x -= temp_fv0 * temp_fa1;
+            }
+        }
+    } else {
+        if (D_FLT_80AAE580_jp[this->unk_194].z != 0.0f) {
+            temp_fa1 = fqrand();
+            temp_fv0_2 = fabsf(D_FLT_80AAE580_jp[this->unk_194].z);
+            if (D_FLT_80AAE580_jp[this->unk_194].z > 0.0f) {
+                this->actor.world.pos.z += temp_fv0_2 * temp_fa1;
+            } else {
+                this->actor.world.pos.z -= temp_fv0_2 * temp_fa1;
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Fuusen/ac_fuusen/func_80AAD490_jp.s")
 

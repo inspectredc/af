@@ -15,11 +15,14 @@ typedef struct Fuusen {
     Actor actor;
     s8 unk_174[0x4];
     void* unk_178;
-    s8 unk_17C[0x8];
+    s8 unk_17C[0x4];
+    u32 unk_180;
     s32 unk_184;
-    s8 unk_188[0x8];
+    u32 unk_188;
+    s8 unk_18C[0x4];
     s32 unk_190;
-    s8 unk_194[0xC];
+    s32 unk_194;
+    s8 unk_198[0x8];
     f32 unk_1A0;
     s8 unk_1A4[0x4];
     SkeletonInfoR skeletonInfo; // 0x1A8
