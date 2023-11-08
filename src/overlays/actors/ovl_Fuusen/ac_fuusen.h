@@ -19,7 +19,7 @@ typedef struct Fuusen {
     u32 unk_180;
     s32 unk_184;
     u32 unk_188;
-    s8 unk_18C[0x4];
+    s32 unk_18C;
     s32 unk_190;
     s32 unk_194;
     s8 unk_198[0x8];

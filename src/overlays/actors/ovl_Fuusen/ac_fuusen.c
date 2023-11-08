@@ -130,7 +130,24 @@ void func_80AAD4A0_jp(Fuusen* this, Game_Play* game_play) {
     func_800D1D58_jp(0x402, &this->actor.world.pos, &this->actor);
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Fuusen/ac_fuusen/func_80AAD4DC_jp.s")
+void func_80AAD4DC_jp(Fuusen* this, Game_Play* game_play) {
+    f32 temp_fa0;
+    f32 temp_fv1;
+    Player* player = get_player_actor_withoutCheck(game_play);
+    
+    temp_fv1 = player->actor.world.pos.x - this->actor.world.pos.x;
+    temp_fa0 = player->actor.world.pos.z - this->actor.world.pos.z;
+    this->unk_18C = 0;
+    this->actor.terminalVelocity = 5.0f;
+    this->actor.gravity = 0.5f;
+    this->unk_190 = 0;
+    if (this->unk_184 == 0x309) {
+        this->unk_18C = 1;
+        if (sqrtf(SQ(temp_fv1) + SQ(temp_fa0)) < 640.0f) {
+            this->unk_190 = 1;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Fuusen/ac_fuusen/func_80AAD580_jp.s")
 
