@@ -361,6 +361,18 @@ void aFSN_actor_move(Actor* thisx, Game_Play* game_play) {
     D_80106E10_jp = 0;
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Fuusen/ac_fuusen/func_80AAE10C_jp.s")
+Gfx* func_80AAE10C_jp(u8 arg0, u8 arg1, u8 arg2, u8 arg3, Game_Play* game_play) {
+    GraphicsContext* gfxCtx = game_play->state.gfxCtx;
+    Gfx* gfx;
+    gfx = gfxCtx->polyOpa.d;
+    gfx -= 2;
+    gfxCtx->polyOpa.d = gfx;
+    if (gfx) {
+        gDPSetPrimColor(gfx, 0, 0xFF, arg0, arg1, arg2, arg3);
+        gSPEndDisplayList(gfx + 1);
+        return gfx;
+    }
+    return NULL;
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Fuusen/ac_fuusen/aFSN_actor_draw.s")
