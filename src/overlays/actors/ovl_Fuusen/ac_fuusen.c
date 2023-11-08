@@ -364,9 +364,7 @@ void aFSN_actor_move(Actor* thisx, Game_Play* game_play) {
 Gfx* func_80AAE10C_jp(u8 arg0, u8 arg1, u8 arg2, u8 arg3, Game_Play* game_play) {
     GraphicsContext* gfxCtx = game_play->state.gfxCtx;
     Gfx* gfx;
-    gfx = gfxCtx->polyOpa.d;
-    gfx -= 2;
-    gfxCtx->polyOpa.d = gfx;
+    gfx = GRAPH_ALLOC(gfxCtx, 1);
     if (gfx) {
         gDPSetPrimColor(gfx, 0, 0xFF, arg0, arg1, arg2, arg3);
         gSPEndDisplayList(gfx + 1);
