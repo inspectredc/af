@@ -327,7 +327,19 @@ void func_80AADEC4_jp(Fuusen* this, s32 arg0, Game_Play* game_play) {
     D_80AAE614_jp[arg0](this, game_play);
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Fuusen/ac_fuusen/func_80AADF10_jp.s")
+void func_80AADF10_jp(Fuusen* this, Game_Play* game_play) {
+    s32 pad;
+    void* sp20;
+    SkeletonInfoR* sp18;
+
+    sp20 = game_play->objectExchangeBank.status[this->actor.unk_026].segment;
+    if (this->unk_178 != sp20) {
+        sp18 = &this->skeletonInfo;
+        sp18->skeleton = Lib_SegmentedToVirtual(&D_6000F88);
+        sp18->animation = Lib_SegmentedToVirtual(&D_6000F44);
+        this->unk_178 = sp20;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Fuusen/ac_fuusen/aFSN_actor_move.s")
 
