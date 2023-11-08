@@ -293,7 +293,29 @@ void func_80AADB9C_jp(Fuusen* this, Game_Play* game_play) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Fuusen/ac_fuusen/func_80AADDA8_jp.s")
+void func_80AADDA8_jp(Fuusen* this, Game_Play* game_play) {
+    CommonData_unk_10080 *unk_10080;
+    f32 sp48;
+    xyz_t sp3C;
+    s32 sp38;
+    s32 sp34;
+
+    sp48 = func_80072F9C_jp(&this->actor.world.pos);
+    if (this->unk_18C == 0) {
+        func_800884E0_jp(&sp3C, this->actor.world.pos);
+        unk_10080 = common_data.unk_10080;
+        if ((unk_10080 != NULL) && (common_data.unk_10080->unk_38 != 0) && func_80088344_jp(&sp38, &sp34, sp3C)) {
+            common_data.unk_10080->unk_30(0x251C, sp38, sp34, 1);
+            this->unk_18C = 1;
+        };
+        // ^ FAKE ?
+    }
+    if (this->unk_18C == 1) {
+        if (this->actor.world.pos.y > (sp48 + 500.0f)) {
+            Actor_delete(&this->actor);
+        }
+    }
+}
 
 extern void (*D_80AAE614_jp[4])(Fuusen*,Game_Play*);
 extern s32 D_80AAE624_jp[4];
