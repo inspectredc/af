@@ -10,6 +10,7 @@ void aFSN_actor_ct(Actor* thisx, Game_Play* game_play);
 void aFSN_actor_dt(Actor* thisx, Game_Play* game_play);
 void aFSN_actor_move(Actor* thisx, Game_Play* game_play);
 void aFSN_actor_draw(Actor* thisx, Game_Play* game_play);
+void func_80AADEC4_jp(Fuusen*, s32, Game_Play*);
 
 #if 0
 ActorProfile Fuusen_Profile = {
@@ -149,7 +150,9 @@ void func_80AAD4DC_jp(Fuusen* this, Game_Play* game_play) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Fuusen/ac_fuusen/func_80AAD580_jp.s")
+void func_80AAD580_jp(Fuusen* this, Game_Play* game_play) {
+    func_80AADEC4_jp(this, 1, game_play);
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Fuusen/ac_fuusen/func_80AAD5A4_jp.s")
 
@@ -157,7 +160,15 @@ void func_80AAD4DC_jp(Fuusen* this, Game_Play* game_play) {
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Fuusen/ac_fuusen/func_80AADDA8_jp.s")
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Fuusen/ac_fuusen/func_80AADEC4_jp.s")
+extern void (*D_80AAE614_jp[4])(Fuusen*,Game_Play*);
+extern s32 D_80AAE624_jp[4];
+
+void func_80AADEC4_jp(Fuusen* this, s32 arg0, Game_Play* game_play) {
+
+    this->unk_17C = arg0;
+    this->unk_174 = D_80AAE624_jp[arg0];
+    D_80AAE614_jp[arg0](this, game_play);
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Fuusen/ac_fuusen/func_80AADF10_jp.s")
 
