@@ -1,7 +1,10 @@
 #include "ac_ball.h"
 #include "m_actor_dlftbls.h"
 #include "m_object.h"
+#include "m_actor_shadow.h"
 #include "overlays/gamestates/ovl_play/m_play.h"
+#include "overlays/actors/player_actor/m_player.h"
+#include "libc/math.h"
 
 void aBALL_actor_ct(Actor* thisx, Game_Play* game_play);
 void aBALL_actor_dt(Actor* thisx, Game_Play* game_play);

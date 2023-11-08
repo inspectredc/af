@@ -5,6 +5,7 @@
 #include "m_actor.h"
 #include "m_collision_obj.h"
 #include "unk.h"
+#include "c_keyframe.h"
 
 struct Game_Play;
 struct Ball;
