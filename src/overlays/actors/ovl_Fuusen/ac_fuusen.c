@@ -249,7 +249,49 @@ dummy_label:
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Fuusen/ac_fuusen/func_80AAD5A4_jp.s")
 #endif
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Fuusen/ac_fuusen/func_80AADB9C_jp.s")
+void func_800884E0_jp(xyz_t*, xyz_t);
+s32 func_800B5BC0_jp(xyz_t*);
+s32 func_800B5C10_jp(xyz_t*);
+
+void func_80AADB9C_jp(Fuusen* this, Game_Play* game_play) {
+    s32 pad;
+    xyz_t sp40;
+    xyz_t sp34;
+    f32 temp_fa0;
+    f32 temp_fv1;
+
+    this->unk_184 -= 1;
+    if (this->unk_184 < 0x30A) {
+        this->unk_184 = 0x309;
+        func_80AADEC4_jp(this, 3, game_play);
+    } else {
+        func_800884E0_jp(&sp40, this->actor.world.pos);
+        xyz_t_move(&sp34, &sp40);
+        sp40.x -= 2.5f;
+        sp40.y = mCoBG_GetBgY_OnlyCenter_FromWpos2(this->actor.world.pos, 0.0f) + 97.5f;
+        sp40.z += 7.5f;
+        temp_fv1 = this->actor.world.pos.x - sp40.x;
+        temp_fa0 = this->actor.world.pos.z - sp40.z;
+        if (sqrtf(SQ(temp_fv1) + SQ(temp_fa0)) > 2.0f) {
+            add_calc(&this->actor.world.pos.x, sp40.x, 0.3f, 1.0f, 0.0f);
+            add_calc(&this->actor.world.pos.y, sp40.y, 0.3f, 1.0f, 0.0f);
+            add_calc(&this->actor.world.pos.z, sp40.z, 0.3f, 1.0f, 0.0f);
+        } else if (func_800B5C10_jp(&sp34)) {
+            this->actor.shape.rot.z = 0;
+            func_80AADEC4_jp(this, 3, game_play);
+        } else if (func_800B5BC0_jp(&sp34)) {
+            if (!(this->unk_18C & 2)) {
+                this->actor.shape.rot.z = 0x1F4;
+            } else {
+                this->actor.shape.rot.z = 0;
+            }
+            this->unk_18C += 1;
+        } else {
+            this->actor.shape.rot.z = 0;
+            this->unk_18C = 0;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Fuusen/ac_fuusen/func_80AADDA8_jp.s")
 
