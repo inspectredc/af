@@ -22,9 +22,11 @@ typedef struct Fuusen {
     s32 unk_18C;
     s32 unk_190;
     s32 unk_194;
-    s8 unk_198[0x8];
+    s16 unk_198;
+    s8 unk_19A[0x2];
+    f32 unk_19C;
     f32 unk_1A0;
-    s8 unk_1A4;
+    u8 unk_1A4;
     s8 unk_1A5[0x3];
     SkeletonInfoR skeletonInfo; // 0x1A8
     s_xyz jointTable[0x4]; // 0x218
