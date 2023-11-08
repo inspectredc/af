@@ -122,7 +122,13 @@ void func_80AAD490_jp(Fuusen* this, Game_Play* game_play) {
     this->unk_1A4 = 0;
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Fuusen/ac_fuusen/func_80AAD4A0_jp.s")
+extern void func_800D1D58_jp(s32, xyz_t*, Actor*);
+
+void func_80AAD4A0_jp(Fuusen* this, Game_Play* game_play) {
+    this->unk_184 = 0x2631;
+    this->actor.speed = 0.0f;
+    func_800D1D58_jp(0x402, &this->actor.world.pos, &this->actor);
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Fuusen/ac_fuusen/func_80AAD4DC_jp.s")
 
