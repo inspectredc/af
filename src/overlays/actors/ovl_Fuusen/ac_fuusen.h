@@ -13,12 +13,12 @@ typedef void (*FuusenActionFunc)(struct Fuusen*, struct Game_Play*);
 
 typedef struct Fuusen {
     Actor actor;
-    s32 unk_174;
+    FuusenActionFunc unk_174;
     void* unk_178;
     s32 unk_17C;
     u32 unk_180;
     s32 unk_184;
-    u32 unk_188;
+    s32 unk_188;
     s32 unk_18C;
     s32 unk_190;
     s32 unk_194;

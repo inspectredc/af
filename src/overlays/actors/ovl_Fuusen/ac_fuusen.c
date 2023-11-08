@@ -68,7 +68,7 @@ void aFSN_actor_dt(Actor* thisx, Game_Play* game_play) {
     func_80092B7C_jp();
 }
 
-s16 func_8009895C_jp();                             /* extern */
+extern s16 func_8009895C_jp();
 extern s32 D_80AAE4E0_jp[16];
 extern xyz_t D_80AAE520_jp[8];
 extern xyz_t D_FLT_80AAE580_jp[8];
@@ -155,12 +155,10 @@ void func_80AAD580_jp(Fuusen* this, Game_Play* game_play) {
 }
 
 #ifdef NON_MATCHING
-f32 func_80072F9C_jp(xyz_t*);
-void func_800765AC_jp(s32, Actor*, f32, f32, s32, s32, s32);
-void func_800884E0_jp(xyz_t*, xyz_t);
-s16 func_8009895C_jp();
-f32 func_80098980_jp();
-u16* mFI_GetUnitFG(xyz_t);
+extern void func_800765AC_jp(s32, Actor*, f32, f32, s32, s32, s32);
+extern void func_800884E0_jp(xyz_t*, xyz_t);
+extern f32 func_80098980_jp();
+extern u16* mFI_GetUnitFG(xyz_t);
 extern Vec2s D_80AAE608_jp[3];
 #ifndef ARRAY_COUNT
 #define ARRAY_COUNT(arr) (s32)(sizeof(arr) / sizeof(arr[0]))
@@ -249,9 +247,8 @@ dummy_label:
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Fuusen/ac_fuusen/func_80AAD5A4_jp.s")
 #endif
 
-void func_800884E0_jp(xyz_t*, xyz_t);
-s32 func_800B5BC0_jp(xyz_t*);
-s32 func_800B5C10_jp(xyz_t*);
+extern s32 func_800B5BC0_jp(xyz_t*);
+extern c_800B5C10_jp(xyz_t*);
 
 void func_80AADB9C_jp(Fuusen* this, Game_Play* game_play) {
     s32 pad;
@@ -294,7 +291,7 @@ void func_80AADB9C_jp(Fuusen* this, Game_Play* game_play) {
 }
 
 void func_80AADDA8_jp(Fuusen* this, Game_Play* game_play) {
-    CommonData_unk_10080 *unk_10080;
+    s32 pad;
     f32 sp48;
     xyz_t sp3C;
     s32 sp38;
@@ -303,8 +300,7 @@ void func_80AADDA8_jp(Fuusen* this, Game_Play* game_play) {
     sp48 = func_80072F9C_jp(&this->actor.world.pos);
     if (this->unk_18C == 0) {
         func_800884E0_jp(&sp3C, this->actor.world.pos);
-        unk_10080 = common_data.unk_10080;
-        if ((unk_10080 != NULL) && (common_data.unk_10080->unk_38 != 0) && func_80088344_jp(&sp38, &sp34, sp3C)) {
+        if ((common_data.unk_10080 != NULL) && (common_data.unk_10080->unk_38 != 0) && func_80088344_jp(&sp38, &sp34, sp3C)) {
             common_data.unk_10080->unk_30(0x251C, sp38, sp34, 1);
             this->unk_18C = 1;
         };
@@ -318,7 +314,7 @@ void func_80AADDA8_jp(Fuusen* this, Game_Play* game_play) {
 }
 
 extern void (*D_80AAE614_jp[4])(Fuusen*,Game_Play*);
-extern s32 D_80AAE624_jp[4];
+extern void (*D_80AAE624_jp[4])(Fuusen*,Game_Play*);
 
 void func_80AADEC4_jp(Fuusen* this, s32 arg0, Game_Play* game_play) {
 
@@ -341,7 +337,29 @@ void func_80AADF10_jp(Fuusen* this, Game_Play* game_play) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Fuusen/ac_fuusen/aFSN_actor_move.s")
+extern s32 D_80106E10_jp;
+extern void Debug_Display_new(f32, f32, f32, s32, s32, s32, f32, f32, f32, s32, s32, s32, s32, s32, GraphicsContext*);
+
+void aFSN_actor_move(Actor* thisx, Game_Play* game_play) {
+    s32 pad;
+    Fuusen* this = (Fuusen*)thisx;
+    s32 pad2;
+    Player* sp58;
+
+    func_80AADF10_jp(this, game_play);
+    if (this->unk_188 == 0) {
+        Actor_position_moveF(&this->actor);
+    } else if (this->unk_188 > 0) {
+        this->unk_188--;
+    }
+    if (D_80106E10_jp != 0) {
+        sp58 = get_player_actor_withoutCheck(game_play);
+        Debug_Display_new((sin_s((s16) (this->actor.yawTowardsPlayer + 0x8000)) * 30.0f) + sp58->actor.world.pos.x, sp58->actor.world.pos.y + 60.0f, (cos_s((s16) (this->actor.yawTowardsPlayer + 0x8000)) * 30.0f) + sp58->actor.world.pos.z, 0, this->actor.yawTowardsPlayer + 0x8000, 0, 1.0f, 1.0f, 1.0f, 0xFA, 0x64, 0x78, 0x80, 4, game_play->state.gfxCtx);
+    }
+    cKF_SkeletonInfo_R_play(&this->skeletonInfo);
+    this->unk_174(this, game_play);
+    D_80106E10_jp = 0;
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Fuusen/ac_fuusen/func_80AAE10C_jp.s")
 
