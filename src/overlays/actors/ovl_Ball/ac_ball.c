@@ -43,14 +43,14 @@ CollisionCheck_Status_Init aBALL_StatusData = { 0, 0xD, 0x1E, -0xA, 100, };
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_80968B9C_jp.s")
 
-extern Actor* B_8096A980_jp;
+extern Ball* B_8096A980_jp;
 extern void mAc_ActorShadowEllipse(Actor*, LightsN*, Game_Play*);
 
 void aBALL_actor_ct(Actor* thisx, Game_Play* game_play) {
     Ball* this = (Ball*)thisx;
     PosRot* sp34;
 
-    B_8096A980_jp = &this->actor;
+    B_8096A980_jp = this;
     if ((common_data.unk_10A6C.x == 0.0f) && (common_data.unk_10A6C.y == 0.0f) && (common_data.unk_10A6C.z == 0.0f)) {
         sp34 = &this->actor.world;
         if (func_80968B9C_jp(sp34) == 0) {
@@ -126,4 +126,8 @@ void aBALL_actor_ct(Actor* thisx, Game_Play* game_play) {
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/aBALL_actor_draw.s")
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_8096A86C_jp.s")
+void func_8096A86C_jp(void) {
+    if ((common_data.unk_100DC != NULL) && (B_8096A980_jp != NULL)) {
+        func_80968AF4_jp(B_8096A980_jp, B_8096A980_jp->unk_1F8);
+    }
+}
