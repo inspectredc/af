@@ -99,7 +99,46 @@ void func_80968AF4_jp(Ball* this, s32 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_80968B9C_jp.s")
+s32 func_80968B9C_jp(s32 arg0) {
+    s32 temp_fp;
+    s32 temp_s3;
+    s32 sp64;
+    s32 sp60;
+    s32 temp_v0;
+    s32 temp_v0_2;
+    s32 var_s0;
+    s32 j;
+    s32 var_s2;
+    s32 i;
+
+    temp_fp = func_80087E58_jp();
+    temp_s3 = func_80087E94_jp();
+    var_s2 = (s32) (fqrand() * (f32) temp_fp);
+    var_s0 = (s32) (fqrand() * (f32) temp_s3);
+    for (i = 0; i < temp_fp; i++) {
+        for (j = 0; j < temp_s3; j++) {
+            if ((func_80089404_jp(var_s2, var_s0, 0x8023) == 0) && (func_800ADD20_jp(&sp64, &sp60, var_s2, var_s0, 2) == 1)) {
+                func_80088C74_jp(arg0, var_s2, var_s0, sp64, sp60);
+                return 1;
+            }
+            temp_v0 = var_s0 + 1;
+            var_s0 = temp_s3;
+            if (var_s0 == temp_v0) {
+                var_s0 = 0;
+            } else {
+                var_s0 = temp_v0;
+            }
+        }
+        temp_v0_2 = var_s2 + 1;
+        var_s2 = temp_fp;
+        if (var_s2 == temp_v0_2) {
+            var_s2 = 0;
+        } else {
+            var_s2 = temp_v0_2;
+        }
+    }
+    return 0;
+}
 
 extern Ball* B_8096A980_jp;
 extern void mAc_ActorShadowEllipse(Actor*, LightsN*, Game_Play*);
