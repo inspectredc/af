@@ -196,7 +196,28 @@ void aBALL_actor_dt(Actor* thisx, Game_Play* game_play) {
     ClObjPipe_dt(game_play, &this->collider);
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_80969040_jp.s")
+extern void func_80071884_jp(xyz_t*, xyz_t, f32);
+// extern void func_800CE4F4_jp(xyz_t*, f32*, f32*);
+// extern void func_800CE554_jp(Actor*, xyz_t*);
+
+void func_80969040_jp(Ball* this) {
+    xyz_t sp2C;
+    u32 temp_v0;
+
+    func_80071884_jp(&sp2C, this->actor.world.pos, 0.0f);
+    temp_v0 = this->actor.unk_098;
+    if (((temp_v0 >> 0x1F) != 0) || (s32)((temp_v0 & 0xFFFF) << 0x16) < 0) {
+        chase_f(&this->actor.speed, this->unk_1EC, this->unk_1F0);
+    }
+    if (!(this->unk_208 & 2)) {
+        func_800CE4F4_jp(&this->actor.velocity, &this->actor.speed, &this->actor.world.rot.y);
+        chase_f(&this->actor.velocity.y, this->actor.terminalVelocity, this->actor.gravity);
+        func_800CE554_jp(&this->actor, &sp2C);
+        if (this->actor.world.pos.z < 840.0f) {
+            this->actor.world.pos.z = 840.0f;
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_80969114_jp.s")
 
