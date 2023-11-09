@@ -223,7 +223,12 @@ void func_80969040_jp(Ball* this) {
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_809693EC_jp.s")
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_80969800_jp.s")
+void func_80969800_jp(Ball* this) {
+    if (func_800CEB1C_jp() != 1) {
+        this->unk_208 |= 1;
+        Actor_delete(&this->actor);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_8096983C_jp.s")
 
