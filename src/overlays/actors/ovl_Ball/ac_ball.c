@@ -72,11 +72,11 @@ s32 func_80968A10_jp(Ball* this, Game_Play* game_play, s32 arg0) {
     return 0;
 }
 
-void func_80968AF4_jp(Ball* this, s32 arg1) {
+void func_80968AF4_jp(Ball* this, s32 arg0) {
     s32 var_a1;
     s32 var_v0;
 
-    switch (arg1) {
+    switch (arg0) {
         case 0:
             var_a1 = &D_1100000;
             var_v0 = &D_11003C0;
