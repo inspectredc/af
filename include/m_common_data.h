@@ -214,7 +214,9 @@ typedef struct CommonData {
     /* 0x10098 */ CommonData_unk_10098 *unk_10098;
     /* 0x1009C */ UNK_TYPE1 unk_1009C[0x4];
     /* 0x100A0 */ struct ToolClip* toolClip;
-    /* 0x100A4 */ UNK_TYPE1 unk_100A4[0x40];
+    /* 0x100A4 */ UNK_TYPE1 unk_100A4[0x38];
+    /* 0x100DC */ void* unk_100DC;
+    /* 0x100E0 */ UNK_TYPE1 unk_100E0[0x4];
     /* 0x100E4 */ CommonData_100E4_Func* unk_100E4;
     /* 0x100E8 */ u8 unk100E8[0x24];
     /* 0x1010C */ Time_c time;
@@ -259,7 +261,10 @@ typedef struct CommonData {
     /* 0x10A3C */ UNK_TYPE1 unk_10A3C[0x2C];
     /* 0x10A68 */ u8 unk_10A68;
     /* 0x10A69 */ UNK_TYPE1 unk_10A69[0x3];
-    /* 0x10A6C */ UNK_TYPE1 unk_10A6C[0x14];
+    /* 0x10A6C */ xyz_t unk_10A6C;
+    /* 0x10A78 */ UNK_TYPE1 unk_10A78;
+    /* 0x10A79 */ UNK_TYPE1 unk_10A79[0x3];
+    /* 0x10A7C */ UNK_TYPE1 unk_10A7C[0x4];
     /* 0x10A80 */ UNK_TYPE1 unk_10A80[0x2];
     /* 0x10A82 */ s16 unk_10A82;
     /* 0x10A84 */ u8 unk10A84[0x2C];
