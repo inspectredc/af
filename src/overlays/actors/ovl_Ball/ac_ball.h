@@ -23,7 +23,7 @@ typedef struct Ball {
     ClObjPipe collider; // 0x174
     s8 unk_190[0x40];
     xyz_t unk_1D0;
-    s32 unk_1DC;
+    Actor* unk_1DC;
     void* unk_1E0;
     void* unk_1E4;
     s8 unk_1E8[0x4];

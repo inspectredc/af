@@ -169,7 +169,7 @@ void aBALL_actor_ct(Actor* thisx, Game_Play* game_play) {
     CollisionCheck_Status_set3(&this->actor.colStatus, &aBALL_StatusData);
     this->unk_206 = 3;
     func_80969998_jp(this, game_play);
-    this->unk_1DC = 0;
+    this->unk_1DC = NULL;
     this->actor.terminalVelocity = -20.0f;
     this->actor.gravity = 0.6f;
     this->actor.speed = 0.0f;
