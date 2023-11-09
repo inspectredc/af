@@ -14,6 +14,9 @@ void aBALL_actor_draw(Actor* thisx, Game_Play* game_play);
 void func_8096A86C_jp(void);
 void func_809698E8_jp(Ball* this, Game_Play* game_play);
 void func_809699D8_jp(Ball* this, Game_Play* game_play);
+void func_80969998_jp(Ball* this, Game_Play* game_play);
+void func_80969FBC_jp(Ball* this, Game_Play* game_play);
+void func_8096A0CC_jp(Ball* this, Game_Play* game_play);
 
 #if 0
 ActorProfile Ball_Profile = {
@@ -249,7 +252,25 @@ void func_8096983C_jp(Ball* this, Game_Play* game_play) {
     this->unk_1E0 = func_809698E8_jp;
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_809698E8_jp.s")
+void func_809698E8_jp(Ball* this, Game_Play* game_play) {
+    u32 temp_v0;
+
+    this->unk_1F0 = 0.0f;
+    add_calc0(&this->unk_1E8, 0.5f, 100.0f);
+    temp_v0 = this->actor.unk_098;
+    this->actor.terminalVelocity = -20.0f;
+    this->actor.gravity = 0.6f;
+    this->unk_1F4 = this->actor.speed;
+    if (temp_v0 >> 0x1F) {
+        if (((s32)(temp_v0 & 0xFFFF) << 0x16) < 0) {
+            func_8096A0CC_jp(this, game_play);
+        } else {
+            func_80969998_jp(this, game_play);
+        }
+    } else if (((s32)(temp_v0 & 0xFFFF) << 0x16) < 0) {
+        func_80969FBC_jp(this, game_play);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_80969998_jp.s")
 

@@ -26,7 +26,7 @@ typedef struct Ball {
     Actor* unk_1DC;
     void* unk_1E0;
     void* unk_1E4;
-    s8 unk_1E8[0x4];
+    f32 unk_1E8;
     f32 unk_1EC;
     f32 unk_1F0;
     f32 unk_1F4;
