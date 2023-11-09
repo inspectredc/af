@@ -272,7 +272,14 @@ void func_809698E8_jp(Ball* this, Game_Play* game_play) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_80969998_jp.s")
+void func_80969998_jp(Ball* this, Game_Play* game_play) {
+    this->actor.shape.unk_2C = 1;
+    if (this->actor.velocity.y > 0.0f) {
+        this->unk_1E0 = func_809698E8_jp;
+    } else {
+        this->unk_1E0 = func_809699D8_jp;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_809699D8_jp.s")
 
