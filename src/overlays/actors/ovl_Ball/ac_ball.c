@@ -182,7 +182,19 @@ void aBALL_actor_ct(Actor* thisx, Game_Play* game_play) {
     this->unk_20A = 0;
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/aBALL_actor_dt.s")
+void aBALL_actor_dt(Actor* thisx, Game_Play* game_play) {
+    Ball* this = (Ball*)thisx;
+    s16 temp_v0;
+
+    temp_v0 = this->unk_208;
+    if ((temp_v0 & 1) || (temp_v0 & 2) || (func_800CE9C4_jp(&this->actor) == 0)) {
+        common_data.unk_10A6C = ZeroVec;
+    } else {
+        common_data.unk_10A6C = this->actor.world.pos;
+    }
+    common_data.unk_100DC = NULL;
+    ClObjPipe_dt(game_play, &this->collider);
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_80969040_jp.s")
 
