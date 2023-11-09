@@ -37,9 +37,67 @@ ClObjPipe_Init aBALL_CoInfoData = { { OC1_1 | OC1_TYPE_8 | OC1_TYPE_10 | OC1_TYP
 CollisionCheck_Status_Init aBALL_StatusData = { 0, 0xD, 0x1E, -0xA, 100, };
 #endif
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_80968A10_jp.s")
+extern UNK_TYPE D_1100000;
+extern UNK_TYPE D_11003C0;
+extern UNK_TYPE D_1101000;
+extern UNK_TYPE D_1101770;
+extern UNK_TYPE D_1102000;
+extern UNK_TYPE D_11029E0;
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_80968AF4_jp.s")
+s32 func_80968A10_jp(Ball* this, Game_Play* game_play, s32 arg0) {
+    s32 sp18;
+    s32 temp_v1;
+    s32 var_a2;
+
+    temp_v1 = game_play->objectExchangeBank.num;
+    switch (arg0) {
+        case 0:
+            var_a2 = (s32)&D_11003C0 - (s32)&D_1100000;
+            break;
+        case 1:
+            var_a2 = (s32)&D_1101770 - (s32)&D_1101000;
+            break;
+        case 2:
+            var_a2 = (s32)&D_11029E0 - (s32)&D_1102000;
+            break;
+        default:
+            var_a2 = (s32)&D_11003C0 - (s32)&D_1100000;
+            break;
+    }
+    sp18 = temp_v1;
+    if (mSc_secure_exchange_keep_bank(&game_play->objectExchangeBank, 0, var_a2) != 0) {
+        this->unk_1E4 = game_play->objectExchangeBank.status[temp_v1].segment;
+        return 1;
+    }
+    return 0;
+}
+
+void func_80968AF4_jp(Ball* this, s32 arg1) {
+    s32 var_a1;
+    s32 var_v0;
+
+    switch (arg1) {
+        case 0:
+            var_a1 = &D_1100000;
+            var_v0 = &D_11003C0;
+            break;
+        case 1:
+            var_a1 = &D_1101000;
+            var_v0 = &D_1101770;
+            break;
+        case 2:
+            var_a1 = &D_1102000;
+            var_v0 = &D_11029E0;
+            break;
+        default:
+            var_a1 = &D_1100000;
+            var_v0 = &D_11003C0;
+            break;
+    }
+    if ((var_a1 != NULL) && (var_v0 != NULL)) {
+        DmaMgr_RequestSyncDebug(this->unk_1E4, var_a1, var_v0 - var_a1, "../ac_ball.c", 0x11D);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_80968B9C_jp.s")
 

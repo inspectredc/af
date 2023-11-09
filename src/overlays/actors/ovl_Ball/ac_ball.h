@@ -23,7 +23,9 @@ typedef struct Ball {
     ClObjPipe collider; // 0x174
     s8 unk_190[0x4C];
     s32 unk_1DC;
-    s8 unk_1E0[0xC];
+    s8 unk_1E0[0x4];
+    void* unk_1E4;
+    s8 unk_1E8[0x4];
     f32 unk_1EC;
     f32 unk_1F0;
     f32 unk_1F4;
@@ -34,6 +36,6 @@ typedef struct Ball {
     s8 unk_208[0x2];
     s16 unk_20A;
     s8 unk_20C[0x10];
-} Ball; // size 0x21C
+} Ball; // size 0x21C (wrong on base)
 
 #endif
