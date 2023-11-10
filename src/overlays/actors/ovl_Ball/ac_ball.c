@@ -16,6 +16,7 @@ void func_809698E8_jp(Ball* this, Game_Play* game_play);
 void func_809699D8_jp(Ball* this, Game_Play* game_play);
 void func_80969998_jp(Ball* this, Game_Play* game_play);
 void func_80969FBC_jp(Ball* this, Game_Play* game_play);
+void func_80969FD8_jp(Ball* this, Game_Play* game_play);
 void func_8096A0CC_jp(Ball* this, Game_Play* game_play);
 
 #if 0
@@ -288,7 +289,10 @@ void func_80969998_jp(Ball* this, Game_Play* game_play) {
 // how to handle this when this file gets decompiled.
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_80969DE8_jp.s")
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_80969FBC_jp.s")
+void func_80969FBC_jp(Ball* this, Game_Play* game_play) {
+    this->actor.shape.unk_2C = 0;
+    this->unk_1E0 = func_80969FD8_jp;
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_80969FD8_jp.s")
 
