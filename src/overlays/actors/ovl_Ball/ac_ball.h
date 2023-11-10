@@ -31,7 +31,9 @@ typedef struct Ball {
     f32 unk_1F0;
     f32 unk_1F4;
     s32 unk_1F8;
-    s8 unk_1FC[0x8];
+    s16 unk_1FC;
+    s8 unk_1FE[0x2];
+    s8 unk_200[0x4];
     s8 unk_204[0x2];
     s16 unk_206;
     s16 unk_208;
