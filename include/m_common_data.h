@@ -110,6 +110,12 @@ typedef struct CommonData_unk_10098 {
     /* 0x86C */ UNK_TYPE unk_86C;
 } CommonData_unk_10098; // size >= 0x870
 
+typedef void (*CommonData_unk_100BF_unk_C)(xyz_t*, f32, UNK_TYPE);
+typedef struct CommonData_unk_100BF {
+    UNK_TYPE1 unk_0[0xC];
+    CommonData_unk_100BF_unk_C unk_C;
+} CommonData_unk_100BF; // size >= 0xC
+
 typedef struct mPr_mother_mail_info_c {
     /* 0x00 */ UNK_TYPE1 unk_00[0xE];
 } mPr_mother_mail_info_c; // size = 0xE
@@ -215,7 +221,9 @@ typedef struct CommonData {
     /* 0x10098 */ CommonData_unk_10098 *unk_10098;
     /* 0x1009C */ CommonData_1009C_Func unk_1009C;
     /* 0x100A0 */ struct ToolClip* toolClip;
-    /* 0x100A4 */ UNK_TYPE1 unk_100A4[0x38];
+    /* 0x100A4 */ UNK_TYPE1 unk_100A4[0x10];
+    /* 0x100B4 */ CommonData_unk_100BF* unk_100B4;
+    /* 0x100B8 */ UNK_TYPE1 unk_100B8[0x24];
     /* 0x100DC */ void* unk_100DC;
     /* 0x100E0 */ UNK_TYPE1 unk_100E0[0x4];
     /* 0x100E4 */ CommonData_100E4_Func* unk_100E4;

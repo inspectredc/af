@@ -20,6 +20,9 @@ void func_80969FD8_jp(Ball* this, Game_Play* game_play);
 void func_8096A0CC_jp(Ball* this, Game_Play* game_play);
 void func_8096A0EC_jp(Ball* this, Game_Play* game_play);
 
+// todo: move out
+#define	ABS_2(d)		((d) >= 0) ? (d) : -(d)
+
 #if 0
 ActorProfile Ball_Profile = {
     /* */ ACTOR_BALL,
@@ -303,7 +306,39 @@ void func_8096A0CC_jp(Ball* this, Game_Play* game_play) {
     this->unk_1E0 = func_8096A0EC_jp;
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_8096A0EC_jp.s")
+void func_8096A0EC_jp(Ball* this, Game_Play* game_play) {
+    f32 var_fv1;
+    u32 sp20;
+    Ball* new_var = this;
+
+
+    sp20 = (u32) (this->actor.unk_098 << 0xF) >> 0x1A;
+    func_80969DE8_jp(this, game_play);
+    this->unk_1F4 = (f32) this->actor.speed;
+
+    if (common_data.unk_100B4 != NULL) {
+        common_data.unk_100B4->unk_C(&this->actor.world.pos, 20.0f, 1);
+    }
+    if ((this->actor.unk_098 >> 0x1F) != 0) {
+        if (((s32)((this->actor.unk_098 & 0xFFFF) << 0x16) >= 0) && (sp20 != 0xB) && (sp20 != 0x16)) {
+            func_80969998_jp(this, game_play);
+        }
+    } else if ((s32)((this->actor.unk_098 & 0xFFFF) << 0x16) >= 0) {
+        func_8096983C_jp(this, game_play);
+    } else {
+        func_80969FBC_jp(this, game_play);
+    }
+    if ((sp20 == 0xB) || (sp20 == 0x16)) {
+        new_var->actor.world.pos.y += 0.5f * this->unk_1D0.y;
+        if (sp20 == 0x16) {
+            var_fv1 = ABS_2(this->unk_1D0.y);
+
+            if (var_fv1 < 1.0f) {
+                func_80969998_jp(this, game_play);
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_8096A23C_jp.s")
 
