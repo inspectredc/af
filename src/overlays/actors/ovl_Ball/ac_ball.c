@@ -18,6 +18,7 @@ void func_80969998_jp(Ball* this, Game_Play* game_play);
 void func_80969FBC_jp(Ball* this, Game_Play* game_play);
 void func_80969FD8_jp(Ball* this, Game_Play* game_play);
 void func_8096A0CC_jp(Ball* this, Game_Play* game_play);
+void func_8096A0EC_jp(Ball* this, Game_Play* game_play);
 
 #if 0
 ActorProfile Ball_Profile = {
@@ -296,7 +297,11 @@ void func_80969FBC_jp(Ball* this, Game_Play* game_play) {
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_80969FD8_jp.s")
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_8096A0CC_jp.s")
+void func_8096A0CC_jp(Ball* this, Game_Play* game_play) {
+    this->actor.shape.unk_2C = 0;
+    this->unk_1FC = 0;
+    this->unk_1E0 = func_8096A0EC_jp;
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_8096A0EC_jp.s")
 
