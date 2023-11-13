@@ -340,7 +340,19 @@ void func_8096A0EC_jp(Ball* this, Game_Play* game_play) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_8096A23C_jp.s")
+extern void func_800CE7E4_jp(Actor*, void*, s16);
+
+void func_8096A23C_jp(Ball* this) {
+    f32 temp_f;
+    s16 sp1A;
+
+    sp1A = (s16) (s32) (this->actor.speed * 869.63904f);
+    if ((this->unk_1E0 == func_80969FD8_jp) || (this->unk_1E0 == func_8096A0EC_jp)) {
+        temp_f = ((-1.0f) - this->actor.velocity.y) / (-2.0f);
+        sp1A *= sin_s((s16) (s32) (((60.0f * temp_f) + 30.0f) * 182.04445f));
+    }
+    func_800CE7E4_jp(&this->actor, &this->unk_200, sp1A);
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_8096A334_jp.s")
 
