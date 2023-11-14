@@ -4,6 +4,7 @@
 #include "ultra64.h"
 #include "m_actor.h"
 #include "unk.h"
+#include "c_keyframe.h"
 
 struct Game_Play;
 struct Kago;

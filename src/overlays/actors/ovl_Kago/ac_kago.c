@@ -2,6 +2,7 @@
 #include "m_actor_dlftbls.h"
 #include "m_object.h"
 #include "overlays/gamestates/ovl_play/m_play.h"
+#include "overlays/actors/player_actor/m_player.h"
 
 void aKAG_actor_ct(Actor* thisx, Game_Play* game_play);
 void func_80A8F340_jp(Actor* thisx, Game_Play* game_play);
