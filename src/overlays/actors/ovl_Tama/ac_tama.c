@@ -4,7 +4,10 @@
 #include "m_actor_shadow.h"
 #include "overlays/gamestates/ovl_play/m_play.h"
 #include "overlays/actors/player_actor/m_player.h"
+#include "m_player_lib.h"
 #include "libc/math.h"
+#include "69E2C0.h"
+#include "m_field_info.h"
 
 void aTAM_actor_ct(Actor* thisx, Game_Play* game_play);
 void func_80A8EF30_jp(Actor* thisx, Game_Play* game_play);
@@ -65,7 +68,23 @@ void func_80A8EFCC_jp(Tama* this, s32 arg0) {
     this->unk_2B8 = arg0;
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Tama/ac_tama/func_80A8EFEC_jp.s")
+void func_80A8EFEC_jp(Tama* this, Game_Play* game_play) {
+    UNK_TYPE1 pad[0x8];
+    Player* player;
+    s32 sp30;
+    s32 sp2C;
+    s32 sp28;
+    s32 sp24;
+
+    player = get_player_actor_withoutCheck(game_play);
+    mFI_Wpos2BlockNum(&sp30, &sp2C, this->actor.world.pos);
+    mFI_Wpos2BlockNum(&sp28, &sp24, player->actor.world.pos);
+    if ((mDemo_Check(1, player) == 0) && (mDemo_Check(5, &player->actor) == 0) && ((sp30 != sp28) || (sp2C != sp24))) {
+        Actor_delete(&this->actor);
+        return;
+    }
+    this->unk_2A0(this, game_play);
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Tama/ac_tama/aTAM_actor_init.s")
 
