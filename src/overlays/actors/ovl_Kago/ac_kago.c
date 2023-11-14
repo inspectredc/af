@@ -25,7 +25,20 @@ ActorProfile Kago_Profile = {
 };
 #endif
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kago/ac_kago/aKAG_actor_ct.s")
+void func_80A8F3CC_jp(Kago* this, s32 arg0);
+void func_80A8F428_jp(Kago* this, s32 arg0);
+
+void aKAG_actor_ct(Actor* thisx, Game_Play* game_play) {
+    Kago* this = (Kago*)thisx;
+    s32 temp_v0;
+
+    temp_v0 = this->actor.fgName - 0x5835;
+    this->unk_2B4 = temp_v0;
+    this->unk_2A8_union.unk_2A8 = temp_v0 + 0x23;
+    this->unk_2AC_union.unk_2AC = temp_v0 + 0x4C;
+    func_80A8F428_jp(this, 0);
+    func_80A8F3CC_jp(this, 1);
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kago/ac_kago/func_80A8F340_jp.s")
 
