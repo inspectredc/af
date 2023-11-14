@@ -40,7 +40,13 @@ void aKAG_actor_ct(Actor* thisx, Game_Play* game_play) {
     func_80A8F3CC_jp(this, 1);
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kago/ac_kago/func_80A8F340_jp.s")
+void func_80A8F340_jp(Actor* thisx, Game_Play* game_play) {
+    Kago* this = (Kago*)thisx;
+
+    common_data.unk_10098->unk_A8(&common_data.unk_10098->unk_B0, 8, this->unk_2A8_union.unk_2A8_struct.unk_2AA, &this->actor);
+    common_data.unk_10098->unk_A8(&common_data.unk_10098->unk_454, 9, this->unk_2AC_union.unk_2AC_struct.unk_2AE, &this->actor);
+    common_data.unk_10098->unk_A8(&common_data.unk_10098->unk_86C, 8, this->unk_2A8_union.unk_2A8_struct.unk_2AA, &this->actor);
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kago/ac_kago/func_80A8F3CC_jp.s")
 
