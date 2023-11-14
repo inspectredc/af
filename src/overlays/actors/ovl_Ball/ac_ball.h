@@ -37,7 +37,6 @@ typedef struct Ball {
     s16 unk_206;
     s16 unk_208;
     s16 unk_20A;
-    s8 unk_20C[0x10];
-} Ball; // size 0x21C (wrong on base)
+} Ball; // size 0x20C
 
 #endif
