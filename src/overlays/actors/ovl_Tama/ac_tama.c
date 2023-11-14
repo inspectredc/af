@@ -86,6 +86,12 @@ void func_80A8EFEC_jp(Tama* this, Game_Play* game_play) {
     this->unk_2A0(this, game_play);
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Tama/ac_tama/aTAM_actor_init.s")
+void aTAM_actor_init(Actor* thisx, Game_Play* game_play) {
+    Tama* this = (Tama*)thisx;
+    
+    mFI_SetFG_common(0xF0FC, this->actor.home.pos, 0);
+    func_80A8EFEC_jp(this, game_play);
+    this->actor.update = func_80A8EFEC_jp;
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Tama/ac_tama/aTAM_actor_draw.s")
