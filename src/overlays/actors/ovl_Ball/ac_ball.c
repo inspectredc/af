@@ -360,7 +360,48 @@ void func_8096A23C_jp(Ball* this) {
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/aBALL_actor_move.s")
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/aBALL_actor_draw.s")
+extern Gfx* D_8096A8B0_jp[3];
+
+#define AC_GCN_OPEN_DISP(gfxCtx)            \
+    {                                       \
+        GraphicsContext *__gfxCtx = gfxCtx; \
+        int __gfx_opened = 0;               \
+        do {} while (0)
+
+#define AC_GCN_CLOSE_DISP(gfxCtx) \
+        (void)__gfx_opened;       \
+    }                             \
+    do {} while (0)
+
+#define OPEN_CUSTOM_POLY_OPA()                \
+    {                                         \
+        Gfx* __polyOpa = __gfxCtx->polyOpa.p; \
+        int __opa_opened = 0;                 \
+        do {} while (0)
+
+#define CLOSE_CUSTOM_POLY_OPA()          \
+        __gfxCtx->polyOpa.p = __polyOpa; \
+        (void)__opa_opened;              \
+    }                                    \
+    do {} while (0)
+
+void aBALL_actor_draw(Actor* thisx, Game_Play* game_play) {
+    GraphicsContext* gfxCtx = game_play->state.gfxCtx;
+    Ball* this = (Ball*)thisx;
+    
+    OPEN_DISPS(gfxCtx);
+    OPEN_CUSTOM_POLY_OPA();
+    gSPSegment(__polyOpa++, 0x06, this->unk_1E4);
+    Matrix_translate(0.0f, this->unk_1E8, 0.0f, 1);
+    Matrix_rotateXYZ(this->unk_200.x, this->unk_200.y, this->unk_200.z, MTXMODE_APPLY);
+    gDPPipeSync(__polyOpa++);
+    gSPMatrix(__polyOpa++, _Matrix_to_Mtx_new(gfxCtx), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+    gSPDisplayList(__polyOpa++, D_8096A8B0_jp[this->unk_1F8]);
+    CLOSE_CUSTOM_POLY_OPA();
+    CLOSE_DISPS(gfxCtx);
+    // FAKE: two extra if (1) {}s are needed somewhere (can be any line + split apart) to match?
+    if (1) {} if (1) {}
+}
 
 void func_8096A86C_jp(void) {
     if ((common_data.unk_100DC != NULL) && (B_8096A980_jp != NULL)) {

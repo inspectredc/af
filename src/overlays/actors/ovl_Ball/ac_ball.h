@@ -24,7 +24,7 @@ typedef struct Ball {
     s8 unk_190[0x40];
     xyz_t unk_1D0;
     Actor* unk_1DC;
-    void* unk_1E0;
+    BallActionFunc unk_1E0;
     void* unk_1E4;
     f32 unk_1E8;
     f32 unk_1EC;
@@ -33,8 +33,7 @@ typedef struct Ball {
     s32 unk_1F8;
     s16 unk_1FC;
     s8 unk_1FE[0x2];
-    s8 unk_200[0x4];
-    s8 unk_204[0x2];
+    s_xyz unk_200;
     s16 unk_206;
     s16 unk_208;
     s16 unk_20A;
