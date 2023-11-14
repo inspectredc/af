@@ -34,8 +34,8 @@ void aKAG_actor_ct(Actor* thisx, Game_Play* game_play) {
 
     temp_v0 = this->actor.fgName - 0x5835;
     this->unk_2B4 = temp_v0;
-    this->unk_2A8_union.unk_2A8 = temp_v0 + 0x23;
-    this->unk_2AC_union.unk_2AC = temp_v0 + 0x4C;
+    this->unk_2A8 = temp_v0 + 0x23;
+    this->unk_2AC = temp_v0 + 0x4C;
     func_80A8F428_jp(this, 0);
     func_80A8F3CC_jp(this, 1);
 }
@@ -43,9 +43,9 @@ void aKAG_actor_ct(Actor* thisx, Game_Play* game_play) {
 void func_80A8F340_jp(Actor* thisx, Game_Play* game_play) {
     Kago* this = (Kago*)thisx;
 
-    common_data.unk_10098->unk_A8(&common_data.unk_10098->unk_B0, 8, this->unk_2A8_union.unk_2A8_struct.unk_2AA, &this->actor);
-    common_data.unk_10098->unk_A8(&common_data.unk_10098->unk_454, 9, this->unk_2AC_union.unk_2AC_struct.unk_2AE, &this->actor);
-    common_data.unk_10098->unk_A8(&common_data.unk_10098->unk_86C, 8, this->unk_2A8_union.unk_2A8_struct.unk_2AA, &this->actor);
+    common_data.unk_10098->unk_A8(&common_data.unk_10098->unk_B0, 8, this->unk_2A8, &this->actor);
+    common_data.unk_10098->unk_A8(&common_data.unk_10098->unk_454, 9, this->unk_2AC, &this->actor);
+    common_data.unk_10098->unk_A8(&common_data.unk_10098->unk_86C, 8, this->unk_2A8, &this->actor);
 }
 
 extern void func_800739FC_jp(xyz_t, s32, s32);
