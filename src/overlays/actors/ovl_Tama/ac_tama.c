@@ -38,17 +38,17 @@ void aTAM_actor_ct(Actor* thisx, Game_Play* game_play) {
     Tama* this = (Tama*)thisx;
 
     this->unk_2B4 = this->actor.fgName - 0x5833;
-    this->unk_2A8_union.unk_2A8 = this->unk_2B4 + 0x23;
-    this->unk_2AC_union.unk_2AC = this->unk_2B4 + 0x4C;
+    this->unk_2A8 = this->unk_2B4 + 0x23;
+    this->unk_2AC = this->unk_2B4 + 0x4C;
     func_80A8EFCC_jp(this, 0);
 }
 
 void func_80A8EF30_jp(Actor* thisx, Game_Play* game_play) {
     Tama* this = (Tama*)thisx;
 
-    common_data.unk_10098->unk_A8(&common_data.unk_10098->unk_B0, 8, this->unk_2A8_union.unk_2A8_struct.unk_2AA, &this->actor);
-    common_data.unk_10098->unk_A8(&common_data.unk_10098->unk_454, 9, this->unk_2AC_union.unk_2AC_struct.unk_2AE, &this->actor);
-    common_data.unk_10098->unk_A8(&common_data.unk_10098->unk_86C, 8, this->unk_2A8_union.unk_2A8_struct.unk_2AA, &this->actor);
+    common_data.unk_10098->unk_A8(&common_data.unk_10098->unk_B0, 8, this->unk_2A8, &this->actor);
+    common_data.unk_10098->unk_A8(&common_data.unk_10098->unk_454, 9, this->unk_2AC, &this->actor);
+    common_data.unk_10098->unk_A8(&common_data.unk_10098->unk_86C, 8, this->unk_2A8, &this->actor);
 }
 
 void func_80A8EFBC_jp(Tama* this, Game_Play* game_play) {
@@ -121,8 +121,8 @@ void aTAM_actor_draw(Actor* thisx, Game_Play* game_play) {
     Mtx* temp_v0;
 
     gfxCtx = game_play->state.gfxCtx;
-    sp2C = common_data.unk_10098->unk_AC(this->unk_2A8_union.unk_2A8_struct.unk_2AA);
-    sp28 = common_data.unk_10098->unk_450(this->unk_2AC_union.unk_2AC_struct.unk_2AE);
+    sp2C = common_data.unk_10098->unk_AC(this->unk_2A8);
+    sp28 = common_data.unk_10098->unk_450(this->unk_2AC);
     _texture_z_light_fog_prim(gfxCtx);
     AC_GCN_OPEN_DISP(gfxCtx);
     OPEN_CUSTOM_POLY_OPA();
