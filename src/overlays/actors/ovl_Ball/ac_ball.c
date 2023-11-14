@@ -229,7 +229,73 @@ void func_80969040_jp(Ball* this) {
     }
 }
 
+#ifdef NON_MATCHING
+// regalloc https://decomp.me/scratch/InyGi
+extern void func_800765AC_jp(xyz_t*, Actor*, f32, f32, s32, s32, s32);
+extern void func_800CE4B0_jp(xyz_t*, f32*, s16*);
+extern s32 func_800CE874_jp(Actor*);
+extern void func_800CE8F0_jp(Actor*);
+extern void func_800D2234_jp(s32, xyz_t*, f32);
+
+void func_80969114_jp(Ball* this) {
+    u32 new_var;
+    f32 sp68;
+    s32 var_v0;
+    s16 sp62;
+    xyz_t sp54;
+    f32 sp50;
+    f32 sp4C;
+    f32 sp48;
+    f32 sp44;
+    f32 sp40;
+    f32 var_f0;
+
+    sp68 = this->actor.velocity.y;
+
+    if ((this->unk_1E0 == func_80969FD8_jp) || (this->unk_1E0 == func_8096A0EC_jp) || (((this->actor.unk_098 << 0xF) >> 0x1A) == 0xB)) {
+        func_800765AC_jp(&this->unk_1D0, &this->actor, 12.0f, -12.0f, 0, 1, 0);
+        this->actor.world.pos.x += this->unk_1D0.x;
+        this->actor.world.pos.z += this->unk_1D0.z;
+    } else {
+        func_800765AC_jp(&this->unk_1D0, &this->actor, 12.0f, -12.0f, 0, 0, 0);
+        func_800CE8F0_jp(&this->actor);
+    }
+
+    if (((this->unk_1E0 == func_809698E8_jp) || (this->unk_1E0 == func_80969FD8_jp)) && ((this->actor.unk_098 >> 0x1F))) {
+        if (this->unk_206 < 3) {
+            this->unk_206++;
+            if (1) {}
+            if ((s32)((this->actor.unk_098 & 0xFFFF) << 0x16) < 0) {
+                this->actor.velocity.y = 0.2f;
+            } else {
+                this->actor.velocity.y = -sp68 * 0.7f;
+            }
+        }
+    }
+    new_var = (this->actor.unk_098 << 6) >> 0x1B;
+    if (new_var & 1) {
+        sp62 = func_800CE874_jp(&this->actor);
+        var_v0 = ABS_2((s16) ((this->actor.world.rot.y - sp62) - 0x8000));
+
+        if (var_v0 < 0x4000) {
+            sp54 = this->actor.velocity;
+            sp50 = sin_s(sp62);
+            sp4C = cos_s(sp62);
+            sp48 = sp50 * sp4C;
+            sp44 = -((sp54.z * sp4C) + (sp54.x * sp50));
+            sp40 = (sp44 * 0.07f) + 1.2f;
+            if (sp44 > 1.0f) {
+                func_800D2234_jp(0x26, &this->actor.world.pos, sp44);
+            }
+            this->actor.velocity.z = (f32) (((1.0f - (sp40 * sp4C * sp4C)) * sp54.z) - (sp54.x * sp40 * sp48));
+            this->actor.velocity.x = (f32) ((-sp54.z * sp40 * sp48) + (sp54.x * (1.0f - (sp40 * sp50 * sp50))));
+            func_800CE4B0_jp(&this->actor.velocity, &this->actor.speed, &this->actor.world.rot.y);
+        }
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_80969114_jp.s")
+#endif
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_809693EC_jp.s")
 
@@ -373,7 +439,36 @@ s32 func_8096A334_jp(Ball* this, Player* player) {
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_8096A3D8_jp.s")
 
+#ifdef NON_MATCHING
+// regalloc https://decomp.me/scratch/CjAGn
+void aBALL_actor_move(Actor* thisx, Game_Play* game_play) {
+    s32 pad;
+    Ball* this = (Ball*)thisx;
+
+    func_80969800_jp(this);
+    if (!(this->actor.flags & 0x40)) {
+        if (((s32)((this->actor.unk_098 & 0xFFFF) << 0x16) < 0) || (this->unk_208 & 2)) {
+            Actor_delete(&this->actor);
+        }
+        if (this->actor.speed == 0.0f) {
+            return; 
+        }
+    }
+    
+    common_data.unk_10A6C = this->actor.world.pos;
+    func_80969040_jp(this);
+    this->unk_1E0(this, game_play);
+    func_80969114_jp(this);
+    func_809693EC_jp(this);
+
+    CollisionCheck_Uty_ActorWorldPosSetPipeC(&this->actor, &this->collider);
+    CollisionCheck_setOC(game_play, &game_play->unk_2138, &this->collider.base);
+    func_8096A23C_jp(this);
+    func_8096A3D8_jp(this, game_play);
+}
+#else
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/aBALL_actor_move.s")
+#endif
 
 extern Gfx* D_8096A8B0_jp[3];
 
