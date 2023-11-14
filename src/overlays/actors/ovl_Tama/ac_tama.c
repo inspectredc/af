@@ -47,16 +47,10 @@ void aTAM_actor_ct(Actor* thisx, Game_Play* game_play) {
 
 void func_80A8EF30_jp(Actor* thisx, Game_Play* game_play) {
     Tama* this = (Tama*)thisx;
-    CommonData_unk_10098* temp_v0;
-    CommonData_unk_10098* temp_v0_2;
-    CommonData_unk_10098* temp_v0_3;
 
-    temp_v0 = common_data.unk_10098;
-    temp_v0->unk_A8(&temp_v0->unk_B0, 8, this->unk_2A8_union.unk_2A8_struct.unk_2AA, &this->actor);
-    temp_v0_2 = common_data.unk_10098;
-    temp_v0_2->unk_A8(&temp_v0_2->unk_454, 9, this->unk_2AC_union.unk_2AC_struct.unk_2AE, &this->actor);
-    temp_v0_3 = common_data.unk_10098;
-    temp_v0_3->unk_A8(&temp_v0_3->unk_86C, 8, this->unk_2A8_union.unk_2A8_struct.unk_2AA, &this->actor);
+    common_data.unk_10098->unk_A8(&common_data.unk_10098->unk_B0, 8, this->unk_2A8_union.unk_2A8_struct.unk_2AA, &this->actor);
+    common_data.unk_10098->unk_A8(&common_data.unk_10098->unk_454, 9, this->unk_2AC_union.unk_2AC_struct.unk_2AE, &this->actor);
+    common_data.unk_10098->unk_A8(&common_data.unk_10098->unk_86C, 8, this->unk_2A8_union.unk_2A8_struct.unk_2AA, &this->actor);
 }
 
 void func_80A8EFBC_jp(Tama* this, Game_Play* game_play) {
