@@ -27,7 +27,18 @@ ActorProfile Tama_Profile = {
 };
 #endif
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Tama/ac_tama/aTAM_actor_ct.s")
+void func_80A8EFCC_jp(Tama*, UNK_TYPE);
+
+void aTAM_actor_ct(Actor* thisx, Game_Play* game_play) {
+    Tama* this = (Tama*)thisx;
+    s32 temp_v0;
+
+    temp_v0 = this->actor.fgName - 0x5833;
+    this->unk_2B4 = temp_v0;
+    this->unk_2A8 = temp_v0 + 0x23;
+    this->unk_2AC = temp_v0 + 0x4C;
+    func_80A8EFCC_jp(this, 0);
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Tama/ac_tama/func_80A8EF30_jp.s")
 

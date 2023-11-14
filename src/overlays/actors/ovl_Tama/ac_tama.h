@@ -12,8 +12,13 @@ struct Tama;
 typedef void (*TamaActionFunc)(struct Tama*, struct Game_Play*);
 
 typedef struct Tama {
-    /* 0x000 */ Actor actor;
-    /* 0x174 */ UNK_TYPE1 unk_174[0x164];
+    Actor actor;
+    UNK_TYPE1 unk_174[0x134];
+    s32 unk_2A8;
+    s32 unk_2AC;
+    UNK_TYPE1 unk_2B0[0x4];
+    s32 unk_2B4;
+    UNK_TYPE1 unk_2B8[0x20];
 } Tama; // size = 0x2D8
 
 #endif
