@@ -35,12 +35,24 @@ void aTAM_actor_ct(Actor* thisx, Game_Play* game_play) {
 
     temp_v0 = this->actor.fgName - 0x5833;
     this->unk_2B4 = temp_v0;
-    this->unk_2A8 = temp_v0 + 0x23;
-    this->unk_2AC = temp_v0 + 0x4C;
+    this->unk_2A8_union.unk_2A8 = temp_v0 + 0x23;
+    this->unk_2AC_union.unk_2AC = temp_v0 + 0x4C;
     func_80A8EFCC_jp(this, 0);
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Tama/ac_tama/func_80A8EF30_jp.s")
+void func_80A8EF30_jp(Actor* thisx, Game_Play* game_play) {
+    Tama* this = (Tama*)thisx;
+    CommonData_unk_10098* temp_v0;
+    CommonData_unk_10098* temp_v0_2;
+    CommonData_unk_10098* temp_v0_3;
+
+    temp_v0 = common_data.unk_10098;
+    temp_v0->unk_A8(&temp_v0->unk_B0, 8, this->unk_2A8_union.unk_2A8_struct.unk_2AA, &this->actor);
+    temp_v0_2 = common_data.unk_10098;
+    temp_v0_2->unk_A8(&temp_v0_2->unk_454, 9, this->unk_2AC_union.unk_2AC_struct.unk_2AE, &this->actor);
+    temp_v0_3 = common_data.unk_10098;
+    temp_v0_3->unk_A8(&temp_v0_3->unk_86C, 8, this->unk_2A8_union.unk_2A8_struct.unk_2AA, &this->actor);
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Tama/ac_tama/func_80A8EFBC_jp.s")
 
