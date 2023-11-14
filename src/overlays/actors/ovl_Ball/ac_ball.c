@@ -354,7 +354,22 @@ void func_8096A23C_jp(Ball* this) {
     func_800CE7E4_jp(&this->actor, &this->unk_200, sp1A);
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_8096A334_jp.s")
+s32 func_8096A334_jp(Ball* this, Player* player) {
+    f32 sp2C;
+    s16 temp_v1;
+    s32 var_v0;
+    
+    sp2C = search_position_distance(&this->actor.world.pos, &player->actor.world.pos);
+    temp_v1 = player->actor.shape.rot.y - search_position_angleY(&player->actor.world.pos, &this->actor.world.pos);
+    if (sp2C < 60.0f) {
+        var_v0 = ABS_2(temp_v1);
+        
+        if (var_v0 < 0x2000) {
+            return 1;
+        }
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_8096A3D8_jp.s")
 
