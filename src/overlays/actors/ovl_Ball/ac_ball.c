@@ -389,7 +389,7 @@ void aBALL_actor_draw(Actor* thisx, Game_Play* game_play) {
     GraphicsContext* gfxCtx = game_play->state.gfxCtx;
     Ball* this = (Ball*)thisx;
     
-    OPEN_DISPS(gfxCtx);
+    AC_GCN_OPEN_DISP(gfxCtx);
     OPEN_CUSTOM_POLY_OPA();
     gSPSegment(__polyOpa++, 0x06, this->unk_1E4);
     Matrix_translate(0.0f, this->unk_1E8, 0.0f, 1);
@@ -398,7 +398,7 @@ void aBALL_actor_draw(Actor* thisx, Game_Play* game_play) {
     gSPMatrix(__polyOpa++, _Matrix_to_Mtx_new(gfxCtx), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
     gSPDisplayList(__polyOpa++, D_8096A8B0_jp[this->unk_1F8]);
     CLOSE_CUSTOM_POLY_OPA();
-    CLOSE_DISPS(gfxCtx);
+    AC_GCN_CLOSE_DISP(gfxCtx);
     // FAKE: two extra if (1) {}s are needed somewhere (can be any line + split apart) to match?
     if (1) {} if (1) {}
 }
