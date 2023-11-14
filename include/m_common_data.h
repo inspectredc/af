@@ -90,8 +90,8 @@ typedef UNK_RET (*CommonData_unk_10098_unk_8)(void);
 typedef UNK_PTR (*CommonData_unk_10098_unk_0C)(void);
 typedef UNK_RET (*CommonData_unk_10098_unk_10)(struct Actor*);
 typedef UNK_RET (*CommonData_unk_10098_unk_A8)(UNK_PTR, UNK_TYPE, s16 name, Actor* actor);
-typedef UNK_RET (*CommonData_unk_10098_unk_AC)(u16);
-typedef UNK_RET (*CommonData_unk_10098_unk_450)(u16);
+typedef UNK_RET (*CommonData_unk_10098_unk_AC)(s16);
+typedef UNK_RET (*CommonData_unk_10098_unk_450)(s16);
 
 typedef struct CommonData_unk_10098 {
     /* 0x00 */ UNK_TYPE1 unk_00[0x4];
