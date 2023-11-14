@@ -54,9 +54,16 @@ void func_80A8EF30_jp(Actor* thisx, Game_Play* game_play) {
     temp_v0_3->unk_A8(&temp_v0_3->unk_86C, 8, this->unk_2A8_union.unk_2A8_struct.unk_2AA, &this->actor);
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Tama/ac_tama/func_80A8EFBC_jp.s")
+void func_80A8EFBC_jp(Tama* this, Game_Play* game_play) {
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Tama/ac_tama/func_80A8EFCC_jp.s")
+}
+
+extern TamaActionFunc D_80A8F294_jp[1];
+
+void func_80A8EFCC_jp(Tama* this, s32 arg0) {
+    this->unk_2A0 = D_80A8F294_jp[arg0];
+    this->unk_2B8 = arg0;
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Tama/ac_tama/func_80A8EFEC_jp.s")
 
