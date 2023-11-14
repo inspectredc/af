@@ -36,12 +36,10 @@ void func_80A8EFCC_jp(Tama*, UNK_TYPE);
 
 void aTAM_actor_ct(Actor* thisx, Game_Play* game_play) {
     Tama* this = (Tama*)thisx;
-    s32 temp_v0;
 
-    temp_v0 = this->actor.fgName - 0x5833;
-    this->unk_2B4 = temp_v0;
-    this->unk_2A8_union.unk_2A8 = temp_v0 + 0x23;
-    this->unk_2AC_union.unk_2AC = temp_v0 + 0x4C;
+    this->unk_2B4 = this->actor.fgName - 0x5833;
+    this->unk_2A8_union.unk_2A8 = this->unk_2B4 + 0x23;
+    this->unk_2AC_union.unk_2AC = this->unk_2B4 + 0x4C;
     func_80A8EFCC_jp(this, 0);
 }
 
