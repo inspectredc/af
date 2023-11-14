@@ -48,9 +48,16 @@ void func_80A8F340_jp(Actor* thisx, Game_Play* game_play) {
     common_data.unk_10098->unk_A8(&common_data.unk_10098->unk_86C, 8, this->unk_2A8_union.unk_2A8_struct.unk_2AA, &this->actor);
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kago/ac_kago/func_80A8F3CC_jp.s")
+extern void func_800739FC_jp(xyz_t, s32, s32);
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kago/ac_kago/func_80A8F418_jp.s")
+void func_80A8F3CC_jp(Kago* this, s32 arg0) {
+    s32 var = arg0 == 0 ? 0 : 0;
+    func_800739FC_jp(this->actor.home.pos, 0xA, 0x64);
+}
+
+void func_80A8F418_jp(Kago* this, s32 arg0) {
+
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kago/ac_kago/func_80A8F428_jp.s")
 
