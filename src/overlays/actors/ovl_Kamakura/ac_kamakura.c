@@ -2,6 +2,8 @@
 #include "m_actor_dlftbls.h"
 #include "m_object.h"
 #include "overlays/gamestates/ovl_play/m_play.h"
+#include "m_field_info.h"
+#include "m_police_box.h"
 
 void aKKR_actor_ct(Actor* thisx, Game_Play* game_play);
 void aKKR_actor_dt(Actor* thisx, Game_Play* game_play);
@@ -44,7 +46,39 @@ void aKKR_actor_dt(Actor* thisx, Game_Play* game_play) {
     func_80A0510C_jp(this, 0);
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura/ac_kamakura/func_80A0510C_jp.s")
+extern u16 func_800A5A0C_jp(u16);
+
+void func_80A0510C_jp(Kamakura* this, s32 arg0) {
+    u16* sp44;
+    s32 var_v0;
+    xyz_t sp34;
+
+    xyz_t_move(&sp34, &this->actor.world.pos);
+    sp34.z += 80.0f;
+    if (arg0 == 0) {
+        mFI_SetFG_common(0, sp34, 1);
+        return;
+    }
+    sp44 = mFI_GetUnitFG(sp34);
+    if (sp44 != NULL) {
+        if (mSN_ClearSnowman(sp44) == 0) {
+            if ((var_v0 = (*sp44 < 0x2A) ^ 1, (var_v0 == 0)) || (var_v0 = *sp44 < 0x43, (var_v0 == 0))) {
+                var_v0 = *sp44 == 0x5C;
+            }
+            if (var_v0 == 1) {
+                mPB_keep_item(func_800A5A0C_jp(*sp44));
+                mFI_SetFG_common(0xFFFF, sp34, 1);
+                mFI_Wpos2DepositOFF(sp34);
+                return;
+            }
+            mFI_Wpos2DepositOFF(sp34);
+            mPB_keep_item(*sp44);
+            mFI_SetFG_common(0xFFFF, sp34, 1);
+            return;
+        }
+        mFI_SetFG_common(0xFFFF, sp34, 1);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura/ac_kamakura/func_80A052F4_jp.s")
 
