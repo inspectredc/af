@@ -35,7 +35,14 @@ void aKKR_actor_ct(Actor* thisx, Game_Play* game_play) {
     func_80A052F4_jp(this, 1);
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura/ac_kamakura/aKKR_actor_dt.s")
+void aKKR_actor_dt(Actor* thisx, Game_Play* game_play) {
+    Kamakura* this = (Kamakura*)thisx;
+
+    common_data.unk_10098->unk_A8(&common_data.unk_10098->unk_B0, 8, 0x1A, &this->actor);
+    common_data.unk_10098->unk_A8(&common_data.unk_10098->unk_454, 9, 0x43, &this->actor);
+    common_data.unk_10098->unk_A8(&common_data.unk_10098->unk_86C, 8, 0x1A, &this->actor);
+    func_80A0510C_jp(this, 0);
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura/ac_kamakura/func_80A0510C_jp.s")
 
