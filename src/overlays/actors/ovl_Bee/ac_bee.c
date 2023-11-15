@@ -175,4 +175,53 @@ void aBEE_actor_move(Actor* thisx, Game_Play* game_play) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/aBEE_actor_draw.s")
+extern Gfx* two_tex_scroll(GraphicsContext*, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
+
+#define AC_GCN_OPEN_DISP(gfxCtx)            \
+    {                                       \
+        GraphicsContext *__gfxCtx = gfxCtx; \
+        int __gfx_opened = 0;               \
+        do {} while (0)
+
+#define AC_GCN_CLOSE_DISP(gfxCtx) \
+        (void)__gfx_opened;       \
+    }                             \
+    do {} while (0)
+
+#define OPEN_CUSTOM_POLY_XLU()                \
+    {                                         \
+        Gfx* __polyXlu = __gfxCtx->polyXlu.p; \
+        int __xlu_opened = 0;                 \
+        do {} while (0)
+
+#define CLOSE_CUSTOM_POLY_XLU()          \
+        __gfxCtx->polyXlu.p = __polyXlu; \
+        (void)__xlu_opened;              \
+    }                                    \
+    do {} while (0)
+
+void aBEE_actor_draw(Actor* thisx, Game_Play* game_play) {
+    Bee* this = (Bee*)thisx;
+    s32 sp78 = game_play->state.unk_A0 & 1;
+    s8 pad[0x8];
+    Gfx* texScroll;
+
+    if (!(thisx->world.pos.x < 0.0f) && !(thisx->world.pos.z < 0.0f)) {
+        func_80A9449C_jp(this, game_play);
+        texScroll = two_tex_scroll(game_play->state.gfxCtx, 0, sin_s(this->unk_440) * 90.0f, cos_s(this->unk_440) * 90.0f, 0x20, 0x20, 1, cos_s(this->unk_442) * 90.0f, sin_s(this->unk_442) * 90.0f, 0x20, 0x20);
+        if (texScroll != 0) {
+            Matrix_push();
+            _texture_z_light_fog_prim_xlu(game_play->state.gfxCtx);
+            Setpos_HiliteReflect_xlu_init(&thisx->world.pos, game_play);
+
+            AC_GCN_OPEN_DISP(game_play->state.gfxCtx);    
+            OPEN_CUSTOM_POLY_XLU();
+            gDPSetPrimColor(__polyXlu++, 0, 0xFF, 0, 0, 0, this->unk_438);
+            gSPSegment(__polyXlu++, 0x08, texScroll);
+            CLOSE_CUSTOM_POLY_XLU();
+            AC_GCN_CLOSE_DISP(game_play->state.gfxCtx);
+            cKF_Si3_draw_R_SV(game_play, &this->skeletonInfo, &this->unk_220[sp78], 0, 0, this);
+            Matrix_pull();
+        }
+    }
+}
