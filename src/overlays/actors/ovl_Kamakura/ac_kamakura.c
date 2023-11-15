@@ -24,7 +24,16 @@ ActorProfile Kamakura_Profile = {
 };
 #endif
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura/ac_kamakura/aKKR_actor_ct.s")
+void func_80A0510C_jp(Kamakura*, Game_Play*);
+void func_80A052F4_jp(Kamakura*, Game_Play*);
+void func_80A05760_jp(Kamakura*, Game_Play*);
+
+void aKKR_actor_ct(Actor* thisx, Game_Play* game_play) {
+    Kamakura* this = (Kamakura*)thisx;
+    func_80A0510C_jp(this, 1);
+    func_80A05760_jp(this, 0);
+    func_80A052F4_jp(this, 1);
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura/ac_kamakura/aKKR_actor_dt.s")
 
