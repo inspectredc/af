@@ -24,9 +24,9 @@ ActorProfile Kamakura_Profile = {
 };
 #endif
 
-void func_80A0510C_jp(Kamakura*, Game_Play*);
-void func_80A052F4_jp(Kamakura*, Game_Play*);
-void func_80A05760_jp(Kamakura*, Game_Play*);
+void func_80A0510C_jp(Kamakura*, s32);
+void func_80A052F4_jp(Kamakura*, s32);
+void func_80A05760_jp(Kamakura*, s32);
 
 void aKKR_actor_ct(Actor* thisx, Game_Play* game_play) {
     Kamakura* this = (Kamakura*)thisx;
