@@ -4,6 +4,7 @@
 #include "overlays/gamestates/ovl_play/m_play.h"
 #include "m_field_info.h"
 #include "m_police_box.h"
+#include "macros.h"
 
 void aKKR_actor_ct(Actor* thisx, Game_Play* game_play);
 void aKKR_actor_dt(Actor* thisx, Game_Play* game_play);
@@ -80,7 +81,28 @@ void func_80A0510C_jp(Kamakura* this, s32 arg0) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura/ac_kamakura/func_80A052F4_jp.s")
+extern mCoBG_OffsetTable* D_80A05C10_jp[2];
+extern f32 D_FLT_80A05C18_jp[3];
+extern f32 D_FLT_80A05C24_jp[3];
+
+void func_80A052F4_jp(Kamakura* this, s32 arg0) {
+    s32 i;
+    xyz_t sp58;
+    mCoBG_OffsetTable* var_s0 = D_80A05C10_jp[arg0];
+
+    for (i = 0; i < ARRAY_COUNT(D_FLT_80A05C24_jp); i++) {
+        sp58.z = D_FLT_80A05C24_jp[i] + this->actor.home.pos.z;
+        sp58.x = D_FLT_80A05C18_jp[0] + this->actor.home.pos.x;
+        mCoBG_SetPluss5PointOffset_file(sp58, *var_s0, "../ac_kamakura_move.c_inc", 178);
+        var_s0++;
+        sp58.x = D_FLT_80A05C18_jp[1] + this->actor.home.pos.x;
+        mCoBG_SetPluss5PointOffset_file(sp58, *var_s0, "../ac_kamakura_move.c_inc", 182);
+        var_s0++;
+        sp58.x = D_FLT_80A05C18_jp[2] + this->actor.home.pos.x;
+        mCoBG_SetPluss5PointOffset_file(sp58, *var_s0, "../ac_kamakura_move.c_inc", 186);
+        var_s0++;
+    }
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura/ac_kamakura/func_80A054F4_jp.s")
 
