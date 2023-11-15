@@ -6,6 +6,8 @@
 #include "69E2C0.h"
 #include "m_field_info.h"
 #include "m_player_lib.h"
+#include "m_rcp.h"
+#include "code_variables.h"
 
 void aKAG_actor_ct(Actor* thisx, Game_Play* game_play);
 void func_80A8F340_jp(Actor* thisx, Game_Play* game_play);
@@ -94,4 +96,53 @@ void aKAG_actor_init(Actor* thisx, Game_Play* game_play) {
     this->actor.update = func_80A8F448_jp;
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kago/ac_kago/aKAG_actor_draw.s")
+extern UNK_TYPE D_80A8F714_jp[5];
+extern Gfx* D_80A8F72C_jp[5];
+
+#define AC_GCN_OPEN_DISP(gfxCtx)            \
+    {                                       \
+        GraphicsContext *__gfxCtx = gfxCtx; \
+        int __gfx_opened = 0;               \
+        do {} while (0)
+
+#define AC_GCN_CLOSE_DISP(gfxCtx) \
+        (void)__gfx_opened;       \
+    }                             \
+    do {} while (0)
+
+#define OPEN_CUSTOM_POLY_OPA()                \
+    {                                         \
+        Gfx* __polyOpa = __gfxCtx->polyOpa.p; \
+        int __opa_opened = 0;                 \
+        do {} while (0)
+
+#define CLOSE_CUSTOM_POLY_OPA()          \
+        __gfxCtx->polyOpa.p = __polyOpa; \
+        (void)__opa_opened;              \
+    }                                    \
+    do {} while (0)
+
+void aKAG_actor_draw(Actor* thisx, Game_Play* game_play) {
+    GraphicsContext* gfxCtx = game_play->state.gfxCtx;
+    Kago* this = (Kago*)thisx;
+    s32 sp24;
+    s32 sp20;
+    Mtx* sp1C;
+
+    sp24 = common_data.unk_10098->unk_AC(this->unk_2A8);
+    sp20 = common_data.unk_10098->unk_450(this->unk_2AC);
+    AC_GCN_OPEN_DISP(gfxCtx);
+    sp1C = _Matrix_to_Mtx_new(gfxCtx);
+    if (sp1C != NULL) {
+        _texture_z_light_fog_prim(gfxCtx);
+        OPEN_CUSTOM_POLY_OPA();
+        gSPSegment(__polyOpa++, 0x08, sp20);
+        gSegments[6] = (uintptr_t)OS_PHYSICAL_TO_K0(sp24);
+        gSPSegment(__polyOpa++, 0x06, sp24);
+        gSPMatrix(__polyOpa++, sp1C, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+        gSPDisplayList(__polyOpa++, D_80A8F72C_jp[this->unk_2B4]);
+        CLOSE_CUSTOM_POLY_OPA();
+        common_data.unk_10080->unk_04(game_play, &D_80A8F714_jp, this->unk_2A8, &this->actor);
+    }
+    AC_GCN_CLOSE_DISP(gfxCtx);
+}
