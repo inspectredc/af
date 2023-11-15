@@ -13,12 +13,15 @@ typedef void (*KagoActionFunc)(struct Kago*, struct Game_Play*);
 
 typedef struct Kago {
     Actor actor;
-    UNK_TYPE1 unk_174[0x134];
+    UNK_TYPE1 unk_174[0x12C];
+    KagoActionFunc unk_2A0;
+    UNK_TYPE1 unk_2A4[0x4];
     s32 unk_2A8;
     s32 unk_2AC;
     UNK_TYPE1 unk_2B0[0x4];
     s32 unk_2B4;
-    UNK_TYPE1 unk_2B8[0x20];
+    s32 unk_2B8;
+    UNK_TYPE1 unk_2BC[0x20];
 } Kago; // size = 0x2D8
 
 #endif

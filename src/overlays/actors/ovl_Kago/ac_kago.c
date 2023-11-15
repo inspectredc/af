@@ -59,7 +59,12 @@ void func_80A8F418_jp(Kago* this, s32 arg0) {
 
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kago/ac_kago/func_80A8F428_jp.s")
+extern KagoActionFunc D_80A8F728_jp[1];
+
+void func_80A8F428_jp(Kago* this, s32 arg0) {
+    this->unk_2A0 = D_80A8F728_jp[arg0];
+    this->unk_2B8 = arg0;
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kago/ac_kago/func_80A8F448_jp.s")
 
