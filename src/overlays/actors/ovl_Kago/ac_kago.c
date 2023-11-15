@@ -87,6 +87,11 @@ void func_80A8F448_jp(Kago* this, Game_Play* game_play) {
     this->unk_2A0(this, game_play);
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kago/ac_kago/aKAG_actor_init.s")
+void aKAG_actor_init(Actor* thisx, Game_Play* game_play) {
+    Kago* this = (Kago*)thisx;
+    mFI_SetFG_common(0xF0FD, this->actor.home.pos, 0);
+    func_80A8F448_jp(this, game_play);
+    this->actor.update = func_80A8F448_jp;
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kago/ac_kago/aKAG_actor_draw.s")
