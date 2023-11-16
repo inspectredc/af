@@ -80,7 +80,21 @@ void func_80A801C8_jp(Kamakura_Indoor* this, Game_Play* game_play) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura_Indoor/ac_kamakura_indoor/func_80A80370_jp.s")
+Gfx* func_80A80370_jp(u8 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6, u8 arg7, u8 arg8, Game_Play* game_play) {
+    GraphicsContext* gfxCtx = game_play->state.gfxCtx;
+    Gfx* gfx;
+
+    gfx = GRAPH_ALLOC(gfxCtx, 32);
+
+    if (gfx) {
+        gDPPipeSync(gfx);
+        gDPSetPrimColor(gfx + 1, 0, arg4, arg0, arg1, arg2, arg3);
+        gDPSetEnvColor(gfx + 2, arg5, arg6, arg7, arg8);
+        gSPEndDisplayList(gfx + 3);
+        return gfx;
+    }
+    return NULL;
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura_Indoor/ac_kamakura_indoor/func_80A80440_jp.s")
 
