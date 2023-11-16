@@ -142,9 +142,12 @@ void func_80A806B8_jp(Kamakura_Indoor* this, Game_Play* game_play) {
     }
 }
 
-// clang-format off
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura_Indoor/ac_kamakura_indoor/Kamakura_Indoor_Actor_draw.s")
-// clang-format on
+void Kamakura_Indoor_Actor_draw(Actor* thisx, Game_Play* game_play) {
+    Kamakura_Indoor* this = (Kamakura_Indoor*)thisx;
+    func_80A80440_jp(this, game_play);
+    func_80A801C8_jp(this, game_play);
+    func_80A806B8_jp(this, game_play);
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura_Indoor/ac_kamakura_indoor/func_80A80804_jp.s")
 
