@@ -4,15 +4,22 @@
 #include "ultra64.h"
 #include "m_actor.h"
 #include "unk.h"
+#include "color.h"
 
 struct Game_Play;
 struct Kamakura_Indoor;
+
+typedef struct Kamakura_Indoor_unk_struct {
+    Color_RGBA8 color;
+    f32 unk_4;
+} Kamakura_Indoor_unk_struct;// size 0x8;
 
 typedef void (*Kamakura_IndoorActionFunc)(struct Kamakura_Indoor*, struct Game_Play*);
 
 typedef struct Kamakura_Indoor {
     Actor actor;
-    s8 unk_174[0x20];
+    Kamakura_Indoor_unk_struct unk_174[2];
+    s8 unk_184[0x10];
     s32 unk_194;
     s8 unk_198;
     s8 unk_199[0x3];
