@@ -96,7 +96,35 @@ Gfx* func_80A80370_jp(u8 arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4, u8 arg5, u8 a
     return NULL;
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura_Indoor/ac_kamakura_indoor/func_80A80440_jp.s")
+extern Gfx D_6001148;
+extern Gfx D_6001230;
+
+void func_80A80440_jp(Kamakura_Indoor* this, Game_Play* game_play) {
+    Gfx* sp54;
+    Gfx* sp50;
+
+    
+    sp54 = func_80A80370_jp(this->unk_188.r, this->unk_188.g, this->unk_188.b, this->unk_188.a, 0x80, 0xFF, 0x32, 0, 0xFF, game_play);
+    sp50 = func_80A80370_jp(this->unk_190.r, this->unk_190.g, this->unk_190.b, this->unk_190.a, 0x80, 0xFF, 0x32, 0, 0xFF, game_play);
+    if ((sp54) && (sp50)) {
+        _texture_z_light_fog_prim(game_play->state.gfxCtx);
+        _texture_z_light_fog_prim_xlu(game_play->state.gfxCtx);
+        func_800981B8_jp(game_play);
+        AC_GCN_OPEN_DISP(game_play->state.gfxCtx);
+        if (1) { } if (1) { } if (1) { }
+        Matrix_translate(0.0f, 0.0f, 0.0f, 0);
+        Matrix_scale(0.05f, 0.05f, 0.05f, 1);
+        gSPMatrix(POLY_XLU_DISP++, _Matrix_to_Mtx_new(game_play->state.gfxCtx), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+        gSPMatrix(POLY_OPA_DISP++, _Matrix_to_Mtx_new(game_play->state.gfxCtx), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+        gSPSegment(POLY_XLU_DISP++, 0x09, Lib_SegmentedToVirtual(this->unk_184));
+        gSPSegment(POLY_XLU_DISP++, 0x08, sp54);
+        gSPSegment(POLY_XLU_DISP++, 0x0A, Lib_SegmentedToVirtual(this->unk_18C));
+        gSPSegment(POLY_XLU_DISP++, 0x0B, sp50);
+        gSPDisplayList(POLY_OPA_DISP++, &D_6001230);
+        gSPDisplayList(POLY_XLU_DISP++, &D_6001148);
+        AC_GCN_CLOSE_DISP(game_play->state.gfxCtx);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura_Indoor/ac_kamakura_indoor/func_80A806B8_jp.s")
 

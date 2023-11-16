@@ -19,7 +19,10 @@ typedef void (*Kamakura_IndoorActionFunc)(struct Kamakura_Indoor*, struct Game_P
 typedef struct Kamakura_Indoor {
     Actor actor;
     Kamakura_Indoor_unk_struct unk_174[2];
-    s8 unk_184[0x10];
+    void* unk_184;
+    Color_RGBA8 unk_188;
+    void* unk_18C;
+    Color_RGBA8 unk_190;
     s32 unk_194;
     s8 unk_198;
     s8 unk_199[0x3];
