@@ -8,6 +8,7 @@
 #include "m_police_box.h"
 #include "macros.h"
 #include "67E840.h"
+#include "69E2C0.h"
 
 void aKKR_actor_ct(Actor* thisx, Game_Play* game_play);
 void aKKR_actor_dt(Actor* thisx, Game_Play* game_play);
@@ -156,7 +157,23 @@ void func_80A05760_jp(Kamakura* this, s32 arg0) {
     this->unk_2B4 = arg0;
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura/ac_kamakura/func_80A05780_jp.s")
+void func_80A05780_jp(Kamakura* this, Game_Play* game_play) {
+    char pad[0x8];
+    Player* player;
+    s32 sp30;
+    s32 sp2C;
+    s32 sp28;
+    s32 sp24;
+
+    player = get_player_actor_withoutCheck(game_play);
+    mFI_Wpos2BlockNum(&sp30, &sp2C, this->actor.world.pos);
+    mFI_Wpos2BlockNum(&sp28, &sp24, player->actor.world.pos);
+    if (!mDemo_Check(1, player) && !mDemo_Check(5, player) && ((sp30 != sp28) || (sp2C != sp24))) {
+        Actor_delete(&this->actor);
+    } else {
+        this->unk_2A0(this, game_play);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura/ac_kamakura/aKKR_actor_init.s")
 
