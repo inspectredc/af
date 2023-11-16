@@ -149,7 +149,12 @@ void func_80A05690_jp(Kamakura* this, Game_Play* game_play) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura/ac_kamakura/func_80A05760_jp.s")
+extern KamakuraActionFunc D_80A05C30_jp[];
+
+void func_80A05760_jp(Kamakura* this, s32 arg0) {
+    this->unk_2A0 = D_80A05C30_jp[arg0];
+    this->unk_2B4 = arg0;
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura/ac_kamakura/func_80A05780_jp.s")
 
