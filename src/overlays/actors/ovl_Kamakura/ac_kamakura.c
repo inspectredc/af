@@ -175,6 +175,11 @@ void func_80A05780_jp(Kamakura* this, Game_Play* game_play) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura/ac_kamakura/aKKR_actor_init.s")
+void aKKR_actor_init(Actor* thisx, Game_Play* game_play) {
+    Kamakura* this = (Kamakura*)thisx;
+    mFI_SetFG_common(0xF0F3, this->actor.home.pos, 0);
+    func_80A05780_jp(this, game_play);
+    this->actor.update = func_80A05780_jp;
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura/ac_kamakura/aKKR_actor_draw.s")
