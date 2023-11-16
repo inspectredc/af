@@ -162,24 +162,47 @@ f32 func_80A80804_jp(s16 arg0, f32 arg1, s16 arg2, f32 arg3, s16 arg4, s16 arg5)
     if (arg4 >= arg2) {
         return arg3;
     }
-    if (arg1 <= arg3) {
-        sp1C = arg3 - arg1;
-    } else {
-        sp1C = -(arg3 - arg1);
-    }
+
+    sp1C = ABS(arg3 - arg1);
+
     if (arg5 == 0) {
         if (arg3 <= arg1) {
             return cos_s((((f32) arg4 - arg0) * 1.57f) / ((f32) arg2 - arg0) * 10430.378f) * sp1C + arg3;
         }
         return cos_s(((((f32) arg4 - arg0) * 1.57f) / ((f32) arg2 - arg0) - 1.57f) * 10430.378f) * sp1C + arg1;
     }
+
     if (arg3 <= arg1) {
         return cos_s(((((f32) arg4 - arg0) * 1.57f) / ((f32) arg2 - arg0) + 1.57f) * 10430.378f) * sp1C + (sp1C + arg3);
     }
+    
     return cos_s(((((f32) arg4 - arg0) * 1.57f) / ((f32) arg2 - arg0) - 3.14f) * 10430.378f) * sp1C + (sp1C + arg1);
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura_Indoor/ac_kamakura_indoor/func_80A80A9C_jp.s")
+f32 func_80A80A9C_jp(s16 arg0, f32 arg1, s16 arg2, f32 arg3, s16 arg4) {
+    char pad[0x18];
+    f32 sp24;
+    f32 sp1C;
+
+    if ((arg2 < arg0) || (arg0 == arg2)) {
+        return arg1;
+    }
+    if (arg0 >= arg4) {
+        return arg1;
+    }
+    if (arg4 >= arg2) {
+        return arg3;
+    }
+
+    sp1C = (arg1 + arg3) * 0.5f;
+    sp24 = ABS(arg3 - sp1C);
+    
+    if (arg3 <= arg1) {
+        return cos_s((((f32) arg4 - arg0) * 3.14f) / ((f32) arg2 - arg0) * 10430.378f) * sp24 + sp1C;
+    }
+    
+    return cos_s((((f32) arg4 - arg0) * 3.14f) / ((f32) arg2 - arg0) * 10430.378f) * -sp24 + sp1C;
+}
 
 // clang-format off
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura_Indoor/ac_kamakura_indoor/Kamakura_Indoor_Actor_move.s")
