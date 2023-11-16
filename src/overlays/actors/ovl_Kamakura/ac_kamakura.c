@@ -2,9 +2,12 @@
 #include "m_actor_dlftbls.h"
 #include "m_object.h"
 #include "overlays/gamestates/ovl_play/m_play.h"
+#include "overlays/actors/player_actor/m_player.h"
+#include "m_player_lib.h"
 #include "m_field_info.h"
 #include "m_police_box.h"
 #include "macros.h"
+#include "67E840.h"
 
 void aKKR_actor_ct(Actor* thisx, Game_Play* game_play);
 void aKKR_actor_dt(Actor* thisx, Game_Play* game_play);
@@ -106,7 +109,26 @@ void func_80A052F4_jp(Kamakura* this, s32 arg0) {
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura/ac_kamakura/func_80A054F4_jp.s")
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura/ac_kamakura/func_80A055EC_jp.s")
+s32 func_80A055EC_jp(Kamakura* this, Game_Play* game_play) {
+    Player* player = get_player_actor_withoutCheck(game_play);
+    s32 var_a0 = 0;
+    u16 temp_v0;
+    f32 temp_fv0;
+    f32 temp_fv1;
+
+    if (!player) {
+        return 0;
+    }
+    temp_v0 = player->actor.shape.rot.y;
+    temp_fv0 = player->actor.world.pos.x - this->actor.world.pos.x;
+    temp_fv1 = player->actor.world.pos.z - (this->actor.world.pos.z + 40.0f);
+    // FAKE
+    if (temp_v0) {}
+    if ((temp_v0 >= 0x6001) && (temp_v0 < 0xA000) && ((SQ(temp_fv0)+ SQ(temp_fv1)) < 1600.0f)) {
+        var_a0 = 1;
+    }
+    return var_a0;
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura/ac_kamakura/func_80A05690_jp.s")
 
