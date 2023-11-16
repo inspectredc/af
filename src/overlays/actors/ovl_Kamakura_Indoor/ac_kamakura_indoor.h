@@ -31,7 +31,9 @@ typedef struct Kamakura_Indoor {
     xyz_t unk_1CC;
     s16 unk_1D8;
     s8 unk_1DA[0x2];
-    s8 unk_1DC[0x24];
+    s8 unk_1DC[0x4];
+    xyz_t unk_1E0[2];
+    f32 unk_1F8[2];
 } Kamakura_Indoor; // size = 0x200
 
 #endif

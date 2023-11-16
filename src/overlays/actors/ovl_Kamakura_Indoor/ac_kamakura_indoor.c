@@ -126,7 +126,21 @@ void func_80A80440_jp(Kamakura_Indoor* this, Game_Play* game_play) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura_Indoor/ac_kamakura_indoor/func_80A806B8_jp.s")
+extern Gfx D_6004308;
+extern xyz_t D_80A81268_jp[2];
+
+void func_80A806B8_jp(Kamakura_Indoor* this, Game_Play* game_play) {
+    s32 i;
+
+    for (i = 0; i < 2; i++) {
+        AC_GCN_OPEN_DISP(game_play->state.gfxCtx);
+        Matrix_translate(D_80A81268_jp[i].x, D_80A81268_jp[i].y + this->unk_1F8[i], D_80A81268_jp[i].z, 0);
+        Matrix_scale(this->unk_1E0[i].x, this->unk_1E0[i].y, this->unk_1E0[i].z, 1);
+        gSPMatrix(POLY_OPA_DISP++, _Matrix_to_Mtx_new(game_play->state.gfxCtx), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+        gSPDisplayList(POLY_OPA_DISP++, &D_6004308);
+        AC_GCN_CLOSE_DISP(game_play->state.gfxCtx);
+    }
+}
 
 // clang-format off
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura_Indoor/ac_kamakura_indoor/Kamakura_Indoor_Actor_draw.s")
