@@ -130,7 +130,24 @@ s32 func_80A055EC_jp(Kamakura* this, Game_Play* game_play) {
     return var_a0;
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura/ac_kamakura/func_80A05690_jp.s")
+extern void func_800B27B0_jp(Game_Play*, xyz_t*, s32, s32, Actor*);
+extern void func_800C6C10_jp(Game_Play*, s32*, s32);
+
+extern s32 D_80A05BBC_jp[5];
+
+void func_80A05690_jp(Kamakura* this, Game_Play* game_play) {
+    xyz_t sp2C;
+
+    if (get_player_actor_withoutCheck((Game_Play*)gamePT)->unk_122C(gamePT) == &this->actor) {
+        func_80A054F4_jp(this, game_play);
+        func_800C6C10_jp(game_play, D_80A05BBC_jp, 1);
+    } else if (func_80A055EC_jp(this, game_play) != 0) {
+        sp2C.x = this->actor.world.pos.x;
+        sp2C.y = get_player_actor_withoutCheck(game_play)->actor.world.pos.y;
+        sp2C.z = this->actor.world.pos.z + 68.0f;
+        func_800B27B0_jp(game_play, &sp2C, -0x8000, 1, &this->actor);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura/ac_kamakura/func_80A05760_jp.s")
 
