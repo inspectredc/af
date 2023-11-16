@@ -30,15 +30,13 @@ ActorProfile Mbg_Profile = {  //TODO: import data (some is DisplayList)
 extern Gfx D_80972F40_jp[];
 
 void Mbg_Actor_ct(Actor* thisx, Game_Play* game_play UNUSED) {
-    PosRot* temp_a1;
     Mbg* this = (Mbg*)thisx;
 
     this->unk_19C = 0;
-    temp_a1 = &this->actor.world;
-    this->unk_1A0 = temp_a1->pos;
+    this->unk_1A0 = this->actor.world.pos;
     this->actor.shape.rot.y = 0x2AAA;
     this->unk_1AC = 0.0f;
-    this->unk_19C = mCoBG_RegistMoveBg(this->unk_174, temp_a1, &this->actor.prevPos, &this->actor.shape.rot.y, 40.0f, 0,
+    this->unk_19C = mCoBG_RegistMoveBg(this->unk_174, &this->actor.world.pos, &this->actor.prevPos, &this->actor.shape.rot.y, 40.0f, 0,
                                        0, 0, 0, 0, 7, 80.0f);
 }
 

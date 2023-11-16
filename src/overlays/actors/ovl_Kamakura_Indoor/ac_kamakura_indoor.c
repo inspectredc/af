@@ -25,7 +25,17 @@ ActorProfile Kamakura_Indoor_Profile = {
 #endif
 
 // clang-format off
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura_Indoor/ac_kamakura_indoor/Kamakura_Indoor_Actor_ct.s")
+extern f32 D_80A81234_jp[4];
+extern xyz_t D_80A81244_jp;
+
+void Kamakura_Indoor_Actor_ct(Actor *thisx, Game_Play *game_play) {
+    Kamakura_Indoor *this = (Kamakura_Indoor *) thisx;
+    
+    this->unk_1C0 = D_80A81244_jp;
+    this->unk_1CC = D_80A81244_jp;
+    this->unk_1D8 = 0;
+    this->unk_194 = mCoBG_RegistMoveBg(&this->unk_198, &this->unk_1C0, &this->unk_1CC, &this->unk_1D8, 35.0f, D_80A81234_jp, 0, 0, 0, 6, 7, 100.0f);
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura_Indoor/ac_kamakura_indoor/Kamakura_Indoor_Actor_dt.s")
 // clang-format on
