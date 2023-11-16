@@ -9,6 +9,7 @@
 #include "macros.h"
 #include "67E840.h"
 #include "69E2C0.h"
+#include "m_rcp.h"
 
 void aKKR_actor_ct(Actor* thisx, Game_Play* game_play);
 void aKKR_actor_dt(Actor* thisx, Game_Play* game_play);
@@ -182,4 +183,97 @@ void aKKR_actor_init(Actor* thisx, Game_Play* game_play) {
     this->actor.update = func_80A05780_jp;
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura/ac_kamakura/aKKR_actor_draw.s")
+extern void _texture_z_light_fog_prim_shadow(GraphicsContext*, s32, Mtx*, s32);
+extern Gfx* D_601B078;
+extern Gfx* D_601B230;
+extern UNK_TYPE D_80A05BA8_jp[5];
+
+#define AC_GCN_OPEN_DISP(gfxCtx)            \
+    {                                       \
+        GraphicsContext *__gfxCtx = gfxCtx; \
+        int __gfx_opened = 0;               \
+        do {} while (0)
+
+#define AC_GCN_CLOSE_DISP(gfxCtx) \
+        (void)__gfx_opened;       \
+    }                             \
+    do {} while (0)
+
+#define OPEN_CUSTOM_POLY_OPA()                \
+    {                                         \
+        Gfx* __polyOpa = __gfxCtx->polyOpa.p; \
+        int __opa_opened = 0;                 \
+        do {} while (0)
+
+#define CLOSE_CUSTOM_POLY_OPA()          \
+        __gfxCtx->polyOpa.p = __polyOpa; \
+        (void)__opa_opened;              \
+    }                                    \
+    do {} while (0)
+
+#define OPEN_CUSTOM_2C0_OPA()                \
+    {                                         \
+        Gfx* __unk_2C0 = __gfxCtx->unk_2C0.p; \
+        int __2C0_opened = 0;                 \
+        do {} while (0)
+
+#define CLOSE_CUSTOM_2C0_OPA()          \
+        __gfxCtx->unk_2C0.p = __unk_2C0; \
+        (void)__2C0_opened;              \
+    }                                    \
+    do {} while (0)
+
+void aKKR_actor_draw(Actor* thisx, Game_Play* game_play) {
+    GraphicsContext* gfxCtx;
+    s32 sp80;
+    s32 sp7C;
+    s32 sp78;
+    Mtx* sp74;
+    s32 pad;
+    Kamakura* this = (Kamakura*)thisx;
+
+    gfxCtx = game_play->state.gfxCtx;
+    sp80 = common_data.time.nowSec;
+    sp7C = common_data.unk_10098->unk_AC(0x1AU);
+    sp78 = common_data.unk_10098->unk_450(0x43U);
+    AC_GCN_OPEN_DISP(gfxCtx);
+    sp74 = _Matrix_to_Mtx_new(gfxCtx);
+    if (sp74 != NULL) {
+        func_800BD5E8_jp(gfxCtx);
+        // FAKE
+        if (1) {}
+        
+        OPEN_CUSTOM_POLY_OPA();
+        gSPMatrix(__polyOpa++, sp74, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+        gSPSegment(__polyOpa++, 0x08, sp78);
+        gSegments[6] = (uintptr_t)OS_PHYSICAL_TO_K0(sp7C);
+        gSPSegment(__polyOpa++, 0x06, sp7C);
+        gDPPipeSync(__polyOpa++);
+        if ((sp80 >= 0x5460) && (sp80 < 0xFD20)) {
+            gDPSetEnvColor(__polyOpa++, 0, 0, 0, 0);
+        } else {
+            gDPSetEnvColor(__polyOpa++, 0xFF, 0xFF, 0x96, 0x78);
+        }
+        gSPDisplayList(__polyOpa++, &D_601B230);
+        CLOSE_CUSTOM_POLY_OPA();
+        
+        _texture_z_light_fog_prim_shadow(gfxCtx, (uintptr_t)OS_PHYSICAL_TO_K0(sp7C), sp74, sp80);
+        
+        OPEN_CUSTOM_2C0_OPA();
+        gSPMatrix(__unk_2C0++, sp74, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+        gSPSegment(__unk_2C0++, 0x08, sp78);
+        gSegments[6] = (uintptr_t)OS_PHYSICAL_TO_K0(sp7C);
+        gSPSegment(__unk_2C0++, 0x06, sp7C);
+        gDPPipeSync(__unk_2C0++);
+        if ((sp80 >= 0x5460) && (sp80 < 0xFD20)) {
+            gDPSetPrimColor(__unk_2C0++, 0, 0, 0, 0, 0, 0);
+        } else {
+            gDPSetPrimColor(__unk_2C0++, 0, 0x78, 0xFF, 0xFF, 0x96, 0);
+        }
+        gSPDisplayList(__unk_2C0++, &D_601B078);
+        CLOSE_CUSTOM_2C0_OPA();
+        
+        common_data.unk_10080->unk_04(game_play, D_80A05BA8_jp, 0x1A);
+    }
+    AC_GCN_CLOSE_DISP(gfxCtx);
+}
