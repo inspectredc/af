@@ -104,8 +104,8 @@ void func_80A80440_jp(Kamakura_Indoor* this, Game_Play* game_play) {
     Gfx* sp50;
 
     
-    sp54 = func_80A80370_jp(this->unk_188.r, this->unk_188.g, this->unk_188.b, this->unk_188.a, 0x80, 0xFF, 0x32, 0, 0xFF, game_play);
-    sp50 = func_80A80370_jp(this->unk_190.r, this->unk_190.g, this->unk_190.b, this->unk_190.a, 0x80, 0xFF, 0x32, 0, 0xFF, game_play);
+    sp54 = func_80A80370_jp(this->unk_184[0].color.r, this->unk_184[0].color.g, this->unk_184[0].color.b, this->unk_184[0].color.a, 0x80, 0xFF, 0x32, 0, 0xFF, game_play);
+    sp50 = func_80A80370_jp(this->unk_184[1].color.r, this->unk_184[1].color.g, this->unk_184[1].color.b, this->unk_184[1].color.a, 0x80, 0xFF, 0x32, 0, 0xFF, game_play);
     if ((sp54) && (sp50)) {
         _texture_z_light_fog_prim(game_play->state.gfxCtx);
         _texture_z_light_fog_prim_xlu(game_play->state.gfxCtx);
@@ -116,9 +116,9 @@ void func_80A80440_jp(Kamakura_Indoor* this, Game_Play* game_play) {
         Matrix_scale(0.05f, 0.05f, 0.05f, 1);
         gSPMatrix(POLY_XLU_DISP++, _Matrix_to_Mtx_new(game_play->state.gfxCtx), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
         gSPMatrix(POLY_OPA_DISP++, _Matrix_to_Mtx_new(game_play->state.gfxCtx), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-        gSPSegment(POLY_XLU_DISP++, 0x09, Lib_SegmentedToVirtual(this->unk_184));
+        gSPSegment(POLY_XLU_DISP++, 0x09, Lib_SegmentedToVirtual(this->unk_184[0].unk_0));
         gSPSegment(POLY_XLU_DISP++, 0x08, sp54);
-        gSPSegment(POLY_XLU_DISP++, 0x0A, Lib_SegmentedToVirtual(this->unk_18C));
+        gSPSegment(POLY_XLU_DISP++, 0x0A, Lib_SegmentedToVirtual(this->unk_184[1].unk_0));
         gSPSegment(POLY_XLU_DISP++, 0x0B, sp50);
         gSPDisplayList(POLY_OPA_DISP++, &D_6001230);
         gSPDisplayList(POLY_XLU_DISP++, &D_6001148);
@@ -175,7 +175,7 @@ f32 func_80A80804_jp(s16 arg0, f32 arg1, s16 arg2, f32 arg3, s16 arg4, s16 arg5)
     if (arg3 <= arg1) {
         return cos_s(((((f32) arg4 - arg0) * 1.57f) / ((f32) arg2 - arg0) + 1.57f) * 10430.378f) * sp1C + (sp1C + arg3);
     }
-    
+
     return cos_s(((((f32) arg4 - arg0) * 1.57f) / ((f32) arg2 - arg0) - 3.14f) * 10430.378f) * sp1C + (sp1C + arg1);
 }
 
@@ -204,6 +204,111 @@ f32 func_80A80A9C_jp(s16 arg0, f32 arg1, s16 arg2, f32 arg3, s16 arg4) {
     return cos_s((((f32) arg4 - arg0) * 3.14f) / ((f32) arg2 - arg0) * 10430.378f) * -sp24 + sp1C;
 }
 
+#ifdef NON_EQUIVALENT
+// https://decomp.me/scratch/nJ5Z7 issues in first for loop
+typedef struct unk_struct_1 {
+    s16 unk_00;
+    f32 unk_04;
+    f32 unk_08;
+    f32 unk_0C;
+    s16 unk_10;
+    f32 unk_14;
+    f32 unk_18;
+    f32 unk_1C;
+} unk_struct_1; // size = 0x20
+
+typedef struct unk_struct_2 {
+    s32 unk_00;
+    s16 unk_04;
+    f32 unk_08;
+    f32 unk_0C;
+    f32 unk_10;
+    f32 unk_14;
+    s16 unk_18;
+    f32 unk_1C;
+    f32 unk_20;
+    f32 unk_24;
+    f32 unk_28;
+} unk_struct_2; // size = 0x2C
+
+
+extern void func_800D1D58_jp(s16, xyz_t*);
+
+extern xyz_t D_80A81268_jp[2];
+// new struct unk1C max referenced
+extern unk_struct_1 D_80A81280_jp[17];
+// new struct size 0x2C
+extern unk_struct_2 D_80A814A0_jp[10];
+extern Color_RGBA8 D_80A81658_jp[12];
+extern void* D_80A81688_jp[12];
+extern u32 D_80A816B8_jp[2];
+extern u32 D_80A816C0_jp[2];
+extern s32 D_80A816C8_jp[2];
+
+void Kamakura_Indoor_Actor_move(Actor* thisx, Game_Play* game_play) {
+    Kamakura_Indoor* this = (Kamakura_Indoor*)thisx;
+    char pad[0x08];
+    s32 j;
+    s32 temp_s7;
+    u32 temp_hi_2;
+    s32 i;
+    s32 temp_s3;
+
+    temp_s7 = game_play->state.unk_A0;
+    for (i = 0; i < 2; i++) {
+        temp_hi_2 = (temp_s7 - D_80A816B8_jp[i]) % 17;
+
+        this->unk_174[i].color.r = 0xFF;
+        this->unk_174[i].color.g = (u8) (s32) ABS(func_80A80A9C_jp(D_80A81280_jp[temp_hi_2].unk_00, D_80A81280_jp[temp_hi_2].unk_08, D_80A81280_jp[temp_hi_2].unk_10, D_80A81280_jp[temp_hi_2].unk_18, temp_hi_2));
+        this->unk_174[i].color.b = 0;
+        this->unk_174[i].color.a = (u8) (s32) ABS(func_80A80A9C_jp(D_80A81280_jp[temp_hi_2].unk_00, D_80A81280_jp[temp_hi_2].unk_0C, D_80A81280_jp[temp_hi_2].unk_10, D_80A81280_jp[temp_hi_2].unk_1C, temp_hi_2));
+        this->unk_174[i].unk_4 = func_80A80A9C_jp(D_80A81280_jp[temp_hi_2].unk_00, D_80A81280_jp[temp_hi_2].unk_04, D_80A81280_jp[temp_hi_2].unk_10, D_80A81280_jp[temp_hi_2].unk_14, temp_hi_2);
+        
+        temp_hi_2 = (temp_s7 - D_80A816C0_jp[i]) % 12;
+        this->unk_184[i].unk_0 = D_80A81688_jp[temp_hi_2];
+        this->unk_184[i].color = D_80A81658_jp[temp_hi_2];
+    }
+    // equivalent from here on
+    for (i = 0; i < 2; i++) {
+        temp_hi_2 = (game_play->state.unk_A0 + D_80A816C8_jp[i]) % 700U;
+        if (((temp_hi_2 == 0x17C) || (temp_hi_2 == 0x299)) && (common_data.unk_1009C)) {
+            xyz_t sp94;
+            sp94 = D_80A81268_jp[i];
+            sp94.y += this->unk_1F8[i];
+            common_data.unk_1009C->unk_00(0x69, sp94, 2, 0, game_play, 0xFFFF, 0, 0);
+        }
+        if ((temp_hi_2 == 0x17C) || (temp_hi_2 == 0x299)) {
+            xyz_t sp88;
+            sp88 = D_80A81268_jp[i];
+            sp88.y += this->unk_1F8[i];
+            func_800D1D58_jp(0x439, &sp88);
+        }
+
+
+        for (j = 0; j < ARRAY_COUNT(D_80A814A0_jp); j++) {
+            if (temp_hi_2 >= D_80A814A0_jp[j].unk_04) {
+                if (D_80A814A0_jp[j].unk_18 >= temp_hi_2) {
+                    temp_s3 = D_80A814A0_jp[j].unk_00 & 1;
+                    if (D_80A814A0_jp[j].unk_00 == 2) {
+                        if (common_data.unk_1009C != NULL) {
+                            this->unk_1E0[i].x = common_data.unk_1009C->unk_14(temp_hi_2, D_80A814A0_jp[j].unk_04, D_80A814A0_jp[j].unk_18, D_80A814A0_jp[j].unk_08, D_80A814A0_jp[j].unk_1C) * 0.0001f;
+                            this->unk_1E0[i].y = common_data.unk_1009C->unk_14(temp_hi_2, D_80A814A0_jp[j].unk_04, D_80A814A0_jp[j].unk_18, D_80A814A0_jp[j].unk_0C, D_80A814A0_jp[j].unk_20) * 0.0001f;
+                            this->unk_1E0[i].z = common_data.unk_1009C->unk_14(temp_hi_2, D_80A814A0_jp[j].unk_04, D_80A814A0_jp[j].unk_18, D_80A814A0_jp[j].unk_10, D_80A814A0_jp[j].unk_24) * 0.0001f;
+                            this->unk_1F8[i] = common_data.unk_1009C->unk_14(temp_hi_2, D_80A814A0_jp[j].unk_04, D_80A814A0_jp[j].unk_18, D_80A814A0_jp[j].unk_14, D_80A814A0_jp[j].unk_28);
+                        }
+                    } else {
+                        this->unk_1E0[i].x = func_80A80804_jp(D_80A814A0_jp[j].unk_04, D_80A814A0_jp[j].unk_08, D_80A814A0_jp[j].unk_18, D_80A814A0_jp[j].unk_1C, temp_hi_2, temp_s3) * 0.0001f;
+                        this->unk_1E0[i].y = func_80A80804_jp(D_80A814A0_jp[j].unk_04, D_80A814A0_jp[j].unk_0C, D_80A814A0_jp[j].unk_18, D_80A814A0_jp[j].unk_20, temp_hi_2, temp_s3) * 0.0001f;
+                        this->unk_1E0[i].z = func_80A80804_jp(D_80A814A0_jp[j].unk_04, D_80A814A0_jp[j].unk_10, D_80A814A0_jp[j].unk_18, D_80A814A0_jp[j].unk_24, temp_hi_2, temp_s3) * 0.0001f;
+                        this->unk_1F8[i] = func_80A80804_jp(D_80A814A0_jp[j].unk_04, D_80A814A0_jp[j].unk_14, D_80A814A0_jp[j].unk_18, D_80A814A0_jp[j].unk_28, temp_hi_2, temp_s3);
+                    }
+                }
+            }
+        }
+    }
+}
+#else
 // clang-format off
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Kamakura_Indoor/ac_kamakura_indoor/Kamakura_Indoor_Actor_move.s")
 // clang-format on
+#endif

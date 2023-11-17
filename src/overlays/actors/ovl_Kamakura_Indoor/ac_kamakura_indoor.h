@@ -9,20 +9,21 @@
 struct Game_Play;
 struct Kamakura_Indoor;
 
-typedef struct Kamakura_Indoor_unk_struct {
+typedef struct Kamakura_Indoor_unk_struct_1 {
     Color_RGBA8 color;
     f32 unk_4;
-} Kamakura_Indoor_unk_struct;// size 0x8;
+} Kamakura_Indoor_unk_struct_1;// size 0x8;
+typedef struct Kamakura_Indoor_unk_struct_2 {
+    void* unk_0;
+    Color_RGBA8 color;
+} Kamakura_Indoor_unk_struct_2;// size 0x8;
 
 typedef void (*Kamakura_IndoorActionFunc)(struct Kamakura_Indoor*, struct Game_Play*);
 
 typedef struct Kamakura_Indoor {
     Actor actor;
-    Kamakura_Indoor_unk_struct unk_174[2];
-    void* unk_184;
-    Color_RGBA8 unk_188;
-    void* unk_18C;
-    Color_RGBA8 unk_190;
+    Kamakura_Indoor_unk_struct_1 unk_174[2];
+    Kamakura_Indoor_unk_struct_2 unk_184[2];
     s32 unk_194;
     s8 unk_198;
     s8 unk_199[0x3];
