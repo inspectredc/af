@@ -24,7 +24,12 @@ ActorProfile My_Indoor_Profile = {
 };
 #endif
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/func_80951A70_jp.s")
+s32 func_80951A70_jp(s32 arg0) {
+    if (common_data.unk_10001 == 1) {
+        return 1;
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/func_80951A9C_jp.s")
 
