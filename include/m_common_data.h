@@ -209,7 +209,9 @@ typedef struct CommonData {
     /* 0x10098 */ CommonData_unk_10098* unk_10098;
     /* 0x1009C */ UNK_TYPE1 unk_1009C[0x4];
     /* 0x100A0 */ struct ToolClip* toolClip;
-    /* 0x100A4 */ UNK_TYPE1 unk_100A4[0x40];
+    /* 0x100A4 */ UNK_TYPE1 unk_100A4[0x4];
+    /* 0x100A8 */ Actor* unk_100A8;
+    /* 0x100AC */ UNK_TYPE1 unk_100AC[0x38];
     /* 0x100E4 */ CommonData_unk_100E4* unk_100E4;
     /* 0x100E8 */ u8 unk_100E8[0x24];
     /* 0x1010C */ Time time;
@@ -242,7 +244,8 @@ typedef struct CommonData {
     /* 0x10754 */ UNK_TYPE unk_10754;
     /* 0x10758 */ UNK_TYPE1 unk_10758[0x48];
     /* 0x107A0 */ UNK_TYPE unk_107A0;
-    /* 0x107A4 */ UNK_TYPE1 unk_107A4[0x12];
+    /* 0x107A4 */ UNK_TYPE1 unk_107A4[0x11];
+    /* 0x017B5 */ s8 unk_107B5;
     /* 0x107B6 */ s16 unk_107B6; // named "demo_profile" in AC GCN decomp (though it's an array of two s16s in that game)
     /* 0x107B8 */ u8 unk_107B8[0x28];
     /* 0x107E0 */ s8 player_decoy_flag;

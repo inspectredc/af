@@ -71,9 +71,30 @@ void func_80951CDC_jp(My_Indoor* this, s16 arg1, s16 arg2) {
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/func_80951DF4_jp.s")
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/func_80951E64_jp.s")
+void func_80951E64_jp(My_Indoor* this, Game_Play* game_play) {
+    func_80951DF4_jp(this);
+    func_80951CDC_jp(this, this->unk_176, 2);
+    func_80951BC4_jp(this, this->unk_174, 2);
+    common_data.unk_107B5 = this->unk_174;
+}
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/func_80951EBC_jp.s")
+void func_8095267C_jp(My_Indoor*,Game_Play*);
+void func_809526D4_jp(My_Indoor*,Game_Play*);
+void func_8095272C_jp(My_Indoor*,Game_Play*);
+void func_80952754_jp(My_Indoor*,Game_Play*);
+
+void func_80951EBC_jp(My_Indoor* this, s32 arg0) {
+    if (arg0 != 0) {
+        common_data.unk_100A8 = NULL;
+        return;
+    }
+    common_data.unk_100A8 = &this->unk_190;
+    this->unk_190 = &this->actor;
+    this->unk_194 = func_809526D4_jp;
+    this->unk_198 = func_8095267C_jp;
+    this->unk_19C = func_80952754_jp;
+    this->unk_1A0 = func_8095272C_jp;
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/func_80951F14_jp.s")
 
