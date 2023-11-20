@@ -128,9 +128,18 @@ void func_80951F14_jp(My_Indoor* this, Game_Play* game_play) {
     this->unk_188[1] = NULL;
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/My_Indoor_Actor_ct.s")
+void My_Indoor_Actor_ct(Actor* thisx, Game_Play* game_play) {
+    My_Indoor* this = (My_Indoor*)thisx;
+    func_80951F14_jp(this, game_play);
+    func_80951A9C_jp(this, game_play);
+    func_80951E64_jp(this, game_play);
+    func_80951EBC_jp(this, 0);
+}
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/My_Indoor_Actor_dt.s")
+void My_Indoor_Actor_dt(Actor* thisx, Game_Play* game_play) {
+    My_Indoor* this = (My_Indoor*)thisx;
+    func_80951EBC_jp(this, 1);
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/func_8095205C_jp.s")
 
