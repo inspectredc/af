@@ -2,6 +2,7 @@
 #include "m_actor_dlftbls.h"
 #include "m_object.h"
 #include "overlays/gamestates/ovl_play/m_play.h"
+#include "m_field_info.h"
 
 void My_Indoor_Actor_ct(Actor* thisx, Game_Play* game_play);
 void My_Indoor_Actor_dt(Actor* thisx, Game_Play* game_play);
@@ -96,7 +97,36 @@ void func_80951EBC_jp(My_Indoor* this, s32 arg0) {
     this->unk_1A0 = func_8095272C_jp;
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/func_80951F14_jp.s")
+void func_80951F14_jp(My_Indoor* this, Game_Play* game_play) {
+    s32 var_a1;
+    u16 temp_v0;
+
+    temp_v0 = mFI_GetFieldId();
+    var_a1 = 0;
+    if ((temp_v0 & 0xF000) == 0x6000) {
+        var_a1 = temp_v0 - 0x6000;
+    }
+    switch (common_data.unk_00014) {
+        case 20:
+            this->unk_1A4 = 0;
+            break;
+        case 21:
+            this->unk_1A4 = 1;
+            break;
+        case 22:
+            this->unk_1A4 = 2;
+            break;
+    }
+    this->unk_174 = common_data.homes[var_a1].unk_014;
+    this->unk_176 = common_data.homes[var_a1].unk_015;
+    this->unk_178 = 0;
+    this->unk_17A = 0;
+    this->unk_17C = NULL;
+    this->unk_180[0] = NULL;
+    this->unk_180[1] = NULL;
+    this->unk_188[0] = NULL;
+    this->unk_188[1] = NULL;
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/My_Indoor_Actor_ct.s")
 
