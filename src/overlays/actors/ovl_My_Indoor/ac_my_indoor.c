@@ -307,7 +307,11 @@ void func_8095253C_jp(My_Indoor* this, Game_Play* game_play) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/My_Indoor_Actor_move.s")
+void My_Indoor_Actor_move(Actor* thisx, Game_Play* game_play) {
+    My_Indoor* this = (My_Indoor*)thisx;
+    func_80952444_jp(this, game_play);
+    func_8095253C_jp(this, game_play);
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/func_8095267C_jp.s")
 
