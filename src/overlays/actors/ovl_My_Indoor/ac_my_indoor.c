@@ -25,7 +25,7 @@ ActorProfile My_Indoor_Profile = {
 };
 #endif
 
-s32 func_80951A70_jp(s32 arg0) {
+s32 func_80951A70_jp(u8 arg0) {
     if (common_data.unk_10001 == 1) {
         return 1;
     }
@@ -240,7 +240,40 @@ void My_Indoor_Actor_draw(Actor* thisx, Game_Play* game_play) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/func_80952444_jp.s")
+void func_8009CC00_jp();
+void func_800D1A9C_jp(s32);
+void func_80951CDC_jp(My_Indoor*, s16, s16);
+
+void func_80952444_jp(My_Indoor* this, Game_Play* game_play) {
+    char pad[0x4];
+    u16 temp_v;
+    u16 temp_v0;
+    u8 playerNumber;
+    s32 sp20;
+    u16 temp_v1;
+
+    if ((this->unk_1A8 != 0) && (game_play->submenu.moveProcIndex == 0)) {
+        playerNumber = common_data.playerNumber;
+        this->unk_1A8 = 0;
+        if (func_80951A70_jp(playerNumber) != 0) {
+            sp20 = 0;
+            temp_v0 = mFI_GetFieldId();
+            temp_v = this->unk_1AC;
+            if ((temp_v0 & 0xF000) == 0x6000) {
+                sp20 = temp_v0 - 0x6000;
+            }
+            if ((temp_v >= 0x2700) && (temp_v < 0x2744)) {
+                temp_v1 = this->unk_17A ^ 1;
+                this->unk_176 = temp_v - 0x2700;
+                this->unk_17A = (temp_v1 & 0xFFFF) & 1;
+                func_80951CDC_jp(this, this->unk_176, this->unk_17A);
+                common_data.homes[sp20].unk_015 = this->unk_176;
+                func_8009CC00_jp();
+                func_800D1A9C_jp(0x11B);
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/func_8095253C_jp.s")
 
