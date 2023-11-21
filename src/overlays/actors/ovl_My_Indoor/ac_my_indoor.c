@@ -25,6 +25,17 @@ ActorProfile My_Indoor_Profile = {
 };
 #endif
 
+typedef struct unk_struct {
+    s8 unk_00[0x08];
+    RomOffset unk_08;
+    RomOffset unk_0C;
+    Gfx* unk_10;
+    Gfx* unk_14;
+    Gfx* unk_18;
+} unk_struct;
+
+extern unk_struct* D_80952804_jp[];
+
 s32 func_80951A70_jp(u8 arg0) {
     if (common_data.unk_10001 == 1) {
         return true;
@@ -70,10 +81,22 @@ void func_80951CDC_jp(My_Indoor* this, s16 arg1, s16 arg2) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/func_80951DF4_jp.s")
+void func_80951DF4_jp(Actor* thisx) {
+    My_Indoor* this = (My_Indoor*)thisx;
+    unk_struct* temp_v0;
+    RomOffset end;
+    size_t size;
+
+    temp_v0 = D_80952804_jp[this->unk_1A4];
+    if (this->unk_17C != 0) {
+        end = temp_v0->unk_08;
+        size = temp_v0->unk_0C - end;
+        DmaMgr_RequestSyncDebug(this->unk_17C, end, (size + 7) & ~7, "../ac_my_indoor.c", 0x1BA);
+    }
+}
 
 void func_80951E64_jp(My_Indoor* this, Game_Play* game_play) {
-    func_80951DF4_jp(this);
+    func_80951DF4_jp(&this->actor);
     func_80951CDC_jp(this, this->unk_176, 2);
     func_80951BC4_jp(this, this->unk_174, 2);
     common_data.unk_107B5 = this->unk_174;
@@ -143,16 +166,6 @@ void My_Indoor_Actor_dt(Actor* thisx, Game_Play* game_play) {
 
 void func_800981B8_jp(Game_Play*);
 
-typedef struct unk_struct {
-    s8 unk_00[0x08];
-    RomOffset unk_08;
-    RomOffset unk_0C;
-    Gfx* unk_10;
-    Gfx* unk_14;
-    Gfx* unk_18;
-} unk_struct;
-
-extern unk_struct* D_80952804_jp[];
 #define AC_GCN_OPEN_DISP(gfxCtx)            \
     {                                       \
         GraphicsContext *__gfxCtx = gfxCtx; \
@@ -362,7 +375,7 @@ void func_80952754_jp() {
     if (temp_v0 != NULL) {
         my_indoor = (My_Indoor*)temp_v0->actor;
         if (my_indoor != NULL) {
-            func_80951DF4_jp(my_indoor);
+            func_80951DF4_jp(&my_indoor->actor);
             func_80951CDC_jp(my_indoor, my_indoor->unk_176, 2);
             func_80951BC4_jp(my_indoor, my_indoor->unk_174, 2);
         }
