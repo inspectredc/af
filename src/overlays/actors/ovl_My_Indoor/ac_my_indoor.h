@@ -25,11 +25,10 @@ typedef struct My_Indoor {
     My_IndoorActionFunc unk_19C;
     My_IndoorActionFunc unk_1A0;
     s16 unk_1A4;
-    UNK_TYPE1 unk_1A6[0x2];
     s32 unk_1A8;
     u16 unk_1AC;
-    UNK_TYPE1 unk_1AE[0x2];
-    UNK_TYPE1 unk_1B0[0x8];
+    s32 unk_1B0;
+    u16 unk_1B4;
 } My_Indoor; // size = 0x1B8
 
 #endif

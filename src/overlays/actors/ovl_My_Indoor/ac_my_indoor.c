@@ -275,7 +275,37 @@ void func_80952444_jp(My_Indoor* this, Game_Play* game_play) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/func_8095253C_jp.s")
+void func_8095253C_jp(My_Indoor* this, Game_Play* game_play) {
+    char pad[0x4];
+    u16 var;
+    u16 temp_v0;
+    u8 new_var;
+    s32 sp20;
+    u16 temp_v1;
+
+    if ((this->unk_1B0 != 0) && (game_play->submenu.moveProcIndex == 0)) {
+        new_var = common_data.playerNumber;
+        this->unk_1B0 = 0;
+        if (func_80951A70_jp(new_var) != 0) {
+            sp20 = 0;
+            temp_v0 = mFI_GetFieldId();
+            var = this->unk_1B4;
+            if ((temp_v0 & 0xF000) == 0x6000) {
+                sp20 = (temp_v0 - 0x6000) & 3;
+            }
+            if ((var >= 0x2600) && (var < 0x2644)) {
+                temp_v1 = this->unk_178 ^ 1;
+                this->unk_174 = var - 0x2600;
+                this->unk_178 = (temp_v1 & 0xFFFF) & 1;
+                func_80951BC4_jp(this, this->unk_174, this->unk_178);
+                common_data.homes[sp20].unk_014 = this->unk_174;
+                common_data.unk_107B5 = this->unk_174;
+                func_800D1A9C_jp(0x11B);
+                func_8009CC00_jp();
+            }
+        }
+    }
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/My_Indoor_Actor_move.s")
 
