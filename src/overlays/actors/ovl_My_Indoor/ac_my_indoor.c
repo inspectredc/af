@@ -27,9 +27,9 @@ ActorProfile My_Indoor_Profile = {
 
 s32 func_80951A70_jp(u8 arg0) {
     if (common_data.unk_10001 == 1) {
-        return 1;
+        return true;
     }
-    return 0;
+    return false;
 }
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/func_80951A9C_jp.s")
@@ -255,7 +255,7 @@ void func_80952444_jp(My_Indoor* this, Game_Play* game_play) {
     if ((this->unk_1A8 != 0) && (game_play->submenu.moveProcIndex == 0)) {
         playerNumber = common_data.playerNumber;
         this->unk_1A8 = 0;
-        if (func_80951A70_jp(playerNumber) != 0) {
+        if (func_80951A70_jp(playerNumber)) {
             sp20 = 0;
             temp_v0 = mFI_GetFieldId();
             temp_v = this->unk_1AC;
@@ -286,7 +286,7 @@ void func_8095253C_jp(My_Indoor* this, Game_Play* game_play) {
     if ((this->unk_1B0 != 0) && (game_play->submenu.moveProcIndex == 0)) {
         new_var = common_data.playerNumber;
         this->unk_1B0 = 0;
-        if (func_80951A70_jp(new_var) != 0) {
+        if (func_80951A70_jp(new_var)) {
             sp20 = 0;
             temp_v0 = mFI_GetFieldId();
             var = this->unk_1B4;
@@ -332,17 +332,17 @@ u16 func_8095267C_jp(u16 arg0) {
 }
 
 u16 func_809526D4_jp(u16 arg0) {
-    My_Indoor* temp_v1;
     My_IndoorStruct* temp_v0;
+    My_Indoor* my_indoor;
     u16 ret;
 
     temp_v0 = common_data.unk_100A8;
     if (temp_v0 != NULL) {
-        temp_v1 = (My_Indoor*)temp_v0->actor;
-        if ((temp_v1 != NULL) && (temp_v1->unk_1A8 == 0)) {
-            ret = temp_v1->unk_176 + 0x2700;
-            temp_v1->unk_1A8 = 1;
-            temp_v1->unk_1AC = arg0;
+        my_indoor = (My_Indoor*)temp_v0->actor;
+        if ((my_indoor != NULL) && (my_indoor->unk_1A8 == 0)) {
+            ret = my_indoor->unk_176 + 0x2700;
+            my_indoor->unk_1A8 = 1;
+            my_indoor->unk_1AC = arg0;
             return ret;
         }
     }
@@ -354,4 +354,17 @@ void func_8095272C_jp() {
     func_8095267C_jp(0x2600);
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/func_80952754_jp.s")
+void func_80952754_jp() {
+    My_Indoor* my_indoor;
+    My_IndoorStruct* temp_v0;
+
+    temp_v0 = common_data.unk_100A8;
+    if (temp_v0 != NULL) {
+        my_indoor = temp_v0->actor;
+        if (my_indoor != NULL) {
+            func_80951DF4_jp(my_indoor);
+            func_80951CDC_jp(my_indoor, my_indoor->unk_176, 2);
+            func_80951BC4_jp(my_indoor, my_indoor->unk_174, 2);
+        }
+    }
+}
