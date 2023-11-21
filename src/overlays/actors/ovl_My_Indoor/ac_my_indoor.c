@@ -360,7 +360,7 @@ void func_80952754_jp() {
 
     temp_v0 = common_data.unk_100A8;
     if (temp_v0 != NULL) {
-        my_indoor = temp_v0->actor;
+        my_indoor = (My_Indoor*)temp_v0->actor;
         if (my_indoor != NULL) {
             func_80951DF4_jp(my_indoor);
             func_80951CDC_jp(my_indoor, my_indoor->unk_176, 2);
