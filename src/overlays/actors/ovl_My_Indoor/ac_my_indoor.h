@@ -10,6 +10,14 @@ struct My_Indoor;
 
 typedef void (*My_IndoorActionFunc)(struct My_Indoor*, struct Game_Play*);
 
+typedef struct My_IndoorStruct {
+    Actor* actor;
+    void* unk_04;
+    void* unk_08;
+    void* unk_0C;
+    void* unk_10;
+} My_IndoorStruct;
+
 typedef struct My_Indoor {
     Actor actor;
     s16 unk_174;
@@ -19,11 +27,7 @@ typedef struct My_Indoor {
     void* unk_17C;
     void* unk_180[2];
     void* unk_188[2];
-    Actor* unk_190;
-    My_IndoorActionFunc unk_194;
-    My_IndoorActionFunc unk_198;
-    My_IndoorActionFunc unk_19C;
-    My_IndoorActionFunc unk_1A0;
+    My_IndoorStruct unk_190;
     s16 unk_1A4;
     s32 unk_1A8;
     u16 unk_1AC;

@@ -24,6 +24,7 @@ struct CommonData_unk_1004C_unk_14_arg0;
 struct Game_Play;
 struct struct_809AEFA4;
 struct ToolClip;
+struct My_IndoorStruct;
 
 typedef UNK_RET (*CommonData_unk_1004C_unk_04)(struct ActorOverlay*, const struct struct_801161E8_jp*, size_t, s32);
 typedef UNK_RET (*CommonData_unk_1004C_unk_08)(void);
@@ -210,7 +211,7 @@ typedef struct CommonData {
     /* 0x1009C */ UNK_TYPE1 unk_1009C[0x4];
     /* 0x100A0 */ struct ToolClip* toolClip;
     /* 0x100A4 */ UNK_TYPE1 unk_100A4[0x4];
-    /* 0x100A8 */ Actor* unk_100A8;
+    /* 0x100A8 */ struct My_IndoorStruct* unk_100A8;
     /* 0x100AC */ UNK_TYPE1 unk_100AC[0x38];
     /* 0x100E4 */ CommonData_unk_100E4* unk_100E4;
     /* 0x100E8 */ u8 unk_100E8[0x24];

@@ -79,10 +79,10 @@ void func_80951E64_jp(My_Indoor* this, Game_Play* game_play) {
     common_data.unk_107B5 = this->unk_174;
 }
 
-void func_8095267C_jp(My_Indoor*,Game_Play*);
-void func_809526D4_jp(My_Indoor*,Game_Play*);
-void func_8095272C_jp(My_Indoor*,Game_Play*);
-void func_80952754_jp(My_Indoor*,Game_Play*);
+void func_809526D4_jp();
+u16 func_8095267C_jp(u16);
+void func_80952754_jp();
+void func_8095272C_jp();
 
 void func_80951EBC_jp(My_Indoor* this, s32 arg0) {
     if (arg0 != 0) {
@@ -90,11 +90,11 @@ void func_80951EBC_jp(My_Indoor* this, s32 arg0) {
         return;
     }
     common_data.unk_100A8 = &this->unk_190;
-    this->unk_190 = &this->actor;
-    this->unk_194 = func_809526D4_jp;
-    this->unk_198 = func_8095267C_jp;
-    this->unk_19C = func_80952754_jp;
-    this->unk_1A0 = func_8095272C_jp;
+    this->unk_190.actor = &this->actor;
+    this->unk_190.unk_04 = func_809526D4_jp;
+    this->unk_190.unk_08 = func_8095267C_jp;
+    this->unk_190.unk_0C = func_80952754_jp;
+    this->unk_190.unk_10 = func_8095272C_jp;
 }
 
 void func_80951F14_jp(My_Indoor* this, Game_Play* game_play) {
@@ -313,7 +313,23 @@ void My_Indoor_Actor_move(Actor* thisx, Game_Play* game_play) {
     func_8095253C_jp(this, game_play);
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/func_8095267C_jp.s")
+u16 func_8095267C_jp(u16 arg0) {
+    My_IndoorStruct* temp_v0;
+    My_Indoor* my_indoor;
+    u16 ret;
+    
+    temp_v0 = common_data.unk_100A8;
+    if (temp_v0 != NULL) {
+        my_indoor = (My_Indoor*)temp_v0->actor;
+        if ((my_indoor != NULL) && (my_indoor->unk_1B0 == 0)) {
+            ret = my_indoor->unk_174 + 0x2600;
+            my_indoor->unk_1B0 = 1;
+            my_indoor->unk_1B4 = arg0;
+            return ret;
+        }
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/func_809526D4_jp.s")
 
