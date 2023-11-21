@@ -79,7 +79,7 @@ void func_80951E64_jp(My_Indoor* this, Game_Play* game_play) {
     common_data.unk_107B5 = this->unk_174;
 }
 
-void func_809526D4_jp();
+u16 func_809526D4_jp(u16);
 u16 func_8095267C_jp(u16);
 void func_80952754_jp();
 void func_8095272C_jp();
@@ -331,7 +331,23 @@ u16 func_8095267C_jp(u16 arg0) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/func_809526D4_jp.s")
+u16 func_809526D4_jp(u16 arg0) {
+    My_Indoor* temp_v1;
+    My_IndoorStruct* temp_v0;
+    u16 ret;
+
+    temp_v0 = common_data.unk_100A8;
+    if (temp_v0 != NULL) {
+        temp_v1 = (My_Indoor*)temp_v0->actor;
+        if ((temp_v1 != NULL) && (temp_v1->unk_1A8 == 0)) {
+            ret = temp_v1->unk_176 + 0x2700;
+            temp_v1->unk_1A8 = 1;
+            temp_v1->unk_1AC = arg0;
+            return ret;
+        }
+    }
+    return 0;
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/func_8095272C_jp.s")
 
