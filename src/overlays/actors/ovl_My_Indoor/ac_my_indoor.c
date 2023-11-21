@@ -148,6 +148,8 @@ typedef struct unk_struct {
     RomOffset unk_08;
     RomOffset unk_0C;
     Gfx* unk_10;
+    Gfx* unk_14;
+    Gfx* unk_18;
 } unk_struct;
 
 extern unk_struct* D_80952804_jp[];
@@ -199,7 +201,36 @@ void func_8095205C_jp(My_Indoor* this, Game_Play* game_play) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/func_80952254_jp.s")
+void func_80952254_jp(My_Indoor* this, Game_Play* game_play) {
+    s32 pad;
+    unk_struct* sp50;
+    s16 temp_a2;
+    void* sp48;
+    void* sp44;
+    void* sp40;
+
+
+    sp50 = D_80952804_jp[this->unk_1A4];
+    temp_a2 = this->unk_17A;
+    sp44 = (uintptr_t)this->unk_188[temp_a2] + 0x20;
+    sp40 = (uintptr_t)this->unk_188[temp_a2] + 0x820;
+    sp48 = this->unk_188[temp_a2];
+    func_800981B8_jp(game_play);
+    if (this->unk_188[temp_a2] != NULL) {
+        AC_GCN_OPEN_DISP(game_play->state.gfxCtx);
+        _texture_z_light_fog_prim(game_play->state.gfxCtx);
+        Matrix_translate(0.0f, 0.0f, 0.0f, 0);
+        Matrix_scale(0.05f, 0.05f, 0.05f, 1);
+        gSPMatrix(POLY_OPA_DISP++, _Matrix_to_Mtx_new(game_play->state.gfxCtx), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+        gSPSegment(POLY_OPA_DISP++, 0x06, this->unk_17C);
+        gSPSegment(POLY_OPA_DISP++, 0x08, sp44);
+        gSPSegment(POLY_OPA_DISP++, 0x09, sp40);
+        gSPSegment(POLY_OPA_DISP++, 0x0A, sp48);
+        gSPDisplayList(POLY_OPA_DISP++, sp50->unk_14);
+        gSPDisplayList(POLY_OPA_DISP++, sp50->unk_18);
+        AC_GCN_CLOSE_DISP(game_play->state.gfxCtx);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/My_Indoor_Actor_draw.s")
 
