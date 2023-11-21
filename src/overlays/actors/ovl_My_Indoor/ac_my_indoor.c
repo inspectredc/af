@@ -141,7 +141,63 @@ void My_Indoor_Actor_dt(Actor* thisx, Game_Play* game_play) {
     func_80951EBC_jp(this, 1);
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/func_8095205C_jp.s")
+void func_800981B8_jp(Game_Play*);
+
+typedef struct unk_struct {
+    s8 unk_00[0x08];
+    RomOffset unk_08;
+    RomOffset unk_0C;
+    Gfx* unk_10;
+} unk_struct;
+
+extern unk_struct* D_80952804_jp[];
+#define AC_GCN_OPEN_DISP(gfxCtx)            \
+    {                                       \
+        GraphicsContext *__gfxCtx = gfxCtx; \
+        int __gfx_opened = 0;               \
+        do {} while (0)
+
+#define AC_GCN_CLOSE_DISP(gfxCtx) \
+        (void)__gfx_opened;       \
+    }                             \
+    do {} while (0)
+
+void func_8095205C_jp(My_Indoor* this, Game_Play* game_play) {
+    GraphicsContext* gfxCtx;
+    unk_struct* sp60;
+    s16 temp_a2;
+    void* sp58;
+    void* sp54;
+    void* sp50;
+    void* sp4C;
+    void* sp48;
+
+    sp60 = D_80952804_jp[this->unk_1A4];
+    temp_a2 = this->unk_178;
+    sp58 = this->unk_180[temp_a2];
+    sp54 = (uintptr_t)(this->unk_180[temp_a2]) + 0x20;
+    sp50 = (uintptr_t)(this->unk_180[temp_a2]) + 0x820;
+    sp4C = (uintptr_t)(this->unk_180[temp_a2]) + 0x1020;
+    sp48 = (uintptr_t)(this->unk_180[temp_a2]) + 0x1820;
+    func_800981B8_jp(game_play);
+    // FAKE!
+    if (this) {}
+    if ((this->unk_180[temp_a2] != NULL) && (this->unk_17C != NULL)) {
+        AC_GCN_OPEN_DISP(game_play->state.gfxCtx);
+        _texture_z_light_fog_prim(game_play->state.gfxCtx);
+        Matrix_translate(0.0f, 0.0f, 0.0f, 0);
+        Matrix_scale(0.05f, 0.05f, 0.05f, 1);
+        gSPMatrix(POLY_OPA_DISP++, _Matrix_to_Mtx_new(game_play->state.gfxCtx), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+        gSPSegment(POLY_OPA_DISP++, 0x06, this->unk_17C);
+        gSPSegment(POLY_OPA_DISP++, 0x08, sp54);
+        gSPSegment(POLY_OPA_DISP++, 0x09, sp50);
+        gSPSegment(POLY_OPA_DISP++, 0x0A, sp4C);
+        gSPSegment(POLY_OPA_DISP++, 0x0B, sp48);
+        gSPSegment(POLY_OPA_DISP++, 0x0C, sp58);
+        gSPDisplayList(POLY_OPA_DISP++, sp60->unk_10);
+        AC_GCN_CLOSE_DISP(game_play->state.gfxCtx);
+    }
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/func_80952254_jp.s")
 
