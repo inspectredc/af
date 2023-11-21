@@ -64,7 +64,7 @@ dummy_label:
     // FAKE!
     if (!game_play) {}
     
-    if (mSc_secure_exchange_keep_bank(objectExchangeBank, (new_var_2->unk_0C - new_var_2->unk_08) * 0, (temp + 7) & (~7)) != 0) {
+    if (mSc_secure_exchange_keep_bank(objectExchangeBank, /* FAKE! */(new_var_2->unk_0C - new_var_2->unk_08) * 0, (temp + 7) & (~7)) != 0) {
         this->unk_17C = var_s1->segment;
         var_s1++;
     }
