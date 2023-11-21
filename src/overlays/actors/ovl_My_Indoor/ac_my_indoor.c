@@ -43,7 +43,52 @@ s32 func_80951A70_jp(u8 arg0) {
     return false;
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/func_80951A9C_jp.s")
+void func_80951A9C_jp(My_Indoor* this, Game_Play* game_play) {
+    void* segment;
+    ObjectExchangeBank* objectExchangeBank;
+    ObjectStatus* var_s1;
+    s32 i;
+    unk_struct* temp_v0;
+    unk_struct* new_var_2;
+    s32 temp;
+
+    objectExchangeBank = &game_play->objectExchangeBank;
+    var_s1 = objectExchangeBank->status;
+    temp = objectExchangeBank->num;
+    temp_v0 = D_80952804_jp[this->unk_1A4];
+    var_s1 += temp;
+    // FAKE!
+dummy_label:
+
+    temp = temp_v0->unk_0C - (new_var_2 = temp_v0)->unk_08;
+    // FAKE!
+    if (!game_play) {}
+    
+    if (mSc_secure_exchange_keep_bank(objectExchangeBank, (new_var_2->unk_0C - new_var_2->unk_08) * 0, (temp + 7) & (~7)) != 0) {
+        this->unk_17C = var_s1->segment;
+        var_s1++;
+    }
+
+    for (i = 0; i < 2; i++) {
+        if (mSc_secure_exchange_keep_bank(objectExchangeBank, 0, 0x1020) == 0) {
+            break;
+        } else {
+            this->unk_188[i] = var_s1->segment;
+            var_s1++;
+        }
+    }
+
+    for (i = 0; i < 2; i++) {
+        if (mSc_secure_exchange_keep_bank(objectExchangeBank, 0, 0x2020) != 0) {
+            this->unk_180[i] = var_s1->segment;
+            // FAKE!
+            if (this) {}
+            var_s1++;
+        } else {
+            break;
+        }
+    }
+}
 
 extern UNK_TYPE D_17A1000;
 #define UNK_SIZE_1 0x2020
