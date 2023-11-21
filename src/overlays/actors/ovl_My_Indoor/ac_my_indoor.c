@@ -349,6 +349,9 @@ u16 func_809526D4_jp(u16 arg0) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/func_8095272C_jp.s")
+void func_8095272C_jp() {
+    func_809526D4_jp(0x2700);
+    func_8095267C_jp(0x2600);
+}
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_My_Indoor/ac_my_indoor/func_80952754_jp.s")
