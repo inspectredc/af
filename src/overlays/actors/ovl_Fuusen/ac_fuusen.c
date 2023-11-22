@@ -373,4 +373,67 @@ Gfx* func_80AAE10C_jp(u8 arg0, u8 arg1, u8 arg2, u8 arg3, Game_Play* game_play) 
     return NULL;
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Fuusen/ac_fuusen/aFSN_actor_draw.s")
+extern void _texture_z_light_fog_prim(GraphicsContext*);
+extern s32 func_80060970_jp();
+extern s32 func_80060B18_jp(f32, f32, f32);
+extern void mAc_ActorShadowDraw_ShadowDrawFlagOn(Actor*, Game_Play*, s32, xyz_t, f32);
+
+extern s32 D_4009580;
+extern s32 D_4009620;
+extern Color_RGBA8 D_80AAE5E0_jp[5];
+extern Color_RGBA8 D_80AAE5F4_jp[5];
+extern xyz_t D_80AAE634_jp;
+
+#define OPEN_CUSTOM_POLY_OPA()                \
+    {                                         \
+        Gfx* __polyOpa = __gfxCtx->polyOpa.p; \
+        int __opa_opened = 0;                 \
+        do {} while (0)
+
+#define CLOSE_CUSTOM_POLY_OPA()          \
+        __gfxCtx->polyOpa.p = __polyOpa; \
+        (void)__opa_opened;              \
+    }                                    \
+    while (0)
+
+void aFSN_actor_draw(Actor* thisx, Game_Play* game_play) {
+    Fuusen* this = (Fuusen*)thisx;
+    s32 sp58;
+    char pad[0x8];
+    s16 objBankIndex;
+    Gfx* sp48;
+    Gfx* sp44;
+    sp58 = game_play->state.unk_A0 & 1;
+    objBankIndex = this->actor.unk_026;
+    sp48 = game_play->objectExchangeBank.status[objBankIndex].segment;
+    sp44 = func_80AAE10C_jp(D_80AAE5E0_jp[this->unk_180].r, D_80AAE5E0_jp[this->unk_180].g, D_80AAE5E0_jp[this->unk_180].b, D_80AAE5E0_jp[this->unk_180].a, game_play);
+    if ((sp44 != NULL) && ((func_80060970_jp() == 0) || (func_80060B18_jp(this->actor.world.pos.x, this->actor.world.pos.z, 60.0f) == 0))) {
+        func_80AADF10_jp(this, game_play);
+        Matrix_push();
+        if ((this->unk_17C != 3) || (this->unk_184 == 0x309) || ((this->unk_17C == 3) && (this->unk_18C == 0))) {
+            _texture_z_light_fog_prim(game_play->state.gfxCtx);
+            OPEN_DISPS(game_play->state.gfxCtx);
+            OPEN_CUSTOM_POLY_OPA();
+            Matrix_translate(this->actor.world.pos.x, this->actor.world.pos.y, this->actor.world.pos.z, 0U);
+            Matrix_scale(0.01f, 0.01f, 0.01f, 1U);
+            Matrix_RotateX(this->actor.shape.rot.x, MTXMODE_APPLY);
+            Matrix_RotateZ(this->actor.shape.rot.z, MTXMODE_APPLY);
+            Matrix_RotateY(this->actor.shape.rot.y, MTXMODE_APPLY);
+            gSPMatrix(__polyOpa++, _Matrix_to_Mtx_new(game_play->state.gfxCtx), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+            gSPDisplayList(__polyOpa++, &D_4009580);
+            gSPDisplayList(__polyOpa++, &D_4009620);
+            CLOSE_CUSTOM_POLY_OPA()
+            CLOSE_DISPS(game_play->state.gfxCtx);
+        }
+        OPEN_DISPS(game_play->state.gfxCtx);
+        gSPSegment(POLY_OPA_DISP++, 0x06, sp48);
+        gSPSegment(POLY_OPA_DISP++, 0x08, sp44);
+        gDPPipeSync(POLY_OPA_DISP++);
+        gDPSetEnvColor(POLY_OPA_DISP++, D_80AAE5F4_jp[this->unk_180].r, D_80AAE5F4_jp[this->unk_180].g, D_80AAE5F4_jp[this->unk_180].b, D_80AAE5F4_jp[this->unk_180].a);
+        CLOSE_DISPS(game_play->state.gfxCtx);
+        Setpos_HiliteReflect_init(&this->actor.world.pos, game_play);
+        cKF_Si3_draw_R_SV(game_play, &this->skeletonInfo, this->unk_248[sp58], NULL, NULL, &this->actor);
+        mAc_ActorShadowDraw_ShadowDrawFlagOn(&this->actor, game_play, 0, D_80AAE634_jp, 170.0f);
+        Matrix_pull();
+    }
+}

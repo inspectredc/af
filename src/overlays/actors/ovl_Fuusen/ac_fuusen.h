@@ -31,7 +31,7 @@ typedef struct Fuusen {
     SkeletonInfoR skeletonInfo; // 0x1A8
     s_xyz jointTable[0x4]; // 0x218
     s_xyz morphTable[0x4]; // 0x230
-    s8 unk_248[0x200];
+    Mtx unk_248[2][4];
 } Fuusen; // size = 0x448
 
 #endif
