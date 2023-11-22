@@ -32,7 +32,6 @@ extern BaseAnimationR* D_60008E4;
 extern BaseSkeletonR* D_6000928;
 extern xyz_t D_80A94974_jp;
 
-// #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/aBEE_actor_ct.s")
 void aBEE_actor_ct(Actor* thisx, Game_Play* game_play) {
     Bee *this = thisx;
     SkeletonInfoR *tmp = &this->skeletonInfo;
@@ -51,12 +50,10 @@ void aBEE_actor_ct(Actor* thisx, Game_Play* game_play) {
     func_80A94450_jp(this, 0, game_play);
 }
 
-// #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A93DD0_jp.s")
 void func_80A93DD0_jp(Actor* thisx, Game_Play* game_play) {
 
 }
 
-// #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A93DE0_jp.s")
 extern xyz_t D_80A94980_jp;
 
 void func_80A93DE0_jp(Bee* this, Game_Play* game_play) {
@@ -67,19 +64,16 @@ void func_80A93DE0_jp(Bee* this, Game_Play* game_play) {
     common_data.unk107E6[0x253] = 1;
 }
 
-// #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A93E38_jp.s")
 void func_80A93E38_jp(Bee* this, Game_Play* game_play) {
 
 }
 
-// #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A93E48_jp.s")
 void func_80A93E48_jp(Bee* this, Game_Play* game_play) {
     
     this->actor.speed = 9.7f;
     this->actor.shape.rot.x = this->actor.shape.rot.z = 0;
 }
 
-// #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A93E6C_jp.s")
 void func_80A93E6C_jp(Bee* this, Game_Play* game_play) {
     Player* player = get_player_actor_withoutCheck(game_play);
     s32 *var = &this->unk_438;
@@ -109,7 +103,6 @@ void func_80A94408_jp(Bee* this, Game_Play* game_play) {
     }
 }
 
-// #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A94450_jp.s")
 extern void(*D_80A9498C_jp[])(Bee*, Game_Play*);
 extern void(*D_80A94998_jp[]);
 
@@ -119,8 +112,6 @@ void func_80A94450_jp(Bee* this, s32 arg0, Game_Play* game_play) {
     D_80A9498C_jp[this->unk_17C](this, game_play);
 }
 
-
-// #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A9449C_jp.s")
 void func_80A9449C_jp(Bee* this, Game_Play* game_play) {
     s32 pad;
     void* sp20;
@@ -135,7 +126,6 @@ void func_80A9449C_jp(Bee* this, Game_Play* game_play) {
     }
 }
 
-// #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/aBEE_actor_move.s")
 extern f32 D_80A949A4_jp[3];
 extern f32 D_80A949B0_jp[4];
 extern void func_800D1D08_jp(Actor*, s32, PosRot*);
