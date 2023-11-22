@@ -5,6 +5,7 @@
 #include "overlays/gamestates/ovl_play/m_play.h"
 #include "overlays/actors/player_actor/m_player.h"
 #include "libc/math.h"
+#include "macros.h"
 
 void aFSN_actor_ct(Actor* thisx, Game_Play* game_play);
 void aFSN_actor_dt(Actor* thisx, Game_Play* game_play);
@@ -154,16 +155,13 @@ void func_80AAD580_jp(Fuusen* this, Game_Play* game_play) {
     func_80AADEC4_jp(this, 1, game_play);
 }
 
-#ifdef NON_MATCHING
 extern void func_800765AC_jp(s32, Actor*, f32, f32, s32, s32, s32);
-extern void func_800884E0_jp(xyz_t*, xyz_t);
+extern s32 func_800884E0_jp(xyz_t*, xyz_t);
 extern f32 func_80098980_jp();
 extern u16* mFI_GetUnitFG(xyz_t);
 extern Vec2s D_80AAE608_jp[3];
-#ifndef ARRAY_COUNT
-#define ARRAY_COUNT(arr) (s32)(sizeof(arr) / sizeof(arr[0]))
-#endif
-void func_80AAD5A4_jp(Fuusen* this, Game_Play* game_play) {
+
+void func_80AAD5A4_jp(Actor* thisx, Game_Play* game_play) {
     f32 temp_fa0;
     f32 sp70;
     s32 i;
@@ -173,7 +171,7 @@ void func_80AAD5A4_jp(Fuusen* this, Game_Play* game_play) {
     s16 temp_s1;
     u16* temp_v0_4;
     xyz_t* sp40;
-    u16 temp_v1;
+    Fuusen* this = (Fuusen*)thisx;
 
     sp40 = &this->actor.world.pos;
     sp70 = func_80072F9C_jp(sp40) + this->unk_1A0;
@@ -209,7 +207,7 @@ void func_80AAD5A4_jp(Fuusen* this, Game_Play* game_play) {
             }
         }
         temp_v0_4 = mFI_GetUnitFG(*sp40);
-        if ((temp_v0_4 != NULL) && ((temp_v1 = *temp_v0_4, (*temp_v0_4 == 0x804)) || (*temp_v0_4 == 0x809) || (*temp_v0_4 == 0x811) || (*temp_v0_4 == 0x819) || (*temp_v0_4 == 0x821) || (*temp_v0_4 == 0x829) || (*temp_v0_4 == 0x80A) || (*temp_v0_4 == 0x812) || (*temp_v0_4 == 0x81A) || (*temp_v0_4 == 0x822) || (*temp_v0_4 == 0x82A) || (*temp_v0_4 == 0x80B) || (*temp_v0_4 == 0x813) || (*temp_v0_4 == 0x81B) || (*temp_v0_4 == 0x823) || (*temp_v0_4 == 0x82B))) {
+        if ((temp_v0_4 != NULL) && ((*temp_v0_4 == 0x804) || (*temp_v0_4 == 0x809) || (*temp_v0_4 == 0x811) || (*temp_v0_4 == 0x819) || (*temp_v0_4 == 0x821) || (*temp_v0_4 == 0x829) || (*temp_v0_4 == 0x80A) || (*temp_v0_4 == 0x812) || (*temp_v0_4 == 0x81A) || (*temp_v0_4 == 0x822) || (*temp_v0_4 == 0x82A) || (*temp_v0_4 == 0x80B) || (*temp_v0_4 == 0x813) || (*temp_v0_4 == 0x81B) || (*temp_v0_4 == 0x823) || (*temp_v0_4 == 0x82B))) {
             func_800884E0_jp(&sp5C, *sp40);
             sp5C.x -= 2.5f;
             sp5C.y = mCoBG_GetBgY_OnlyCenter_FromWpos2(*sp40, 0.0f) + 97.5f;
@@ -229,7 +227,7 @@ dummy_label:
                     sp5C.x += sin_s(temp_s1) * 80.0f;
                     sp5C.z += cos_s(temp_s1) * 80.0f;
                     temp_v0_4 = mFI_GetUnitFG(sp5C);
-                    if ((temp_v0_4 != NULL) && ((temp_v1 = *temp_v0_4, (*temp_v0_4 == 0x804)) || (*temp_v0_4 == 0x809) || (*temp_v0_4 == 0x811) || (*temp_v0_4 == 0x819) || (*temp_v0_4 == 0x821) || (*temp_v0_4 == 0x829) || (*temp_v0_4 == 0x80A) || (*temp_v0_4 == 0x812) || (*temp_v0_4 == 0x81A) || (*temp_v0_4 == 0x822) || (*temp_v0_4 == 0x82A) || (*temp_v0_4 == 0x80B) || (*temp_v0_4 == 0x813) || (*temp_v0_4 == 0x81B) || (*temp_v0_4 == 0x823) || (*temp_v0_4 == 0x82B))) {
+                    if ((temp_v0_4 != NULL) && ((*temp_v0_4 == 0x804) || (*temp_v0_4 == 0x809) || (*temp_v0_4 == 0x811) || (*temp_v0_4 == 0x819) || (*temp_v0_4 == 0x821) || (*temp_v0_4 == 0x829) || (*temp_v0_4 == 0x80A) || (*temp_v0_4 == 0x812) || (*temp_v0_4 == 0x81A) || (*temp_v0_4 == 0x822) || (*temp_v0_4 == 0x82A) || (*temp_v0_4 == 0x80B) || (*temp_v0_4 == 0x813) || (*temp_v0_4 == 0x81B) || (*temp_v0_4 == 0x823) || (*temp_v0_4 == 0x82B))) {
                         this->actor.world.rot.y = temp_s1;
                         this->unk_1A4 = 1U;
                         break;
@@ -242,10 +240,6 @@ dummy_label:
         }
     }
 }
-
-#else
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Fuusen/ac_fuusen/func_80AAD5A4_jp.s")
-#endif
 
 extern s32 func_800B5BC0_jp(xyz_t*);
 extern c_800B5C10_jp(xyz_t*);
