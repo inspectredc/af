@@ -11,6 +11,7 @@ struct Game_Play;
 struct Player;
 
 typedef s32 (*SetMgrGetEndPosProc)(struct Game*, xyz_t*);
+typedef s32 (*Player_Unk_123C_Func)(struct Game*, s32, s_xyz*, s32);
 
 typedef struct Player {
     /* 0x0000 */ Actor actor;
@@ -35,7 +36,9 @@ typedef struct Player {
     /* 0x0FA4 */ ClObjTris colliderTris2;
     /* 0x0FB8 */ UNK_TYPE1 unk_0FB8[0x50];
     /* 0x1008 */ ClObjPipe colliderPipe;
-    /* 0x1024 */ UNK_TYPE1 unk_1024[0x220];
+    /* 0x1024 */ UNK_TYPE1 unk_1024[0x218];
+    /* 0x123C */ Player_Unk_123C_Func unk_123C;
+    /* 0x1240 */ UNK_TYPE1 unk_1240[0x4];
     /* 0x1024 */ SetMgrGetEndPosProc getEndPos;
     /* 0x1048 */ UNK_TYPE1 unk_1048[0x70];
     /* 0x12B8 */ UNK_TYPE unk_12B8;

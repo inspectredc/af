@@ -76,6 +76,12 @@ typedef struct CommonData_unk_10078 {
     /* 0x08 */ CommonData_unk_10078_unk_08 unk_08;
 } CommonData_unk_10078; // size >= 0xC
 
+typedef UNK_RET (*CommonData_unk_10080_unk_04)(struct Game_Play*, UNK_PTR, s32);
+typedef struct CommonData_unk_10080 {
+    UNK_TYPE1 unk_00[0x4];
+    CommonData_unk_10080_unk_04 unk_04;
+} CommonData_unk_10080;
+
 typedef UNK_RET (*CommonData_unk_10098_unk_4)(struct ActorOverlay*, size_t);
 typedef UNK_RET (*CommonData_unk_10098_unk_8)(void);
 typedef UNK_PTR (*CommonData_unk_10098_unk_0C)(void);
@@ -100,6 +106,14 @@ typedef struct CommonData_unk_10098 {
     /* 0x458 */ UNK_TYPE1 pad2[0x86C - 0x458];
     /* 0x86C */ UNK_TYPE unk_86C;
 } CommonData_unk_10098; // size >= 0x870
+
+typedef void (*CommonData_unk_1009C_unk_00)(s32, xyz_t, s32, s32, struct Game_Play*, s32, s32, s32);
+typedef f32 (*CommonData_unk_1009C_unk_14)(s16, s16, s16, f32, f32);
+typedef struct CommonData_unk_1009C {
+    CommonData_unk_1009C_unk_00 unk_00;
+    s8 unk_04[0x10];
+    CommonData_unk_1009C_unk_14 unk_14;
+} CommonData_unk_1009C;
 
 typedef struct MotherMailInfo {
     /* 0x00 */ UNK_TYPE1 unk_00[0xE];
@@ -205,9 +219,11 @@ typedef struct CommonData {
     /* 0x1004C */ CommonData_unk_1004C* unk_1004C;
     /* 0x10050 */ UNK_TYPE1 unk_10050[0x28];
     /* 0x10078 */ CommonData_unk_10078* unk_10078;
-    /* 0x1007C */ UNK_TYPE1 unk_1007C[0x1C];
+    /* 0x1007C */ UNK_TYPE1 unk_1007C[0x4];
+    /* 0x10080 */ CommonData_unk_10080* unk_10080;
+    /* 0x10084 */ UNK_TYPE1 unk_10084[0x14];
     /* 0x10098 */ CommonData_unk_10098* unk_10098;
-    /* 0x1009C */ UNK_TYPE1 unk_1009C[0x4];
+    /* 0x1009C */ CommonData_unk_1009C* unk_1009C;
     /* 0x100A0 */ struct ToolClip* toolClip;
     /* 0x100A4 */ UNK_TYPE1 unk_100A4[0x40];
     /* 0x100E4 */ CommonData_unk_100E4* unk_100E4;
@@ -253,7 +269,8 @@ typedef struct CommonData {
     /* 0x10A3B */ UNK_TYPE1 unk_10A3B[0x1];
     /* 0x10A3C */ UNK_TYPE1 unk_10A3C[0x2C];
     /* 0x10A68 */ u8 unk_10A68;
-    /* 0x10A69 */ UNK_TYPE1 unk_10A69[0x3];
+    /* 0x10A69 */ u8 unk_10A69;
+    /* 0x10A6A */ UNK_TYPE1 unk_10A6A[0x2];
     /* 0x10A6C */ UNK_TYPE1 unk_10A6C[0x14];
     /* 0x10A80 */ UNK_TYPE1 unk_10A80[0x2];
     /* 0x10A82 */ s16 unk_10A82;
