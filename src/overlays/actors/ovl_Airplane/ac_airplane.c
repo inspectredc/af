@@ -27,7 +27,6 @@ ActorProfile Airplane_Profile = {
 extern void mAc_ActorShadowEllipse(Actor*, LightsN*, Game_Play*);
 extern f32 func_80071884_jp(s32, xyz_t, f32);
 
-#ifdef NON_MATCHING
 void Airplane_Actor_ct(Actor* thisx, Game_Play* game_play) {
     Airplane* this = (Airplane*)thisx;
     
@@ -37,7 +36,7 @@ void Airplane_Actor_ct(Actor* thisx, Game_Play* game_play) {
     this->unk_178 = 6.2f;
     this->actor.speed = 6.2f;
     this->unk_17C = 0.0f;
-    this->unk_188 = BINANG_TO_RAD(RAD_TO_DEG(thisx->world.rot.y));
+    this->unk_188 = RAD_TO_DEG(BINANG_TO_RAD(thisx->world.rot.y));
 
     this->unk_19C = 0;
     this->unk_1A0 = 0;
@@ -51,9 +50,6 @@ void Airplane_Actor_ct(Actor* thisx, Game_Play* game_play) {
 
     this->actor.world.pos.y = func_80071884_jp(0, this->actor.world.pos, -5.5f);
 }
-#else
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Airplane/ac_airplane/Airplane_Actor_ct.s")
-#endif
 
 void Airplane_Actor_dt(Actor* thisx, Game_Play* game_play) {
     Airplane* this = (Airplane* ) thisx;
@@ -73,15 +69,14 @@ extern Gfx* D_60000B0;
     }                             \
     do {} while (0)
 
-#ifdef NON_MATCHING
 void Airplane_Actor_draw(Actor* thisx, Game_Play* game_play) {
     Airplane* this = (Airplane* ) thisx;
 
     if ((this->unk_174 != 6) && (this->unk_174 != 4)) {
         AC_GCN_OPEN_DISP(game_play->state.gfxCtx);
         _texture_z_light_fog_prim(game_play->state.gfxCtx);
-        Matrix_RotateX(RAD_TO_BINANG(BINANG_TO_RAD(this->unk_18C)), MTXMODE_APPLY);
-        Matrix_RotateZ(RAD_TO_BINANG(BINANG_TO_RAD(this->unk_190)), MTXMODE_APPLY);
+        Matrix_RotateX(RAD_TO_BINANG(DEG_TO_RAD(this->unk_18C)), MTXMODE_APPLY);
+        Matrix_RotateZ(RAD_TO_BINANG(DEG_TO_RAD(this->unk_190)), MTXMODE_APPLY);
         Matrix_scale(50.0f, 50.0f, 50.0f, 1);
         gSPMatrix(POLY_OPA_DISP++, _Matrix_to_Mtx_new(game_play->state.gfxCtx), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
         gSPDisplayList(POLY_OPA_DISP++, &D_60000B0);
@@ -89,9 +84,6 @@ void Airplane_Actor_draw(Actor* thisx, Game_Play* game_play) {
         AC_GCN_CLOSE_DISP(game_play->state.gfxCtx);
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Airplane/ac_airplane/Airplane_Actor_draw.s")
-#endif
 
 void func_80967B50_jp(f32* arg0, f32 arg1, f32 arg2) {
 
@@ -99,12 +91,14 @@ void func_80967B50_jp(f32* arg0, f32 arg1, f32 arg2) {
 }
 
 void func_80967B78_jp(Airplane* this) {
+
     if (((u32) (this->actor.unk_098 << 6) >> 0x1B) != 0) {
         this->unk_174 = 1;
     }
 }
 
 void func_80967B9C_jp(Airplane* this, Game_Play* game_play) {
+
     if (((u32) this->actor.unk_098 >> 0x1F) != 0) {
         func_80967B50_jp(&this->unk_178, 0.0f, 0.6f);
         if (this->unk_178 < 1.0f) {
@@ -120,6 +114,7 @@ void func_80967B9C_jp(Airplane* this, Game_Play* game_play) {
 }
 
 void func_80967C8C_jp(Airplane* this, Game_Play* game_play) {
+
     func_80967B50_jp(&this->unk_178, 3.0f, 0.01f);
     func_80967B50_jp(&this->unk_18C, 19.0f, 0.045f);
     func_80967B50_jp(&this->unk_190, 0.0f, 0.05f);
@@ -310,7 +305,6 @@ static s32 D_80968794_jp[10] = {
 
 static xyz_t D_809687BC_jp = { 0.0f, 1.0f, 0.0f };
 
-#ifdef NON_MATCHING
 void func_80968304_jp(Actor* thisx, Game_Play* game_play) {
     Airplane* this = (Airplane*)thisx;
     xyz_t sp30;
@@ -328,27 +322,23 @@ void func_80968304_jp(Actor* thisx, Game_Play* game_play) {
     }
 
     if (this->unk_174 != 5 && this->unk_174 != 4 && this->unk_174 != 6 && this->unk_1A8) {
-        sMath_RotateX(&sp30, RAD_TO_DEG(this->unk_18C));
-        sMath_RotateZ(&sp30, RAD_TO_DEG(this->unk_190));
-        sMath_RotateY(&sp30, RAD_TO_DEG(this->unk_188));
+        sMath_RotateX(&sp30, DEG_TO_RAD(this->unk_18C));
+        sMath_RotateZ(&sp30, DEG_TO_RAD(this->unk_190));
+        sMath_RotateY(&sp30, DEG_TO_RAD(this->unk_188));
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Airplane/ac_airplane/func_80968304_jp.s")
-#endif
 
 extern f32 cosf_table(f32);
 
-#ifdef NON_MATCHING
 void func_80968464_jp(Actor* actor, Airplane* this, Game_Play* game_play) {
 
     func_80968280_jp(this);
-    actor->speed = cosf_table(RAD_TO_DEG(this->unk_18C)) * this->unk_178;
-    this->unk_17C = sinf_table(RAD_TO_DEG(this->unk_18C)) * this->unk_178;
+    actor->speed = cosf_table(DEG_TO_RAD(this->unk_18C)) * this->unk_178;
+    this->unk_17C = sinf_table(DEG_TO_RAD(this->unk_18C)) * this->unk_178;
 
     actor->world.pos.y -= this->unk_17C;
-    actor->world.rot.y = RAD_TO_BINANG(RAD_TO_DEG(this->unk_188));
-    actor->shape.rot.y = RAD_TO_BINANG(RAD_TO_DEG(this->unk_188));
+    actor->world.rot.y = RAD_TO_BINANG(DEG_TO_RAD(this->unk_188));
+    actor->shape.rot.y = RAD_TO_BINANG(DEG_TO_RAD(this->unk_188));
     Actor_position_moveF(actor);
     
     this->unk_198 = getJoystick_X();
@@ -372,9 +362,6 @@ void func_80968464_jp(Actor* actor, Airplane* this, Game_Play* game_play) {
     }
     func_80968304_jp(actor, game_play);
 }
-#else
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Airplane/ac_airplane/func_80968464_jp.s")
-#endif
 
 extern void func_800B23DC_jp(Game_Play*);
 extern void func_800B2414_jp(Game_Play*);
