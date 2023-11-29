@@ -10,7 +10,6 @@ void Airplane_Actor_dt(Actor* thisx, Game_Play* game_play);
 void Airplane_Actor_move(Actor* thisx, Game_Play* game_play);
 void Airplane_Actor_draw(Actor* thisx, Game_Play* game_play);
 
-#if 0
 ActorProfile Airplane_Profile = {
     /* */ ACTOR_AIRPLANE,
     /* */ ACTOR_PART_4,
@@ -24,7 +23,6 @@ ActorProfile Airplane_Profile = {
     /* */ Airplane_Actor_draw,
     /* */ NULL,
 };
-#endif
 
 extern void mAc_ActorShadowEllipse(Actor*, LightsN*, Game_Play*);
 extern f32 func_80071884_jp(s32, xyz_t, f32);
@@ -44,7 +42,7 @@ void Airplane_Actor_ct(Actor* thisx, Game_Play* game_play) {
     this->unk_19C = 0;
     this->unk_1A0 = 0;
     this->unk_1A4 = 0;
-    this->unk_1A8 = 0;
+    this->unk_1A8 = NULL;
     this->unk_190 = 0.0f;
     this->unk_18C = 0.0f;
 
@@ -177,8 +175,27 @@ s32 func_80967E1C_jp(Airplane* this, s32 arg1) {
     return 1;
 }
 
-extern s16 D_80968734_jp[];
-extern s16 D_80968744_jp[];
+static s16 D_80968734_jp[8] = {
+    0x093E,
+    0x07D2,
+    0xFBBC,
+    0xF6C2,
+    0x0000,
+    0x1110,
+    0xEFA6,
+    0x105A,
+};
+
+static s16 D_80968744_jp[8] = {
+    0x31C4,
+    0x1FFE,
+    0xDC74,
+    0xE002,
+    0xD558,
+    0x2AA8,
+    0x238C,
+    0x0000,
+};
 
 // s32 func_80967E1C_jp(f32, Airplane*, s32, s32);
 extern void func_800B2414_jp(Game_Play*);
@@ -266,9 +283,32 @@ void func_80968280_jp(Airplane* this) {
 extern void sMath_RotateX(xyz_t*, f32);
 extern void sMath_RotateY(xyz_t*, f32);
 extern void sMath_RotateZ(xyz_t*, f32);
-extern s32 D_80968784_jp[];
-extern s32 D_80968794_jp[];
-extern xyz_t D_809687BC_jp;
+static xyz_t D_80968754_jp = { 2.0f, 1.0f, 4.0f };
+static xyz_t D_80968760_jp = { -3.0f, -4.0f, -7.0f };
+static xyz_t D_8096876C_jp = { 4.0f, -3.0f, 1.0f };
+static xyz_t D_80968778_jp = { -1.0f, 3.0f, -4.0f };
+
+static xyz_t* D_80968784_jp[4] = {
+    &D_80968754_jp,
+    &D_80968760_jp,
+    &D_8096876C_jp,
+    &D_80968778_jp,
+};
+
+static s32 D_80968794_jp[10] = {
+    0x0000012C,
+    0x00000014,
+    0x000001F4,
+    0x000003E8,
+    0x00000064,
+    0x000002BC,
+    0x00000014,
+    0x000000C8,
+    0x00000050,
+    0x00000046,
+};
+
+static xyz_t D_809687BC_jp = { 0.0f, 1.0f, 0.0f };
 
 #ifdef NON_MATCHING
 void func_80968304_jp(Actor* thisx, Game_Play* game_play) {
@@ -287,7 +327,7 @@ void func_80968304_jp(Actor* thisx, Game_Play* game_play) {
         this->unk_1A8 = D_80968784_jp[sp2C];
     }
 
-    if (this->unk_174 != 5 && this->unk_174 != 4 && this->unk_174 != 6 && this->unk_1A8 != 0) {
+    if (this->unk_174 != 5 && this->unk_174 != 4 && this->unk_174 != 6 && this->unk_1A8) {
         sMath_RotateX(&sp30, RAD_TO_DEG(this->unk_18C));
         sMath_RotateZ(&sp30, RAD_TO_DEG(this->unk_190));
         sMath_RotateY(&sp30, RAD_TO_DEG(this->unk_188));
@@ -359,7 +399,15 @@ f32 func_80968638_jp(s16 arg0) {
 }
 
 extern void func_800765AC_jp(s32, Actor*, f32, f32, s32, s32, s32);
-extern AirplaneActionFunc D_809687C8_jp[];
+static AirplaneActionFunc D_809687C8_jp[7] = {
+    func_80967C8C_jp,
+    func_809680C8_jp,
+    func_809681A4_jp,
+    func_80967D04_jp,
+    func_80967E98_jp,
+    func_80968068_jp,
+    func_80968058_jp,
+};
 
 void Airplane_Actor_move(Actor* thisx, Game_Play* game_play) {
     Airplane* this = (Airplane* ) thisx;
