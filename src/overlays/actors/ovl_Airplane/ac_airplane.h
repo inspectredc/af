@@ -24,11 +24,11 @@ typedef struct Airplane {
     /* 0x194 */ s32 unk_194;
     /* 0x198 */ s32 unk_198;
     /* 0x19C */ s16 unk_19C;
-    /* 0x19E */ s8 unk_19E[0x2];
+    /* 0x19E */ UNK_TYPE1 unk_19E[0x2];
     /* 0x1A0 */ s32 unk_1A0;
     /* 0x1A4 */ s32 unk_1A4;
     /* 0x1A8 */ xyz_t* unk_1A8;
-    /* 0x1AC */ s8 unk_1AC[0x1C];
+    /* 0x1AC */ UNK_TYPE1 unk_1AC[0x1C];
 } Airplane; // size = 0x1C8
 
 #endif
