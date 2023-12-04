@@ -16,7 +16,6 @@ void func_80A8EF30_jp(Actor* thisx, Game_Play* game_play);
 void aTAM_actor_init(Actor* thisx, Game_Play* game_play);
 void aTAM_actor_draw(Actor* thisx, Game_Play* game_play);
 
-#if 0
 ActorProfile Tama_Profile = {
     /* */ ACTOR_TAMA,
     /* */ ACTOR_PART_0,
@@ -30,9 +29,8 @@ ActorProfile Tama_Profile = {
     /* */ aTAM_actor_draw,
     /* */ NULL,
 };
-#endif
 
-void func_80A8EFCC_jp(Tama*, UNK_TYPE);
+void func_80A8EFCC_jp(Tama*, s32);
 
 void aTAM_actor_ct(Actor* thisx, Game_Play* game_play) {
     Tama* this = (Tama*)thisx;
@@ -55,15 +53,16 @@ void func_80A8EFBC_jp(Tama* this, Game_Play* game_play) {
 
 }
 
-extern TamaActionFunc D_80A8F294_jp[1];
+TamaActionFunc D_80A8F294_jp[1] = { func_80A8EFBC_jp };
 
 void func_80A8EFCC_jp(Tama* this, s32 arg0) {
     this->unk_2A0 = D_80A8F294_jp[arg0];
     this->unk_2B8 = arg0;
 }
 
-void func_80A8EFEC_jp(Tama* this, Game_Play* game_play) {
-    UNK_TYPE1 pad[0x8];
+void func_80A8EFEC_jp(Actor* thisx, Game_Play* game_play) {
+    UNK_TYPE1 pad[0x4];
+    Tama* this = (Tama*)thisx;
     Player* player;
     s32 sp30;
     s32 sp2C;
@@ -73,7 +72,7 @@ void func_80A8EFEC_jp(Tama* this, Game_Play* game_play) {
     player = get_player_actor_withoutCheck(game_play);
     mFI_Wpos2BlockNum(&sp30, &sp2C, this->actor.world.pos);
     mFI_Wpos2BlockNum(&sp28, &sp24, player->actor.world.pos);
-    if ((mDemo_Check(1, player) == 0) && (mDemo_Check(5, &player->actor) == 0) && ((sp30 != sp28) || (sp2C != sp24))) {
+    if ((mDemo_Check(1, &player->actor) == 0) && (mDemo_Check(5, &player->actor) == 0) && ((sp30 != sp28) || (sp2C != sp24))) {
         Actor_delete(&this->actor);
         return;
     }
@@ -84,11 +83,11 @@ void aTAM_actor_init(Actor* thisx, Game_Play* game_play) {
     Tama* this = (Tama*)thisx;
     
     mFI_SetFG_common(0xF0FC, this->actor.home.pos, 0);
-    func_80A8EFEC_jp(this, game_play);
+    func_80A8EFEC_jp(&this->actor, game_play);
     this->actor.update = func_80A8EFEC_jp;
 }
 
-extern Gfx* D_80A8F298_jp[2];
+Gfx* D_80A8F298_jp[2] = { (Gfx*)0x06018220, (Gfx*)0x0601A1E0 };
 
 #define AC_GCN_OPEN_DISP(gfxCtx)            \
     {                                       \
@@ -118,7 +117,7 @@ void aTAM_actor_draw(Actor* thisx, Game_Play* game_play) {
     Tama* this = (Tama*)thisx;
     s32 sp2C;
     s32 sp28;
-    Mtx* temp_v0;
+    Mtx* mtx;
 
     gfxCtx = game_play->state.gfxCtx;
     sp2C = common_data.unk_10098->unk_AC(this->unk_2A8);
@@ -132,10 +131,10 @@ void aTAM_actor_draw(Actor* thisx, Game_Play* game_play) {
 
     gSPSegment(__polyOpa++, 0x06, sp2C);
     Matrix_translate(0.0f, 0.0f, 4000.0f, 1);
-    temp_v0 = _Matrix_to_Mtx_new(gfxCtx);
-    if (temp_v0 != NULL) {
+    mtx = _Matrix_to_Mtx_new(gfxCtx);
+    if (mtx != NULL) {
 
-        gSPMatrix(__polyOpa++, temp_v0, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+        gSPMatrix(__polyOpa++, mtx, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
         gSPDisplayList(__polyOpa++, D_80A8F298_jp[this->unk_2B4]);
         CLOSE_CUSTOM_POLY_OPA();
