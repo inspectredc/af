@@ -14,7 +14,9 @@ void func_80A8F340_jp(Actor* thisx, Game_Play* game_play);
 void aKAG_actor_init(Actor* thisx, Game_Play* game_play);
 void aKAG_actor_draw(Actor* thisx, Game_Play* game_play);
 
-#if 0
+void func_80A8F3CC_jp(Kago*, s32);
+void func_80A8F428_jp(Kago*, s32);
+
 ActorProfile Kago_Profile = {
     /* */ ACTOR_KAGO,
     /* */ ACTOR_PART_0,
@@ -28,10 +30,6 @@ ActorProfile Kago_Profile = {
     /* */ aKAG_actor_draw,
     /* */ NULL,
 };
-#endif
-
-void func_80A8F3CC_jp(Kago* this, s32 arg0);
-void func_80A8F428_jp(Kago* this, s32 arg0);
 
 void aKAG_actor_ct(Actor* thisx, Game_Play* game_play) {
     Kago* this = (Kago*)thisx;
@@ -53,8 +51,6 @@ void func_80A8F340_jp(Actor* thisx, Game_Play* game_play) {
     common_data.unk_10098->unk_A8(&common_data.unk_10098->unk_86C, 8, this->unk_2A8, &this->actor);
 }
 
-extern void func_800739FC_jp(xyz_t, s32, s32);
-
 void func_80A8F3CC_jp(Kago* this, s32 arg0) {
     s32 var = arg0 == 0 ? 0 : 0;
     func_800739FC_jp(this->actor.home.pos, 0xA, 0x64);
@@ -64,7 +60,11 @@ void func_80A8F418_jp(Kago* this, s32 arg0) {
 
 }
 
-extern KagoActionFunc D_80A8F728_jp[1];
+UNK_TYPE D_80A8F704_jp[4] = { 0x01000001, 0x01000001, 0x00010000, 0x01000000 };
+
+UNK_PTR D_80A8F714_jp[5] = { (UNK_PTR)0x0000000D, D_80A8F704_jp, (UNK_PTR)0x42700000, (UNK_PTR)0x06001628, (UNK_PTR)0x060016F8 };
+
+static KagoActionFunc D_80A8F728_jp[1] = { func_80A8F418_jp };
 
 void func_80A8F428_jp(Kago* this, s32 arg0) {
     this->unk_2A0 = D_80A8F728_jp[arg0];
@@ -84,9 +84,9 @@ void func_80A8F448_jp(Kago* this, Game_Play* game_play) {
     mFI_Wpos2BlockNum(&sp28, &sp24, player->actor.world.pos);
     if ((mDemo_Check(1, &player->actor) == 0) && (mDemo_Check(5, &player->actor) == 0) && ((sp30 != sp28) || (sp2C != sp24))) {
         Actor_delete(&this->actor);
-        return;
+    } else {
+        this->unk_2A0(this, game_play);
     }
-    this->unk_2A0(this, game_play);
 }
 
 void aKAG_actor_init(Actor* thisx, Game_Play* game_play) {
@@ -96,8 +96,7 @@ void aKAG_actor_init(Actor* thisx, Game_Play* game_play) {
     this->actor.update = func_80A8F448_jp;
 }
 
-extern UNK_TYPE D_80A8F714_jp[5];
-extern Gfx* D_80A8F72C_jp[5];
+Gfx* D_80A8F72C_jp[5] = { (Gfx*)0x06016EA8, (Gfx*)0x06018EA0, NULL, NULL, NULL };
 
 #define AC_GCN_OPEN_DISP(gfxCtx)            \
     {                                       \
