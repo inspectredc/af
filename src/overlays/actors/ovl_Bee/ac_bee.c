@@ -301,13 +301,13 @@ void aBEE_actor_draw(Actor* thisx, Game_Play* game_play) {
     s8 pad[0x8];
     Gfx* texScroll;
 
-    if (!(thisx->world.pos.x < 0.0f) && !(thisx->world.pos.z < 0.0f)) {
+    if (!(this->actor.world.pos.x < 0.0f) && !(this->actor.world.pos.z < 0.0f)) {
         func_80A9449C_jp(this, game_play);
         texScroll = two_tex_scroll(game_play->state.gfxCtx, 0, sin_s(this->unk_440) * 90.0f, cos_s(this->unk_440) * 90.0f, 0x20, 0x20, 1, cos_s(this->unk_442) * 90.0f, sin_s(this->unk_442) * 90.0f, 0x20, 0x20);
         if (texScroll != 0) {
             Matrix_push();
             _texture_z_light_fog_prim_xlu(game_play->state.gfxCtx);
-            Setpos_HiliteReflect_xlu_init(&thisx->world.pos, game_play);
+            Setpos_HiliteReflect_xlu_init(&this->actor.world.pos, game_play);
 
             AC_GCN_OPEN_DISP(game_play->state.gfxCtx);    
             OPEN_CUSTOM_POLY_XLU();
