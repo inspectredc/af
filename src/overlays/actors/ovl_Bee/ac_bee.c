@@ -13,7 +13,6 @@ void func_80A93DD0_jp(Actor* thisx, Game_Play* game_play);
 void aBEE_actor_move(Actor* thisx, Game_Play* game_play);
 void aBEE_actor_draw(Actor* thisx, Game_Play* game_play);
 
-#if 0
 ActorProfile Bee_Profile = {
     /* */ ACTOR_BEE,
     /* */ ACTOR_PART_4,
@@ -27,23 +26,22 @@ ActorProfile Bee_Profile = {
     /* */ aBEE_actor_draw,
     /* */ NULL,
 };
-#endif
 
-void func_80A94450_jp(Bee*, s32, Game_Play*);          /* extern */
-extern BaseAnimationR* D_60008E4;
-extern BaseSkeletonR* D_6000928;
-extern xyz_t D_80A94974_jp;
+void func_80A94450_jp(Bee*, s32, Game_Play*);
+extern BaseAnimationR* cKF_ba_r_obj_rombee;
+extern BaseSkeletonR* cKF_bs_r_obj_rombee;
+xyz_t D_80A94974_jp = { 0.0f, 0.0f, 0.0f };
 
 void aBEE_actor_ct(Actor* thisx, Game_Play* game_play) {
     Bee *this = thisx;
-    SkeletonInfoR *tmp = &this->skeletonInfo;
+    SkeletonInfoR* skeletonInfo = &this->skeletonInfo;
     xyz_t sp34;
     sp34 = D_80A94974_jp;
-    cKF_SkeletonInfo_R_ct(&this->skeletonInfo, &D_6000928, &D_60008E4, this->jointTable, this->morphTable);
-    cKF_SkeletonInfo_R_init_standard_repeat(&this->skeletonInfo, Lib_SegmentedToVirtual(&D_60008E4), 0);
-    tmp->frameControl.currentFrame = 90.0f;
-    cKF_SkeletonInfo_R_play(tmp);
-    tmp->frameControl.speed = 0.0f;
+    cKF_SkeletonInfo_R_ct(&this->skeletonInfo, &cKF_bs_r_obj_rombee, &cKF_ba_r_obj_rombee, this->jointTable, this->morphTable);
+    cKF_SkeletonInfo_R_init_standard_repeat(&this->skeletonInfo, Lib_SegmentedToVirtual(&cKF_ba_r_obj_rombee), 0);
+    skeletonInfo->frameControl.currentFrame = 90.0f;
+    cKF_SkeletonInfo_R_play(skeletonInfo);
+    skeletonInfo->frameControl.speed = 0.0f;
     this->unk_442 = -0x8000;
     this->unk_430 = 90.0f;
     xyz_t_move(&this->actor.scale, &sp34);
@@ -56,7 +54,7 @@ void func_80A93DD0_jp(Actor* thisx, Game_Play* game_play) {
 
 }
 
-extern xyz_t D_80A94980_jp;
+xyz_t D_80A94980_jp = { 0.01f, 0.01f, 0.01f };
 
 void func_80A93DE0_jp(Bee* this, Game_Play* game_play) {
     xyz_t sp1C;
@@ -97,7 +95,7 @@ void func_80A93EFC_jp(Bee* this, Game_Play* game_play) {
     f32 temp_fv;
     Player* player;
     s16 var_v0;
-    f32 var_fv1 = 0;
+    f32 var_fv1 = 0.0f;
     f32 var_fv2;
     Actor* sp68;
     s32 sp64;
@@ -211,8 +209,17 @@ void func_80A94408_jp(Bee* this, Game_Play* game_play) {
     }
 }
 
-extern void(*D_80A9498C_jp[])(Bee*, Game_Play*);
-extern void(*D_80A94998_jp[]);
+BeeActionFunc D_80A9498C_jp[3] = {
+    func_80A93DE0_jp,
+    func_80A93E38_jp,
+    func_80A93E48_jp,
+};
+
+BeeActionFunc D_80A94998_jp[3] = {
+    func_80A93E6C_jp,
+    func_80A93EFC_jp,
+    func_80A94408_jp,
+};
 
 void func_80A94450_jp(Bee* this, s32 arg0, Game_Play* game_play) {
     this->unk_17C = arg0;
@@ -228,14 +235,23 @@ void func_80A9449C_jp(Bee* this, Game_Play* game_play) {
     sp20 = game_play->objectExchangeBank.status[this->actor.unk_026].segment;
     if (sp20 != this->unk_178) {
         sp18 = &this->skeletonInfo;
-        sp18->skeleton = Lib_SegmentedToVirtual(&D_6000928);
-        sp18->animation = Lib_SegmentedToVirtual(&D_60008E4);
+        sp18->skeleton = Lib_SegmentedToVirtual(&cKF_bs_r_obj_rombee);
+        sp18->animation = Lib_SegmentedToVirtual(&cKF_ba_r_obj_rombee);
         this->unk_178 = sp20;
     }
 }
 
-extern f32 D_80A949A4_jp[3];
-extern f32 D_80A949B0_jp[4];
+f32 D_80A949A4_jp[3] = {
+    0.1f,
+    0.1f,
+    0.1f,
+};
+
+f32 D_80A949B0_jp[3] = {
+    0.005f,
+    0.005f,
+    0.01f,
+};
 
 void aBEE_actor_move(Actor* thisx, Game_Play* game_play) {
     SkeletonInfoR* sp30;

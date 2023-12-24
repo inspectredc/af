@@ -4979,8 +4979,8 @@ D_6000E50 = 0x06000E50;
 
 // ovl_Bee
 
-D_60008E4 = 0x060008E4;
-D_6000928 = 0x06000928;
+cKF_ba_r_obj_rombee = 0x060008E4;
+cKF_bs_r_obj_rombee = 0x06000928;
 
 // ovl__00954D30
 
