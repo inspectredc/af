@@ -9,6 +9,13 @@
 struct Game_Play;
 struct Bee;
 
+typedef struct CommonData_unk_10088_unk_0_arg0 {
+    /* 0x00 */ s32 unk_00;
+    /* 0x04 */ xyz_t unk_04;
+    /* 0x10 */ s32 unk_10;
+    /* 0x14 */ struct Game_Play* unk_14;
+} CommonData_unk_10088_unk_0_arg0; // size >= 0x18
+
 typedef void (*BeeActionFunc)(struct Bee*, struct Game_Play*);
 
 typedef struct Bee {

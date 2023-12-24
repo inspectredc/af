@@ -21,6 +21,7 @@ struct ActorOverlay;
 struct struct_801161E8_jp;
 struct ObjectStatus;
 struct CommonData_unk_1004C_unk_14_arg0;
+struct CommonData_unk_10088_unk_0_arg0;
 struct Game_Play;
 struct struct_809AEFA4;
 struct ToolClip;
@@ -76,13 +77,7 @@ typedef struct CommonData_unk_10078 {
     /* 0x08 */ CommonData_unk_10078_unk_08 unk_08;
 } CommonData_unk_10078; // size >= 0xC
 
-typedef struct CommonData_10088_Func_unk_struct {
-    /* 0x00 */ s32 unk_00;
-    /* 0x04 */ xyz_t unk_04;
-    /* 0x10 */ s32 unk_10;
-    /* 0x14 */ struct Game_Play* unk_14;
-} CommonData_10088_Func_unk_struct; // size >= 0x18
-typedef s32 (*CommonData_10088_Func)(CommonData_10088_Func_unk_struct*, s32);
+typedef s32 (*CommonData_10088_Func)(struct CommonData_unk_10088_unk_0_arg0*, s32);
 typedef struct CommonData_unk_10088 {
     CommonData_10088_Func unk_0;
 } CommonData_unk_10088; // size ?= 0x04
@@ -219,6 +214,7 @@ typedef struct CommonData {
     /* 0x10078 */ CommonData_unk_10078* unk_10078;
     /* 0x1007C */ UNK_TYPE1 unk_1007C[0xC];
     /* 0x10088 */ CommonData_unk_10088* unk_10088;
+    // /* 0x10088 */ UNK_TYPE1 unk_10088[0x4];
     /* 0x1008C */ UNK_TYPE1 unk_1008C[0xC];
     /* 0x10098 */ CommonData_unk_10098* unk_10098;
     /* 0x1009C */ UNK_TYPE1 unk_1009C[0x4];

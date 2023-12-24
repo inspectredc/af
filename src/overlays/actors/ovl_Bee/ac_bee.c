@@ -6,6 +6,7 @@
 #include "m_field_info.h"
 #include "libc/math.h"
 #include "m_player_lib.h"
+#include "m_rcp.h"
 
 void aBEE_actor_ct(Actor* thisx, Game_Play* game_play);
 void func_80A93DD0_jp(Actor* thisx, Game_Play* game_play);
@@ -90,16 +91,6 @@ void func_80A93E6C_jp(Bee* this, Game_Play* game_play) {
     }
 }
 
-// #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A93EFC_jp.s")
-extern s32 func_800B1CBC_jp(Game*);
-extern void func_800B2AD0_jp(Game*);
-extern s32 func_800B3B24_jp(s32);
-extern Actor* func_800B3B74_jp();
-extern s32 func_800B3BBC_jp(s32, s32);
-extern s32 func_800B56D0_jp();
-extern s32 func_800B5718_jp();
-extern s32 func_800B5EA4_jp(Game_Play*);
-
 #define	ABS_2(d)		((d) >= 0) ? (d) : -(d)
 
 void func_80A93EFC_jp(Bee* this, Game_Play* game_play) {
@@ -112,7 +103,7 @@ void func_80A93EFC_jp(Bee* this, Game_Play* game_play) {
     s32 sp64;
     xyz_t sp58;
     s32 sp54;
-    CommonData_10088_Func_unk_struct sp3C;
+    CommonData_unk_10088_unk_0_arg0 sp3C;
 
     player = get_player_actor_withoutCheck(game_play);
     sp68 = func_800B3B74_jp();
@@ -158,20 +149,20 @@ dummy_label: ;
             if ((this->unk_446 != 0) || (this->actor.xzDistToPlayer < 30.0f)) {
                 this->unk_446 = 1;
                 if (sp64 == 1) {
-                    func_800B2AD0_jp(gamePT);
+                    func_800B2AD0_jp((Game_Play*)gamePT);
                     this->unk_446 = 2;
                 } else if (sp64 == 2) {
                     func_80A94450_jp(this, 2, game_play);
                     return;
                 }
             }
-        } else if ((func_800B1CBC_jp(gamePT) == 0x5E) != 0) {
+        } else if ((func_800B1CBC_jp((Game_Play*)gamePT) == 0x5E) != 0) {
             if (func_800B5718_jp() != 0) {
                 func_80A94450_jp(this, 2, game_play);
                 return;
             }
         } else {
-            func_800B2AD0_jp(gamePT);
+            func_800B2AD0_jp((Game_Play*)gamePT);
         }
     }
     var_fv2 = fabsf(90.0f - this->unk_430);
@@ -245,7 +236,6 @@ void func_80A9449C_jp(Bee* this, Game_Play* game_play) {
 
 extern f32 D_80A949A4_jp[3];
 extern f32 D_80A949B0_jp[4];
-extern void func_800D1D08_jp(Actor*, s32, PosRot*);
 
 void aBEE_actor_move(Actor* thisx, Game_Play* game_play) {
     SkeletonInfoR* sp30;
@@ -254,7 +244,7 @@ void aBEE_actor_move(Actor* thisx, Game_Play* game_play) {
 
     sp30 = &this->skeletonInfo;
     func_80A9449C_jp(this, game_play);
-    func_800D1D08_jp(&this->actor, 0x30, &this->actor.world);
+    sAdo_OngenPos(&this->actor, 0x30, &this->actor.world);
     if (!(this->actor.world.pos.x < 0.0f) || !(this->actor.world.pos.z < 0.0f)) {
         if ((this->unk_446 == 2) || (func_8008C120_jp() == 0)) {
             Actor_position_moveF(&this->actor);
@@ -281,8 +271,6 @@ void aBEE_actor_move(Actor* thisx, Game_Play* game_play) {
         add_calc(&this->actor.world.pos.y, this->unk_434, 0.3f, 3.0f, 0.0f);
     }
 }
-
-extern Gfx* two_tex_scroll(GraphicsContext*, s32, s32, s32, s32, s32, s32, s32, s32, s32, s32);
 
 #define AC_GCN_OPEN_DISP(gfxCtx)            \
     {                                       \
