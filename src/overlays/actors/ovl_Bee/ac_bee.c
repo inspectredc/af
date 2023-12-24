@@ -5,6 +5,7 @@
 #include "overlays/actors/player_actor/m_player.h"
 #include "m_field_info.h"
 #include "libc/math.h"
+#include "m_player_lib.h"
 
 void aBEE_actor_ct(Actor* thisx, Game_Play* game_play);
 void func_80A93DD0_jp(Actor* thisx, Game_Play* game_play);
@@ -89,7 +90,123 @@ void func_80A93E6C_jp(Bee* this, Game_Play* game_play) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A93EFC_jp.s")
+// #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Bee/ac_bee/func_80A93EFC_jp.s")
+extern s32 func_800B1CBC_jp(Game*);
+extern void func_800B2AD0_jp(Game*);
+extern s32 func_800B3B24_jp(s32);
+extern Actor* func_800B3B74_jp();
+extern s32 func_800B3BBC_jp(s32, s32);
+extern s32 func_800B56D0_jp();
+extern s32 func_800B5718_jp();
+extern s32 func_800B5EA4_jp(Game_Play*);
+
+#define	ABS_2(d)		((d) >= 0) ? (d) : -(d)
+
+void func_80A93EFC_jp(Bee* this, Game_Play* game_play) {
+    f32 temp_fv;
+    Player* player;
+    s16 var_v0;
+    f32 var_fv1 = 0;
+    f32 var_fv2;
+    Actor* sp68;
+    s32 sp64;
+    xyz_t sp58;
+    s32 sp54;
+    CommonData_10088_Func_unk_struct sp3C;
+
+    player = get_player_actor_withoutCheck(game_play);
+    sp68 = func_800B3B74_jp();
+    sp64 = func_800B56D0_jp();
+    add_calc_short_angle2(&this->actor.shape.rot.z, 0, 0.3f, 0x7D0, 0);
+    add_calc_short_angle2(&this->actor.shape.rot.x, 0, 0.3f, 0x7D0, 0);
+    if (&this->actor != sp68) {
+        if (this->actor.shape.rot.x < 0x1001) {
+            if (this->unk_446 != 2) {
+
+                if (((get_player_actor_withoutCheck((Game_Play*)gamePT)->unk_1234Func((Player*)get_player_actor_withoutCheck((Game_Play*)gamePT), (Game_Play*)gamePT) > 0.0f) || (func_800B3B24_jp(&sp58) != 0)) && (this->actor.xzDistToPlayer < 40.0f)) {
+                    get_player_actor_withoutCheck((Game_Play*)gamePT)->unk_1238Func((Player*)get_player_actor_withoutCheck((Game_Play*)gamePT), (Game_Play*)gamePT, &this->actor, 1);
+                } else {
+                    get_player_actor_withoutCheck((Game_Play*)gamePT)->unk_1230Func((Player*)get_player_actor_withoutCheck((Game_Play*)gamePT), (Game_Play*)gamePT, &this->actor, 1, &this->actor.world.pos, 24.0f);
+                }
+            }
+        } else {
+            return;
+        }
+    }
+
+    if (&this->actor == sp68) {
+        if (this->unk_448 == 0) {
+            sp3C.unk_00 = 8;
+            xyz_t_move(&sp3C.unk_04, &this->actor.world.pos);
+            sp3C.unk_10 = 0;
+            sp3C.unk_14 = game_play;
+            this->unk_448 = common_data.unk_10088->unk_0(&sp3C, 1);
+            // FAKE label and xor
+dummy_label: ;
+        } else if (func_800B3BBC_jp(this->unk_448 ^ 0, 0) != 0) {
+            func_80A94450_jp(this, 2, game_play);
+            return;
+        }
+    }
+
+    if (this->unk_448 == 0) {
+        if (func_800B5EA4_jp(game_play) != 0) {
+            this->unk_446 = 1;
+        }
+
+        if (this->unk_446 != 2) {
+            if ((this->unk_446 != 0) || (this->actor.xzDistToPlayer < 30.0f)) {
+                this->unk_446 = 1;
+                if (sp64 == 1) {
+                    func_800B2AD0_jp(gamePT);
+                    this->unk_446 = 2;
+                } else if (sp64 == 2) {
+                    func_80A94450_jp(this, 2, game_play);
+                    return;
+                }
+            }
+        } else if ((func_800B1CBC_jp(gamePT) == 0x5E) != 0) {
+            if (func_800B5718_jp() != 0) {
+                func_80A94450_jp(this, 2, game_play);
+                return;
+            }
+        } else {
+            func_800B2AD0_jp(gamePT);
+        }
+    }
+    var_fv2 = fabsf(90.0f - this->unk_430);
+    this->unk_444 = 0x640;
+    if (this->unk_446 != 0) {
+        this->unk_444 = 0x1388;
+    }
+    var_fv2 *= 7.5f;
+    add_calc_short_angle2(&this->unk_43E, this->unk_444 - (s16) (var_fv2), 0.4f, 0x1F4, 0);
+    add_calc_short_angle2(&this->actor.world.rot.y, this->actor.yawTowardsPlayer, 0.4f, this->unk_43E, 0);
+    this->actor.shape.rot.y = this->actor.world.rot.y;
+
+    var_v0 = ABS_2((s16) (this->actor.world.rot.y - this->actor.yawTowardsPlayer));
+
+    if (var_v0 >= -0x7FFF) {
+        var_v0 = 0;
+    }
+
+    temp_fv = fabsf((0x8000 - var_v0) / 5461);
+    this->unk_42C = 2.9f + temp_fv;
+    add_calc(&this->actor.speed, this->unk_42C , 0.3f, 0.3f, 0.0f);
+    this->unk_43C += 0x1200;
+    this->unk_434 = player->actor.world.pos.y + 50.0f;
+    this->unk_434 += sin_s(this->unk_43C) * 5.0f;
+    
+    temp_fv = this->actor.yawTowardsPlayer - this->actor.world.rot.y;
+    var_fv1 = (temp_fv / 30.0f) + 90.0f;
+    
+    if (var_fv1 < 0.0f) {
+        var_fv1 = 0.0f;
+    } else if (var_fv1 > 180.0f) {
+        var_fv1 = 180.0f;
+    }
+    add_calc(&this->unk_430, var_fv1, 0.5f, 10.0f, 0.0f);
+}
 
 void func_80A94408_jp(Bee* this, Game_Play* game_play) {
 
