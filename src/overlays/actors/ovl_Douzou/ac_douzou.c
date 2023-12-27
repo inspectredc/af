@@ -157,7 +157,38 @@ extern f32 D_FLT_80AA6F48_jp[];
 extern f32 D_FLT_80AA6F58_jp[];
 u32 func_80AA5D54_jp(s32);
 
+#ifdef NON_MATCHING
+void func_80AA6164_jp(Douzou* this, Game_Play* game_play) {
+    s16 sp58[4];
+    s32 i;
+
+    sp58[0] = this->unk_2C8;
+    sp58[1] = this->unk_2CC;
+    sp58[2] = this->unk_2D0;
+    sp58[3] = this->unk_2D4;
+    
+    for (i = 0; i < 4; i++) {
+        if (func_80AA5C30_jp(i)) {
+            s32 temp_s2;
+            
+            if (sp58[i] == 0) {
+                temp_s2 = func_80AA5D54_jp(i);
+                sp58[i] = RANDOM_F(D_FLT_80AA6F58_jp[temp_s2]) + D_FLT_80AA6F48_jp[temp_s2];
+                func_80AA5FAC_jp(this, game_play, i, temp_s2);
+            } else {
+                sp58[i]--;
+            }
+        }
+    }
+
+    this->unk_2C8 = sp58[0];
+    this->unk_2CC = sp58[1];
+    this->unk_2D0 = sp58[2];
+    this->unk_2D4 = sp58[3];
+}
+#else
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Douzou/ac_douzou/func_80AA6164_jp.s")
+#endif
 
 void func_80AA6304_jp(Douzou* this, s32 arg0) {
     xyz_t sp4C;
@@ -203,7 +234,64 @@ void func_80AA63E4_jp(Douzou* this) {
 
 extern s32 func_8007B410_jp();
 #define	ABS_2(d)		((d) >= 0) ? (d) : -(d)
+
+#ifdef NON_MATCHING
+void func_80AA64A4_jp(Actor* thisx, Game_Play* game_play) {
+    Player* player;
+    s32 i;
+    f32 temp_fs0;
+    xyz_t sp78;
+    xyz_t sp6C;
+    s_xyz sp64;
+    s32 var_v0;
+    s16 sp5E;
+    s16 temp_a1;
+    Douzou* this = (Douzou*)thisx;
+
+    player = get_player_actor_withoutCheck(game_play);
+    if (mDemo_Check(8, &this->actor) == 1) {
+        i = this->unk_2C0;
+        xyz_t_move(&sp78, &this->actor.world.pos);
+        sp78.x += D_FLT_80AA6EB4_jp[i];
+        sp78.z += D_FLT_80AA6EA4_jp[i];
+        temp_a1 = search_position_angleY(&player->actor.world.pos, &sp78);
+        sp5E = player->actor.shape.rot.y;
+        add_calc_short_angle2(&sp5E, temp_a1, 0.3f, 0x1000, 0);
+        sp64.x = player->actor.shape.rot.x;
+        sp64.y = sp5E;
+        sp64.z = player->actor.shape.rot.z;
+        get_player_actor_withoutCheck((Game_Play* ) gamePT)->unk_123C(gamePT, 0, &sp64, 0x20);
+    } else if (chkTrigger(0x8000) != 0) {
+        var_v0 = ABS_2(player->actor.shape.rot.y);
+        if (var_v0 >= 0x6000 && (func_8007B410_jp() == 0)) {
+            xyz_t_move(&sp6C, &this->actor.world.pos);
+            for (i = 0; i < 4; i++) {
+                if (func_80AA5C30_jp(i) != 0) {
+                    sp78.x = D_FLT_80AA6EB4_jp[i] + sp6C.x;
+                    sp78.z = D_FLT_80AA6EA4_jp[i] + sp6C.z;
+                    temp_fs0 = search_position_distanceXZ(&player->actor.world.pos, &sp78);
+                    sp5E = search_position_angleY(&sp78, &player->actor.world.pos);
+                    if (!(temp_fs0 > 50.0f)) {
+                        if (1){if (1){}}
+                        var_v0 = ABS_2(sp5E);
+                        if (var_v0 < 0x1801) {
+                            if (common_data.unk_10A68 == 1) {
+                                common_data.unk_10A69 = 4;
+                            } else {
+                                this->unk_2C0 = i;
+                                mDemo_Request(8, &this->actor, &func_80AA63E4_jp);
+                            }
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+#else
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Douzou/ac_douzou/func_80AA64A4_jp.s")
+#endif
 
 extern BaseAnimationR* D_80AA6F68_jp[];
 extern DouzouActionFunc D_80AA6F70_jp[];
