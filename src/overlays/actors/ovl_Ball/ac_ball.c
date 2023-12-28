@@ -9,6 +9,7 @@
 #include "audio.h"
 #include "6F2150.h"
 #include "m_field_info.h"
+#include "sys_math_atan.h"
 
 void aBALL_actor_ct(Actor* thisx, Game_Play* game_play);
 void aBALL_actor_dt(Actor* thisx, Game_Play* game_play);
@@ -430,7 +431,41 @@ void func_809699D8_jp(Ball* this, Game_Play* game_play) {
 // TODO: this function includes an unreferenced float. It was forced to be in this function to
 // be able to build and match the file. It needs to be figured out where to put this float and
 // how to handle this when this file gets decompiled.
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_80969DE8_jp.s")
+
+// RO_FLT_8096A96C_jp 0.200000003
+
+extern s16 D_8096A8FC_jp[2];
+
+void func_80969DE8_jp(Ball* this, Game_Play* game_play) {
+    s32 pad;
+    xyz_t sp50;
+    s16 temp_v0_2;
+    f32 sp48;
+    s32 var_a3;
+
+    sp48 = func_80075EA0_jp(this->actor.world.pos, "../ac_ball.c", 0x3B5);
+    add_calc0(&this->unk_1E8, 0.5f, 100.0f);
+    func_80076290_jp(&sp50, this->actor.colResult.unk5);
+    temp_v0_2 = atans_table(sp50.z, sp50.x);
+    var_a3 = ABS_2((s16) (this->actor.world.rot.y - temp_v0_2));
+
+    chase_angle(&this->actor.world.rot.y, temp_v0_2, D_8096A8FC_jp[((var_a3 > 0x4000))]);
+    if (this->actor.world.pos.y < sp48) {
+        this->actor.terminalVelocity = 1.0f;
+    } else {
+        this->actor.terminalVelocity = -1.0f;
+    }
+
+    if (this->unk_1FC < 0x20) {
+        if ((!(game_play->state.unk_A0 & 3) && (this->unk_1FC < 0x10)) || !(game_play->state.unk_A0 & 7)) {
+            common_data.unk_1009C->unk_00(0x45, this->actor.world.pos, 1, this->actor.world.rot.y, game_play, this->actor.fgName, 1, 0);
+        }
+        this->unk_1FC++;
+    }
+    this->actor.gravity = 0.2f;
+    this->unk_1F0 = 0.2f;
+    this->unk_1EC = 1.0f;
+}
 
 void func_80969FBC_jp(Ball* this, Game_Play* game_play) {
     this->actor.shape.unk_2C = 0;
