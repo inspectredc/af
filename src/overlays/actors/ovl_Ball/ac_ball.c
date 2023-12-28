@@ -5,6 +5,11 @@
 #include "overlays/gamestates/ovl_play/m_play.h"
 #include "overlays/actors/player_actor/m_player.h"
 #include "libc/math.h"
+#include "m_npc.h"
+#include "audio.h"
+#include "m_actor_shadow.h"
+#include "m_collision_bg.h"
+#include "6F2150.h"
 
 void aBALL_actor_ct(Actor* thisx, Game_Play* game_play);
 void aBALL_actor_dt(Actor* thisx, Game_Play* game_play);
@@ -127,7 +132,7 @@ s32 func_80968B9C_jp(s32 arg0) {
     var_s0 = (s32) (fqrand() * (f32) temp_s3);
     for (i = 0; i < temp_fp; i++) {
         for (j = 0; j < temp_s3; j++) {
-            if ((func_80089404_jp(var_s2, var_s0, 0x8023) == 0) && (func_800ADD20_jp(&sp64, &sp60, var_s2, var_s0, 2) == 1)) {
+            if ((func_80089404_jp(var_s2, var_s0, 0x8023) == 0) && (mNpc_GetMakeUtNuminBlock_hard_area(&sp64, &sp60, var_s2, var_s0, 2) == 1)) {
                 func_80088C74_jp(arg0, var_s2, var_s0, sp64, sp60);
                 return 1;
             }
@@ -151,7 +156,6 @@ s32 func_80968B9C_jp(s32 arg0) {
 }
 
 extern Ball* B_8096A980_jp;
-extern void mAc_ActorShadowEllipse(Actor*, LightsN*, Game_Play*);
 
 void aBALL_actor_ct(Actor* thisx, Game_Play* game_play) {
     Ball* this = (Ball*)thisx;
@@ -205,10 +209,6 @@ void aBALL_actor_dt(Actor* thisx, Game_Play* game_play) {
     common_data.unk_100DC = NULL;
     ClObjPipe_dt(game_play, &this->collider);
 }
-
-extern f32 func_80071884_jp(xyz_t*, xyz_t, f32);
-// extern void func_800CE4F4_jp(xyz_t*, f32*, f32*);
-// extern void func_800CE554_jp(Actor*, xyz_t*);
 
 void func_80969040_jp(Ball* this) {
     xyz_t sp2C;
@@ -299,16 +299,12 @@ void func_80969114_jp(Ball* this) {
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_809693EC_jp.s")
 
-extern s32 func_800CEB1C_jp();
-
 void func_80969800_jp(Ball* this) {
     if (func_800CEB1C_jp() != 1) {
         this->unk_208 |= 1;
         Actor_delete(&this->actor);
     }
 }
-
-extern void func_800D1D58_jp(s32, void*);
 
 void func_8096983C_jp(Ball* this, Game_Play* game_play) {
     void* sp2C;
@@ -318,7 +314,7 @@ void func_8096983C_jp(Ball* this, Game_Play* game_play) {
     temp = func_80071884_jp(NULL, this->actor.world.pos, 0.0f);
     this->actor.shape.unk_2C = 1;
     if ((this->unk_1E0 == func_809699D8_jp) && ((this->actor.world.pos.y - temp) > 20.0f)) {
-        func_800D1D58_jp(0x43D, sp2C);
+        sAdo_OngenTrgStart(0x43D, sp2C);
     }
     this->unk_1E0 = func_809698E8_jp;
 }

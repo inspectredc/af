@@ -29,6 +29,6 @@
 // void mAc_NormalActorShadow();
 // void mAc_UnagiActorShadow();
 // void mAc_ActorShadowCircle();
-// void mAc_ActorShadowEllipse();
+void mAc_ActorShadowEllipse(Actor*, struct LightsN*, struct Game_Play*);
 
 #endif

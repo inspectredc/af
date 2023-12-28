@@ -11,7 +11,7 @@
 // void func_800CE874_jp();
 // void func_800CE8F0_jp();
 // void func_800CE9C4_jp();
-// void func_800CEB1C_jp();
+s32 func_800CEB1C_jp();
 // void func_800CEC30_jp();
 // void func_800CEC98_jp();
 // void func_800CEE24_jp();
