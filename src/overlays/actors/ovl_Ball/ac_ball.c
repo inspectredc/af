@@ -366,9 +366,9 @@ void func_809699D8_jp(Ball* this, Game_Play* game_play) {
                 var_fv1_3 = ABS_F(this->actor.velocity.z);
 
                 if (var_fv1_3 < 1.0f) {
+                    this->unk_208 |= 2;
                     this->collider.attribute.dim.unk_2 = 0x14;
                     this->collider.attribute.dim.radius = 0x12;
-                    this->unk_208 |= 2;
                     this->actor.colStatus.mass = 0xFE;
                     this->actor.speed = 0.0f;
                     return;
@@ -381,7 +381,7 @@ void func_809699D8_jp(Ball* this, Game_Play* game_play) {
     }
 
     if (!(fabsf(sp58.x) < 0.008f) || !(fabsf(sp58.z) < 0.008f)) {
-        if (Math3d_normalizeXyz_t(&sp58) != 0.0f) {
+        if (Math3d_normalizeXyz_t(&sp58)) {
             this->actor.velocity.x += 1.35f * sp58.x;
             this->actor.velocity.z += 1.35f * sp58.z;
             func_800CE4B0_jp(&this->actor.velocity, &this->unk_1EC, &this->actor.world.rot.y);
