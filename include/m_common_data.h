@@ -286,7 +286,7 @@ typedef struct CommonData {
     /* 0x10A68 */ u8 unk_10A68;
     /* 0x10A69 */ UNK_TYPE1 unk_10A69[0x3];
     /* 0x10A6C */ xyz_t unk_10A6C;
-    /* 0x10A78 */ UNK_TYPE1 unk_10A78;
+    /* 0x10A78 */ u8 unk_10A78;
     /* 0x10A79 */ UNK_TYPE1 unk_10A79[0x3];
     /* 0x10A7C */ UNK_TYPE1 unk_10A7C[0x4];
     /* 0x10A80 */ UNK_TYPE1 unk_10A80[0x2];

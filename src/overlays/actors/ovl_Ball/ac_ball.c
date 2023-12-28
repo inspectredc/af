@@ -10,6 +10,7 @@
 #include "6F2150.h"
 #include "m_field_info.h"
 #include "sys_math_atan.h"
+#include "m_player_lib.h"
 
 void aBALL_actor_ct(Actor* thisx, Game_Play* game_play);
 void aBALL_actor_dt(Actor* thisx, Game_Play* game_play);
@@ -115,7 +116,7 @@ void func_80968AF4_jp(Ball* this, s32 arg0) {
     }
 }
 
-s32 func_80968B9C_jp(s32 arg0) {
+s32 func_80968B9C_jp(xyz_t* arg0) {
     s32 temp_fp;
     s32 temp_s3;
     s32 sp64;
@@ -129,8 +130,8 @@ s32 func_80968B9C_jp(s32 arg0) {
 
     temp_fp = func_80087E58_jp();
     temp_s3 = func_80087E94_jp();
-    var_s2 = (s32) (fqrand() * (f32) temp_fp);
-    var_s0 = (s32) (fqrand() * (f32) temp_s3);
+    var_s2 = RANDOM_F(temp_fp);
+    var_s0 = RANDOM_F(temp_s3);
     for (i = 0; i < temp_fp; i++) {
         for (j = 0; j < temp_s3; j++) {
             if ((func_80089404_jp(var_s2, var_s0, 0x8023) == 0) && (mNpc_GetMakeUtNuminBlock_hard_area(&sp64, &sp60, var_s2, var_s0, 2) == 1)) {
@@ -160,31 +161,31 @@ extern Ball* B_8096A980_jp;
 
 void aBALL_actor_ct(Actor* thisx, Game_Play* game_play) {
     Ball* this = (Ball*)thisx;
-    PosRot* sp34;
+    char pad[0x4];
 
     B_8096A980_jp = this;
     if ((common_data.unk_10A6C.x == 0.0f) && (common_data.unk_10A6C.y == 0.0f) && (common_data.unk_10A6C.z == 0.0f)) {
-        sp34 = &this->actor.world;
-        if (func_80968B9C_jp(sp34) == 0) {
-            sp34->pos = this->actor.home.pos;
+
+        if (func_80968B9C_jp(&this->actor.world.pos) == 0) {
+            this->actor.world.pos = this->actor.home.pos;
         }
-        common_data.unk_10A78 = (s8) (u32) (fqrand() * 3.0f);
-        common_data.unk_10A6C = sp34->pos;
-        this->unk_1F8 = (s32) (u8) common_data.unk_10A78;
+        common_data.unk_10A78 = RANDOM_F(3.0f);
+        common_data.unk_10A6C = this->actor.world.pos;
+        this->unk_1F8 = common_data.unk_10A78;
     } else {
         this->actor.world.pos = common_data.unk_10A6C;
-        this->unk_1F8 = (s32) (u8) common_data.unk_10A78;
+        this->unk_1F8 = common_data.unk_10A78;
     }
     func_80968A10_jp(this, game_play, this->unk_1F8);
     func_80968AF4_jp(this, this->unk_1F8);
     common_data.unk_100DC = func_8096A86C_jp;
     Shape_Info_init(&this->actor, 0.0f, mAc_ActorShadowEllipse, 9.0f, 17.0f);
-    ClObjPipe_ct(game_play, (ClObjPipe* ) &this->collider);
-    ClObjPipe_set5(game_play, (ClObjPipe* ) &this->collider, &this->actor, &aBALL_CoInfoData);
+    ClObjPipe_ct(game_play, &this->collider);
+    ClObjPipe_set5(game_play, &this->collider, &this->actor, &aBALL_CoInfoData);
     CollisionCheck_Status_set3(&this->actor.colStatus, &aBALL_StatusData);
     this->unk_206 = 3;
     func_80969998_jp(this, game_play);
-    this->unk_1DC = NULL;
+    this->unk_1DC = 0;
     this->actor.terminalVelocity = -20.0f;
     this->actor.gravity = 0.6f;
     this->actor.speed = 0.0f;
@@ -349,7 +350,7 @@ void func_809699D8_jp(Ball* this, Game_Play* game_play) {
     f32 var_fv1_3;
 
     func_80071C1C_jp(&sp58, this->actor.world.pos);
-    if (func_800CEC98_jp(this, &sp58, &sp54, &sp50, &sp52, 1.0f)) {
+    if (func_800CEC98_jp(&this->actor, &sp58, &sp54, &sp50, &sp52, 1.0f)) {
         f32 var_fv1;
 
         var_fv1 = (sp54 - 40.0f) - 5.0f;
@@ -545,7 +546,53 @@ s32 func_8096A334_jp(Ball* this, Player* player) {
     return 0;
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_8096A3D8_jp.s")
+void func_8096A3D8_jp(Ball* this, Game_Play* game_play) {
+    s32 i;
+
+    if (this->unk_208 & 4) {
+        Player* player;
+        player = get_player_actor_withoutCheck(game_play);
+        this->unk_208 &= ~4;
+        if ((func_8096A334_jp(this, player) != 0) || (fabsf(this->actor.speed) < 0.008f)) {
+            this->actor.world.rot.y = player->actor.shape.rot.y;
+            this->actor.speed = 2.0f;
+            this->actor.velocity.y = 4.5f;
+            if (this->unk_208 & 2) {
+                this->collider.attribute.dim.unk_2 = 0x1E;
+                this->collider.attribute.dim.radius = 0xD;
+                this->unk_208 &= ~2;
+                this->actor.colStatus.mass = 0x64;
+            }
+        }
+    }
+    if (this->unk_208 & 8) {
+        this->unk_208 &= ~8;
+        if (!(this->unk_208 & 2)) {
+            Player* player;
+            player = get_player_actor_withoutCheck(game_play);
+            if ((func_8096A334_jp(this, player) != 0) || (fabsf(this->actor.speed) < 0.008f)) {
+                this->actor.world.rot.y = player->actor.shape.rot.y + 0x2000;
+                this->actor.speed = 4.5f;
+                this->actor.velocity.y = 3.0f;
+            }
+        }
+    }
+    if (!(this->unk_208 & 1)) {
+        if (this->actor.colResult.unk7) {
+            sAdo_OngenTrgStart(0x27, &this->actor.world.pos);
+            this->unk_208 |= 1;
+            if (common_data.unk_100B4 != NULL) {
+                common_data.unk_100B4->unk_C(&this->actor.world.pos, 20.0f, 0);
+            }
+            this->collider.attribute.dim.unk_2 = 0xA;
+            common_data.unk_1009C->unk_00(0x3A, this->actor.world.pos, 1, 0, game_play, this->actor.fgName, 1, 0);
+
+            for (i = 2; i < 6; i++) {
+                common_data.unk_1009C->unk_00(0x3B, this->actor.world.pos, 1, this->actor.world.rot.y, game_play, this->actor.fgName, 0, i | 0x3000);
+            }
+        }
+    }
+}
 
 void aBALL_actor_move(Actor* thisx, Game_Play* game_play) {
     s32 pad;
