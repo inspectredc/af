@@ -35,6 +35,24 @@ typedef union mCoBG_unkStructUnion {
     u32 raw;
 } mCoBG_unkStructUnion;
 
+// collision bg result data
+typedef struct mCoBG_CheckResult {
+  u32 unk0:1; // [31] on_ground
+  u32 unk1:5; // [30:25] hit_attribute_wall
+  u32 unk2:5; // [25:20] hit_wall
+  u32 unk3:3; // [20:17] hit_wall_count
+  u32 unk4:1; // [17:16] unk_flag0
+  u32 unk5:6; // [16:10] unit_attribute
+  u32 unk6:1; // [10] is_on_move_bg_obj
+  u32 unk7:1; // [9] is_in_water
+  u32 unk8:1; // [8] unk_flag1
+  u32 unk9:1; // [7] unk_flag2
+  u32 unk10:1; // [6] unk_flag3
+  u32 unk11:1; // [5] unk_flag4
+  u32 unk12:1; // [4] unk_flag5
+  u32 unk13:4; // [3:0] unk_flag6
+} mCoBG_CheckResult;
+
 // void func_80067430_jp();
 // void func_800674B0_jp();
 // void func_800674D8_jp();
@@ -281,7 +299,7 @@ s32 func_80076358_jp(u32 attribute);
 // void func_800763FC_jp();
 // void func_8007648C_jp();
 // void func_800764CC_jp();
-// void func_800765AC_jp();
+void func_800765AC_jp(xyz_t*, struct Actor*, f32, f32, s32, s32, s32);
 // void func_80076778_jp();
 // void func_800768C8_jp();
 // void func_80076A04_jp();
