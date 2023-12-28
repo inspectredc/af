@@ -7,9 +7,8 @@
 #include "libc/math.h"
 #include "m_npc.h"
 #include "audio.h"
-#include "m_actor_shadow.h"
-#include "m_collision_bg.h"
 #include "6F2150.h"
+#include "m_field_info.h"
 
 void aBALL_actor_ct(Actor* thisx, Game_Play* game_play);
 void aBALL_actor_dt(Actor* thisx, Game_Play* game_play);
@@ -27,6 +26,7 @@ void func_8096A0EC_jp(Ball* this, Game_Play* game_play);
 
 // todo: move out
 #define	ABS_2(d)		((d) >= 0) ? (d) : -(d)
+#define	ABS_F(d)		((d) >= 0.0f) ? (d) : -(d)
 
 #if 0
 ActorProfile Ball_Profile = {
@@ -337,7 +337,95 @@ void func_80969998_jp(Ball* this, Game_Play* game_play) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_809699D8_jp.s")
+void func_809699D8_jp(Ball* this, Game_Play* game_play) {
+    char pad[0x4];
+    xyz_t sp58;
+    f32 sp54;
+    s16 sp52;
+    s16 sp50;
+    s32 var_v0;
+    f32 var_fv1_2;
+    f32 var_fv1_3;
+
+    func_80071C1C_jp(&sp58, this->actor.world.pos);
+    if (func_800CEC98_jp(this, &sp58, &sp54, &sp50, &sp52, 1.0f)) {
+        f32 var_fv1;
+
+        var_fv1 = (sp54 - 40.0f) - 5.0f;
+        if (!(sp54 - 40.0f < 5.0f)) {
+            var_fv1 = 0;
+        }
+        var_fv1 *= 25.0f;
+        add_calc(&this->unk_1E8, var_fv1, 0.5f, 200.0f, 5.0f);
+        this->actor.velocity.x *= 0.7f;
+        this->actor.velocity.z *= 0.7f;
+        if (sp54 < 1.0f) {
+            var_fv1_2 = ABS_F(this->actor.velocity.x);
+
+            if (var_fv1_2 < 1.0f) {
+                var_fv1_3 = ABS_F(this->actor.velocity.z);
+
+                if (var_fv1_3 < 1.0f) {
+                    this->collider.attribute.dim.unk_2 = 0x14;
+                    this->collider.attribute.dim.radius = 0x12;
+                    this->unk_208 |= 2;
+                    this->actor.colStatus.mass = 0xFE;
+                    this->actor.speed = 0.0f;
+                    return;
+                }
+            }
+        }
+    } else {
+        func_800CE694_jp(&this->actor, &sp58);
+        add_calc0(&this->unk_1E8, 0.5f, 100.0f);
+    }
+
+    if (!(fabsf(sp58.x) < 0.008f) || !(fabsf(sp58.z) < 0.008f)) {
+        if (Math3d_normalizeXyz_t(&sp58) != 0.0f) {
+            this->actor.velocity.x += 1.35f * sp58.x;
+            this->actor.velocity.z += 1.35f * sp58.z;
+            func_800CE4B0_jp(&this->actor.velocity, &this->unk_1EC, &this->actor.world.rot.y);
+            if (this->unk_1EC < 8.0f) {
+                this->unk_1EC = this->unk_1EC;
+            } else {
+                this->unk_1EC = 8.0f;
+            }
+            this->unk_1F0 = 0.1f;
+        }
+    } else {
+        this->unk_1EC = 0.0f;
+        this->unk_1F0 = 0.12f;
+    }
+
+    this->actor.terminalVelocity = -20.0f;
+    this->actor.gravity = 0.6f;
+    this->unk_1F4 = this->actor.speed;
+    if (this->actor.colResult.unk7 || this->actor.colResult.unk5 == 0xB) {
+        if (this->actor.colResult.unk0 != 0) {
+            func_8096A0CC_jp(this, game_play);
+        } else {
+            this->unk_206 = 0;
+            func_80969FBC_jp(this, game_play);
+        }
+    } else if (this->actor.colResult.unk0 == 0) {
+        this->unk_206 = 0;
+        func_8096983C_jp(this, game_play);
+        return;
+    }
+
+    if (!(game_play->state.unk_A0 & 7) && this->actor.colResult.unk5 == 9) {
+        if (this->actor.speed > 1.0f) {
+            
+            if (this->actor.speed > 4.0f) {
+                var_v0 = 1;
+            } else {
+                var_v0 = 0;
+            }
+
+            common_data.unk_1009C->unk_00(0x33, this->actor.world.pos, 1, this->actor.world.rot.y, game_play, this->actor.fgName, 0, var_v0);
+        }
+    }
+}
 
 // TODO: this function includes an unreferenced float. It was forced to be in this function to
 // be able to build and match the file. It needs to be figured out where to put this float and

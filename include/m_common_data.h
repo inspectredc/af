@@ -101,7 +101,11 @@ typedef struct CommonData_unk_10098 {
     /* 0x86C */ UNK_TYPE unk_86C;
 } CommonData_unk_10098; // size >= 0x870
 
-typedef void (*CommonData_unk_1009C_Func)(s8, xyz_t, s32, s32, struct Game_Play*, s32, s32, s32);
+typedef void (*CommonData_1009C_unk_00)(s8, xyz_t, s32, s32, struct Game_Play*, s32, s32, s32);
+
+typedef struct CommonData_unk_1009C {
+    /* 0x00 */ CommonData_1009C_unk_00 unk_00;
+} CommonData_unk_1009C;
 
 typedef void (*CommonData_unk_100B4_unk_C)(xyz_t*, f32, UNK_TYPE);
 typedef struct CommonData_unk_100B4 {
@@ -222,7 +226,7 @@ typedef struct CommonData {
     /* 0x10078 */ CommonData_unk_10078* unk_10078;
     /* 0x1007C */ UNK_TYPE1 unk_1007C[0x1C];
     /* 0x10098 */ CommonData_unk_10098* unk_10098;
-    /* 0x1009C */ CommonData_unk_1009C_Func unk_1009C;
+    /* 0x1009C */ CommonData_unk_1009C* unk_1009C;
     /* 0x100A0 */ struct ToolClip* toolClip;
     /* 0x100A4 */ UNK_TYPE1 unk_100A4[0x10];
     /* 0x100B4 */ CommonData_unk_100B4* unk_100B4;
