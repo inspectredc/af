@@ -30,6 +30,7 @@ void func_8096A0EC_jp(Ball* this, Game_Play* game_play);
 #define	ABS_2(d)		((d) >= 0) ? (d) : -(d)
 #define	ABS_F(d)		((d) >= 0.0f) ? (d) : -(d)
 #define CLAMP_MAX(x, max) ((x) > (max) ? (max) : (x))
+#define CLAMP_MIN(x, min) ((x) < (min) ? (min) : (x))
 
 #if 0
 ActorProfile Ball_Profile = {
@@ -571,7 +572,34 @@ void func_80969FBC_jp(Ball* this, Game_Play* game_play) {
     this->unk_1E0 = func_80969FD8_jp;
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_80969FD8_jp.s")
+void func_80969FD8_jp(Ball* this, Game_Play* game_play) {
+    
+
+    func_80969DE8_jp(this, game_play);
+    add_calc0(&this->unk_1E8, 0.5f, 100.0f);
+    
+    {
+        f32 var_fv0;
+        var_fv0 = this->unk_1F4;
+        var_fv0 -= 0.5f;
+        var_fv0 = CLAMP_MIN(var_fv0, 0.0f);
+        this->unk_1F4 = var_fv0;
+    }
+
+    if (common_data.unk_100B4 != NULL) {
+        common_data.unk_100B4->unk_C(&this->actor.world.pos, 20.0f, 1);
+    }
+    
+    if (this->actor.colResult.unk0) {
+        if (this->actor.colResult.unk7) {
+            func_8096A0CC_jp(this, game_play);
+        } else if (this->actor.colResult.unk5 != 0xB) {
+            func_80969998_jp(this, game_play);
+        }
+    } else if (!this->actor.colResult.unk7) {
+        func_8096983C_jp(this, game_play);
+    }
+}
 
 void func_8096A0CC_jp(Ball* this, Game_Play* game_play) {
     this->actor.shape.unk_2C = 0;
