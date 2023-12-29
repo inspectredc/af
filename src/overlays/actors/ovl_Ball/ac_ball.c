@@ -29,6 +29,7 @@ void func_8096A0EC_jp(Ball* this, Game_Play* game_play);
 // todo: move out
 #define	ABS_2(d)		((d) >= 0) ? (d) : -(d)
 #define	ABS_F(d)		((d) >= 0.0f) ? (d) : -(d)
+#define CLAMP_MAX(x, max) ((x) > (max) ? (max) : (x))
 
 #if 0
 ActorProfile Ball_Profile = {
@@ -290,7 +291,104 @@ void func_80969114_jp(Ball* this) {
     }
 }
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/overlays/actors/ovl_Ball/ac_ball/func_809693EC_jp.s")
+void func_809693EC_jp(Ball* this) {
+    s32 sp8C;
+    Actor* sp88;
+    s16 sp86;
+    f32 sp80;
+    f32 sp7C;
+    f32 sp78;
+    f32 sp74;
+    f32 sp70;
+    char pad[0x4];
+    f32 sp68;
+    
+    sp8C = func_8008C120_jp();
+
+    if (this->collider.base.prop.ocFlags1 & 2) {
+        xyz_t sp5C;
+        f32 sp58;
+        f32 sp54;
+        f32 sp50;
+        f32 sp4C;
+        char pad2[0x4];
+        
+        this->collider.base.prop.ocFlags1 &= ~2;
+
+        sp88 = this->collider.base.oc;
+        if (func_800BC528_jp(this->unk_1DC) != 0) {
+
+            func_800BC5D4_jp(this->unk_1DC);
+            this->actor.speed = 0.0f;
+            this->actor.velocity = ZeroVec;
+        } else if ((sp88 != NULL) && (!(this->unk_208 & 2)) && ((sp8C != 1) && (sp8C != 2))) {
+
+            if (sp88 != this->unk_1DC) {
+
+                sp5C = sp88->velocity;
+                this->unk_1DC = sp88;
+                sp86 = atans_table(this->actor.world.pos.z - sp88->world.pos.z, this->actor.world.pos.x - sp88->world.pos.x);
+                sp68 = sin_s(sp86);
+                sp70 = cos_s(sp86);
+                sp7C = (this->actor.velocity.x * sp68) + (sp70 * this->actor.velocity.z);
+
+                sp78 = sqrtf(SQ(sp5C.x) + SQ(sp5C.z));
+                
+                xyz_t_mult_v(&sp5C, (24.0f/180.0f) * sp78 * 0.9f + 0.1f);
+                
+                sp74 = (sp68 * sp5C.x) + (sp70 * sp5C.z);
+                sp80 = ABS_F(sp7C + sp74);
+                
+                sp58 = sin_s(sp86) * sp80;
+                sp54 = cos_s(sp86) * sp80;
+                sp50 = this->actor.velocity.x + sp58;
+                sp4C = this->actor.velocity.z + sp54;
+                sp7C = sqrtf(SQ(sp50) + SQ(sp4C));
+                sp7C = CLAMP_MAX(sp7C, 11.0f);
+                
+                if (this->actor.colResult.unk0) {
+                    f32 temp_fv1;
+                    s16 sp42;
+
+                    if (this->actor.speed == 0.0f) {
+
+                        temp_fv1 = sp7C / 11.0f;
+                        sp42 = DEG_TO_BINANG_ALT3(((fqrand2() * (35.0f * temp_fv1)) + (90.0f * temp_fv1)));
+
+                        this->actor.speed = cos_s(sp42) * sp7C;
+                        this->actor.velocity.y = sin_s(sp42) * sp7C;
+                    } else {
+                        this->actor.speed = sp7C * 0.75f;
+                    }
+                } else {
+                    this->actor.speed = sp7C * 0.75f;
+                }
+
+                this->actor.world.rot.y = atans_table(sp4C, sp50);
+                this->actor.speed *= 0.9f;
+                sAdo_OngenTrgStartSpeed(0x25, &this->actor.world.pos, this->actor.speed);
+                
+            } else {
+                xyz_t sp34;
+                xyz_t sp28;
+
+                sp28 = this->actor.colStatus.displacement;
+                xyz_t_add(&this->actor.velocity, &sp28, &sp34);
+                if ((sp8C != 1) && (sp8C != 2)) {
+    
+                    this->actor.speed = sqrtf(SQ(sp34.x) + SQ(sp34.z));
+                    this->actor.speed = CLAMP_MAX(this->actor.speed, 11.0f);
+                    
+                    this->actor.world.rot.y = atans_table(sp34.z, sp34.x);
+                }
+            }
+        } else {
+            this->unk_1DC = NULL;
+        }
+    } else {
+        this->unk_1DC = NULL;
+    }
+}
 
 void func_80969800_jp(Ball* this) {
     if (func_800CEB1C_jp() != 1) {

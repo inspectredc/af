@@ -11,7 +11,7 @@ void func_800CE694_jp(struct Actor*, xyz_t*);
 s16 func_800CE874_jp(struct Actor*);
 void func_800CE8F0_jp(struct Actor*);
 s32 func_800CE9C4_jp(struct Actor*);
-s32 func_800CEB1C_jp();
+s32 func_800CEB1C_jp(void);
 // void func_800CEC30_jp();
 s32 func_800CEC98_jp(struct Actor*, xyz_t*, f32*, s16*, s16*, f32);
 // void func_800CEE24_jp();
