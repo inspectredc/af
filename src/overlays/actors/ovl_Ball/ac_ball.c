@@ -27,7 +27,12 @@ void func_80969FD8_jp(Ball* this, Game_Play* game_play);
 void func_8096A0CC_jp(Ball* this, Game_Play* game_play);
 void func_8096A0EC_jp(Ball* this, Game_Play* game_play);
 
-#if 0
+Gfx* D_8096A8B0_jp[3] = {
+    0x060001A8,
+    0x06000368,
+    0x06000708,
+};
+
 ActorProfile Ball_Profile = {
     /* */ ACTOR_BALL,
     /* */ ACTOR_PART_4,
@@ -41,15 +46,14 @@ ActorProfile Ball_Profile = {
     /* */ aBALL_actor_draw,
     /* */ NULL,
 };
-#endif
 
-extern ClObjPipe_Init aBALL_CoInfoData;
-extern CollisionCheck_Status_Init aBALL_StatusData;
+ClObjPipe_Init aBALL_CoInfoData = { 
+    { OC1_1 | OC1_TYPE_8 | OC1_TYPE_10 | OC1_TYPE_20, OC2_TYPE_20, COLSHAPE_PIPE },
+    { ELEM_FLAG_1 },
+    { { 0xD, 0x1E, -0xA, { 0, 0, 0 } } },
+};
 
-#if 0
-ClObjPipe_Init aBALL_CoInfoData = { { OC1_1 | OC1_TYPE_8 | OC1_TYPE_10 | OC1_TYPE_20, OC2_TYPE_20, COLSHAPE_PIPE }, { ELEM_FLAG_1 }, { { 0xD, 0x1E, -0xA, { 0, 0, 0 } } }, };
 CollisionCheck_Status_Init aBALL_StatusData = { 0, 0xD, 0x1E, -0xA, 100, };
-#endif
 
 extern UNK_TYPE D_1100000;
 extern UNK_TYPE D_11003C0;
@@ -527,7 +531,10 @@ void func_809699D8_jp(Ball* this, Game_Play* game_play) {
 
 // RO_FLT_8096A96C_jp 0.200000003
 
-extern s16 D_8096A8FC_jp[2];
+s16 D_8096A8FC_jp[2] = {
+    0x100,
+    0x400,
+};
 
 void func_80969DE8_jp(Ball* this, Game_Play* game_play) {
     char pad[0x4];
@@ -736,8 +743,6 @@ void aBALL_actor_move(Actor* thisx, Game_Play* game_play) {
     func_8096A23C_jp(this);
     func_8096A3D8_jp(this, game_play);
 }
-
-extern Gfx* D_8096A8B0_jp[3];
 
 #define AC_GCN_OPEN_DISP(gfxCtx)            \
     {                                       \
