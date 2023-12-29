@@ -22,8 +22,13 @@
 #define SEGMENTED_TO_K0(addr) (void*)((gSegments[SEGMENT_NUMBER(addr)] + K0BASE) + SEGMENT_OFFSET(addr))
 
 #define ABS(x) (((x) >= 0) ? (x): -(x))
+#define	ABS_2(d)		((d) >= 0) ? (d) : -(d)
+#define	ABS_F(d)		((d) >= 0.0f) ? (d) : -(d)
 
+#define CLAMP_MAX(x, max) ((x) > (max) ? (max) : (x))
+#define CLAMP_MIN(x, min) ((x) < (min) ? (min) : (x))
 #define CLAMP(x, min, max) ((x) < (min) ? (min) : (x) > (max) ? (max) : (x))
+
 
 #define DECR(x) ((x) == 0 ? 0 : --(x))
 

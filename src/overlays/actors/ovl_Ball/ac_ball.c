@@ -11,6 +11,7 @@
 #include "m_field_info.h"
 #include "sys_math_atan.h"
 #include "m_player_lib.h"
+#include "macros.h"
 
 void aBALL_actor_ct(Actor* thisx, Game_Play* game_play);
 void aBALL_actor_dt(Actor* thisx, Game_Play* game_play);
@@ -25,12 +26,6 @@ void func_80969FBC_jp(Ball* this, Game_Play* game_play);
 void func_80969FD8_jp(Ball* this, Game_Play* game_play);
 void func_8096A0CC_jp(Ball* this, Game_Play* game_play);
 void func_8096A0EC_jp(Ball* this, Game_Play* game_play);
-
-// todo: move out
-#define	ABS_2(d)		((d) >= 0) ? (d) : -(d)
-#define	ABS_F(d)		((d) >= 0.0f) ? (d) : -(d)
-#define CLAMP_MAX(x, max) ((x) > (max) ? (max) : (x))
-#define CLAMP_MIN(x, min) ((x) < (min) ? (min) : (x))
 
 #if 0
 ActorProfile Ball_Profile = {
@@ -202,10 +197,8 @@ void aBALL_actor_ct(Actor* thisx, Game_Play* game_play) {
 
 void aBALL_actor_dt(Actor* thisx, Game_Play* game_play) {
     Ball* this = (Ball*)thisx;
-    s16 temp_v0;
 
-    temp_v0 = this->unk_208;
-    if ((temp_v0 & 1) || (temp_v0 & 2) || (func_800CE9C4_jp(&this->actor) == 0)) {
+    if ((this->unk_208 & 1) || (this->unk_208 & 2) || (func_800CE9C4_jp(&this->actor) == 0)) {
         common_data.unk_10A6C = ZeroVec;
     } else {
         common_data.unk_10A6C = this->actor.world.pos;
@@ -233,7 +226,7 @@ void func_80969040_jp(Ball* this) {
 }
 
 void func_80969114_jp(Ball* this) {
-    s32 pad;
+    char pad[0x4];
     f32 sp68;
     s32 var_v0;
     s16 sp62;
@@ -285,8 +278,8 @@ void func_80969114_jp(Ball* this) {
             if (sp44 > 1.0f) {
                 sAdo_OngenTrgStartSpeed(0x26, &this->actor.world.pos, sp44);
             }
-            this->actor.velocity.z = (f32) (((1.0f - (sp40 * sp4C * sp4C)) * sp54.z) - (sp54.x * sp40 * sp48));
-            this->actor.velocity.x = (f32) ((-sp54.z * sp40 * sp48) + (sp54.x * (1.0f - (sp40 * sp50 * sp50))));
+            this->actor.velocity.z = ((1.0f - (sp40 * sp4C * sp4C)) * sp54.z) - (sp54.x * sp40 * sp48);
+            this->actor.velocity.x = (-sp54.z * sp40 * sp48) + (sp54.x * (1.0f - (sp40 * sp50 * sp50)));
             func_800CE4B0_jp(&this->actor.velocity, &this->actor.speed, &this->actor.world.rot.y);
         }
     }
@@ -537,7 +530,7 @@ void func_809699D8_jp(Ball* this, Game_Play* game_play) {
 extern s16 D_8096A8FC_jp[2];
 
 void func_80969DE8_jp(Ball* this, Game_Play* game_play) {
-    s32 pad;
+    char pad[0x4];
     xyz_t sp50;
     s16 temp_v0_2;
     f32 sp48;
@@ -641,16 +634,14 @@ void func_8096A0EC_jp(Ball* this, Game_Play* game_play) {
     }
 }
 
-extern void func_800CE7E4_jp(Actor*, void*, s16);
-
 void func_8096A23C_jp(Ball* this) {
     f32 temp_f;
     s16 sp1A;
 
-    sp1A = (s16) (s32) (this->actor.speed * 869.63904f);
+    sp1A = this->actor.speed * 869.63904f;
     if ((this->unk_1E0 == func_80969FD8_jp) || (this->unk_1E0 == func_8096A0EC_jp)) {
         temp_f = ((-1.0f) - this->actor.velocity.y) / (-2.0f);
-        sp1A *= sin_s((s16) (s32) (((60.0f * temp_f) + 30.0f) * 182.04445f));
+        sp1A *= sin_s(DEG_TO_BINANG((60.0f * temp_f) + 30.0f));
     }
     func_800CE7E4_jp(&this->actor, &this->unk_200, sp1A);
 }
@@ -721,7 +712,7 @@ void func_8096A3D8_jp(Ball* this, Game_Play* game_play) {
 }
 
 void aBALL_actor_move(Actor* thisx, Game_Play* game_play) {
-    s32 pad;
+    char pad[0x4];
     Ball* this = (Ball*)thisx;
 
     func_80969800_jp(this);
