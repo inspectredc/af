@@ -20,7 +20,6 @@ void aFSN_actor_move(Actor* thisx, Game_Play* game_play);
 void aFSN_actor_draw(Actor* thisx, Game_Play* game_play);
 void func_80AADEC4_jp(Fuusen*, s32, Game_Play*);
 
-#if 0
 ActorProfile Fuusen_Profile = {
     /* */ ACTOR_FUUSEN,
     /* */ ACTOR_PART_7,
@@ -34,11 +33,55 @@ ActorProfile Fuusen_Profile = {
     /* */ aFSN_actor_draw,
     /* */ NULL,
 };
-#endif
+
+xyz_t D_80AAE4D4_jp = { 0.01f, 0.01f, 0.01f };
+
+s32 D_80AAE4E0_jp[16] = {
+    0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 0,
+};
+
+xyz_t D_80AAE520_jp[8] = {
+    { 1600.0f, 100.0f, 500.0f },
+    { 500.0f, 100.0f, 500.0f },
+    { 500.0f, 100.0f, 1600.0f },
+    { 500.0f, 100.0f, 4620.0f },
+    { 1600.0f, 100.0f, 4620.0f },
+    { 3980.0f, 100.0f, 4620.0f },
+    { 3980.0f, 100.0f, 1600.0f },
+    { 3980.0f, 100.0f, 500.0f },
+};
+
+xyz_t D_FLT_80AAE580_jp[8] = {
+    { 1280.0f, 100.0f, 0.0f },
+    { 960.0f, 100.0f, 960.0f },
+    { 0.0f, 100.0f, 1920.0f },
+    { 960.0f, 100.0f, -960.0f },
+    { 1280.0f, 100.0f, 0.0f },
+    { -960.0f, 100.0f, -960.0f },
+    { 0.0f, 100.0f, 1920.0f },
+    { -960.0f, 100.0f, 960.0f },
+};
+
+Color_RGBA8 D_80AAE5E0_jp[5] = {
+    { 255, 210, 200, 255 },
+    { 200, 230, 200, 255 },
+    { 255, 250, 200, 255 },
+    { 220, 255, 200, 255 },
+    { 240, 210, 255, 255 },
+};
+
+Color_RGBA8 D_80AAE5F4_jp[5] = {
+    { 255, 40, 0, 255 },
+    { 0, 180, 255, 255 },
+    { 255, 200, 0, 255 },
+    { 100, 255, 0, 255 },
+    { 200, 30, 255, 255 },
+};
+
+
 
 extern BaseAnimationR D_6000F44;
 extern BaseSkeletonR D_6000F88;
-extern xyz_t D_80AAE4D4_jp;
 
 void aFSN_actor_ct(Actor* thisx, Game_Play* game_play) {
     Fuusen* this = (Fuusen*)thisx;
@@ -72,10 +115,6 @@ void aFSN_actor_dt(Actor* thisx, Game_Play* game_play) {
     }
     func_80092B7C_jp();
 }
-
-extern s32 D_80AAE4E0_jp[16];
-extern xyz_t D_80AAE520_jp[8];
-extern xyz_t D_FLT_80AAE580_jp[8];
 
 void func_80AAD270_jp(Fuusen* this, Game_Play* game_play) {
     s16 var_v0;
@@ -156,7 +195,11 @@ void func_80AAD580_jp(Fuusen* this, Game_Play* game_play) {
     func_80AADEC4_jp(this, 1, game_play);
 }
 
-extern Vec2s D_80AAE608_jp[3];
+Vec2s D_80AAE608_jp[3] = {
+    { -1, -2500 },
+    { 0, 0 },
+    { 0, 2500 },
+};
 
 void func_80AAD5A4_jp(Actor* thisx, Game_Play* game_play) {
     f32 temp_fa0;
@@ -301,8 +344,19 @@ void func_80AADDA8_jp(Fuusen* this, Game_Play* game_play) {
     }
 }
 
-extern void (*D_80AAE614_jp[4])(Fuusen*,Game_Play*);
-extern void (*D_80AAE624_jp[4])(Fuusen*,Game_Play*);
+FuusenActionFunc D_80AAE614_jp[4] = {
+    func_80AAD270_jp,
+    func_80AAD490_jp,
+    func_80AAD4A0_jp,
+    func_80AAD4DC_jp,
+};
+
+FuusenActionFunc D_80AAE624_jp[4] = {
+    func_80AAD580_jp,
+    func_80AAD5A4_jp,
+    func_80AADB9C_jp,
+    func_80AADDA8_jp,
+};
 
 void func_80AADEC4_jp(Fuusen* this, s32 arg0, Game_Play* game_play) {
 
@@ -363,9 +417,8 @@ Gfx* func_80AAE10C_jp(u8 arg0, u8 arg1, u8 arg2, u8 arg3, Game_Play* game_play) 
 
 extern s32 D_4009580;
 extern s32 D_4009620;
-extern Color_RGBA8 D_80AAE5E0_jp[5];
-extern Color_RGBA8 D_80AAE5F4_jp[5];
-extern xyz_t D_80AAE634_jp;
+
+xyz_t D_80AAE634_jp = { 0.0f, 0.0f, 0.0f };
 
 #define OPEN_CUSTOM_POLY_OPA()                \
     {                                         \
