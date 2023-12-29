@@ -124,12 +124,10 @@ void func_80AAD490_jp(Fuusen* this, Game_Play* game_play) {
     this->unk_1A4 = 0;
 }
 
-extern void func_800D1D58_jp(s32, xyz_t*, Actor*);
-
 void func_80AAD4A0_jp(Fuusen* this, Game_Play* game_play) {
     this->unk_184 = 0x2631;
     this->actor.speed = 0.0f;
-    func_800D1D58_jp(0x402, &this->actor.world.pos, &this->actor);
+    sAdo_OngenTrgStart(0x402, &this->actor.world.pos, &this->actor);
 }
 
 void func_80AAD4DC_jp(Fuusen* this, Game_Play* game_play) {
