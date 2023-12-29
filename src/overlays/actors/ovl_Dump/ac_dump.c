@@ -14,7 +14,6 @@ void aDUM_actor_dt(Actor* thisx, Game_Play* game_play);
 void aDUM_actor_init(Actor* thisx, Game_Play* game_play);
 void aDUM_actor_draw(Actor* thisx, Game_Play* game_play);
 
-#if 0
 ActorProfile Dump_Profile = {
     /* */ ACTOR_DUMP,
     /* */ ACTOR_PART_0,
@@ -28,7 +27,29 @@ ActorProfile Dump_Profile = {
     /* */ aDUM_actor_draw,
     /* */ NULL,
 };
-#endif
+
+UNK_TYPE D_80A97014_jp[12] = {
+    0x01000001,
+    0x01000001,
+    0x01000001,
+    0x01000001,
+    0x01000001,
+    0x01000001,
+    0x01000001,
+    0x01000001,
+    0x01000001,
+    0x01000001,
+    0x01000001,
+    0x01000001,
+};
+
+UNK_PTR D_80A97044_jp[5] = {
+    0x00000030,
+    &D_80A97014_jp,
+    0x42700000,
+    0x06000BD8,
+    0x06000ED8,
+};
 
 void func_80A96B28_jp(Dump*, s32);
 void func_80A96D04_jp(Dump*, s32);
@@ -49,8 +70,14 @@ void aDUM_actor_dt(Actor* thisx, Game_Play* game_play) {
     this->actor.world.pos.x += 40.0f;
 }
 
-extern void func_800739FC_jp(xyz_t, s16, s32);
-extern s32 D_80A97058_jp[6][6];
+s32 D_80A97058_jp[6][6] = {
+    { 1, 1, 0, 0, 1, 1 },
+    { 1, 0, 0, 0, 0, 1 },
+    { 1, 0, 0, 0, 0, 1 },
+    { 1, 0, 0, 0, 0, 1 },
+    { 1, 0, 0, 0, 0, 1 },
+    { 1, 1, 1, 1, 1, 1 },
+};
 
 void func_80A96A70_jp(Dump* this, s32 arg1, s32 arg2, s16 arg3) {
     xyz_t sp24;
@@ -111,8 +138,7 @@ void func_80A96C50_jp(Dump* this, Game_Play* game_play) {
     }
 }
 
-extern DumpActionFunc D_80A970E8_jp[1];
-// DumpActionFunc D_80A970E8_jp[1] = {func_80A96C50_jp};
+DumpActionFunc D_80A970E8_jp[1] = {func_80A96C50_jp};
 
 void func_80A96D04_jp(Dump* this, s32 arg1) {
     this->unk_2A0 = D_80A970E8_jp[arg1];
@@ -146,8 +172,10 @@ void aDUM_actor_init(Actor* thisx, Game_Play* game_play) {
     this->actor.update = func_80A96D24_jp;
 }
 
-extern UNK_PTR D_80A97044_jp[];
-extern UNK_PTR D_80A970EC_jp[];
+UNK_PTR D_80A970EC_jp[2] = {
+    0x060104B8,
+    0x06011AB0,
+};
 
 #define AC_GCN_OPEN_DISP(gfxCtx)            \
     {                                       \

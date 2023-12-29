@@ -243,7 +243,7 @@ s32 mCoBG_SearchWaterLimitDistN(UNK_TYPE* arg0, xyz_t arg1, s16 arg4, f32 arg5, 
 // void func_80073800_jp();
 // void func_800738A4_jp();
 // void func_80073970_jp();
-// void func_800739FC_jp();
+void func_800739FC_jp(xyz_t, s16, s32);
 // void func_80073C38_jp();
 // void func_80073CC0_jp();
 void mCoBG_SetPluss5PointOffset_file(xyz_t pos, mCoBG_unkStruct2 arg1, char* file, s32 line);
