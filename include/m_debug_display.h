@@ -6,7 +6,7 @@
 struct Game_Play;
 
 void Debug_Display_init(void);
-// void Debug_Display_new();
+void Debug_Display_new(f32, f32, f32, s32, s32, s32, f32, f32, f32, s32, s32, s32, s32, s32, GraphicsContext*);
 void Debug_Display_output(struct Game_Play* game_play);
 // void debug_display_output_sprite_16x16_I8();
 // void debug_display_output_polygon();

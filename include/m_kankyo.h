@@ -58,8 +58,8 @@ void Global_kankyo_set(struct Game_Play* game_play, struct Kankyo* kankyo, struc
 // void func_80098558_jp();
 // void func_8009867C_jp();
 // void func_80098794_jp();
-// void func_8009895C_jp();
-// void func_80098980_jp();
+s16 func_8009895C_jp(void);
+f32 func_80098980_jp(void);
 // void func_80098990_jp();
 // void func_80098A90_jp();
 void mEnv_WindMove(void);

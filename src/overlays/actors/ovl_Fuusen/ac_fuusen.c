@@ -6,6 +6,13 @@
 #include "overlays/actors/player_actor/m_player.h"
 #include "libc/math.h"
 #include "macros.h"
+#include "m_handbill.h"
+#include "m_field_info.h"
+#include "m_debug_display.h"
+#include "m_player_lib.h"
+#include "m_rcp.h"
+#include "683030.h"
+#include "audio.h"
 
 void aFSN_actor_ct(Actor* thisx, Game_Play* game_play);
 void aFSN_actor_dt(Actor* thisx, Game_Play* game_play);
@@ -29,8 +36,6 @@ ActorProfile Fuusen_Profile = {
 };
 #endif
 
-extern void mAc_ActorShadowCircle(Actor*, LightsN*, Game_Play*);
-extern f32 func_80072F9C_jp(xyz_t*);
 extern BaseAnimationR D_6000F44;
 extern BaseSkeletonR D_6000F88;
 extern xyz_t D_80AAE4D4_jp;
@@ -40,6 +45,7 @@ void aFSN_actor_ct(Actor* thisx, Game_Play* game_play) {
     SkeletonInfoR *skeletonInfo = &this->skeletonInfo;
     xyz_t sp34;
     f32 sp30;
+
     sp34 = D_80AAE4D4_jp;
     sp30 = func_80072F9C_jp(&this->actor.world.pos);
     this->unk_184 = 0x3E8;
@@ -52,16 +58,14 @@ void aFSN_actor_ct(Actor* thisx, Game_Play* game_play) {
     xyz_t_move(&this->actor.scale, &sp34);
     this->actor.world.pos.y = sp30 + 200.0f;
     this->unk_1A0 = 110.0f;
-    this->unk_178 = (void* ) game_play->objectExchangeBank.status[this->actor.unk_026].segment;
+    this->unk_178 = game_play->objectExchangeBank.status[this->actor.unk_026].segment;
     this->actor.update = aFSN_actor_move;
     func_80AADEC4_jp(this, 0, game_play);
 }
 
-extern void func_80092B7C_jp();
-extern void func_80092B8C_jp();
-
 void aFSN_actor_dt(Actor* thisx, Game_Play* game_play) {
     Fuusen* this = (Fuusen*)thisx;
+
     if (this->unk_190 != 0) {
         func_80092B8C_jp();
         return;
@@ -69,7 +73,6 @@ void aFSN_actor_dt(Actor* thisx, Game_Play* game_play) {
     func_80092B7C_jp();
 }
 
-extern s16 func_8009895C_jp();
 extern s32 D_80AAE4E0_jp[16];
 extern xyz_t D_80AAE520_jp[8];
 extern xyz_t D_FLT_80AAE580_jp[8];
@@ -127,7 +130,7 @@ void func_80AAD490_jp(Fuusen* this, Game_Play* game_play) {
 void func_80AAD4A0_jp(Fuusen* this, Game_Play* game_play) {
     this->unk_184 = 0x2631;
     this->actor.speed = 0.0f;
-    sAdo_OngenTrgStart(0x402, &this->actor.world.pos, &this->actor);
+    sAdo_OngenTrgStart(0x402, &this->actor.world.pos);
 }
 
 void func_80AAD4DC_jp(Fuusen* this, Game_Play* game_play) {
@@ -153,10 +156,6 @@ void func_80AAD580_jp(Fuusen* this, Game_Play* game_play) {
     func_80AADEC4_jp(this, 1, game_play);
 }
 
-extern void func_800765AC_jp(s32, Actor*, f32, f32, s32, s32, s32);
-extern s32 func_800884E0_jp(xyz_t*, xyz_t);
-extern f32 func_80098980_jp();
-extern u16* mFI_GetUnitFG(xyz_t);
 extern Vec2s D_80AAE608_jp[3];
 
 void func_80AAD5A4_jp(Actor* thisx, Game_Play* game_play) {
@@ -239,9 +238,6 @@ dummy_label:
     }
 }
 
-extern s32 func_800B5BC0_jp(xyz_t*);
-extern c_800B5C10_jp(xyz_t*);
-
 void func_80AADB9C_jp(Fuusen* this, Game_Play* game_play) {
     s32 pad;
     xyz_t sp40;
@@ -285,18 +281,18 @@ void func_80AADB9C_jp(Fuusen* this, Game_Play* game_play) {
 void func_80AADDA8_jp(Fuusen* this, Game_Play* game_play) {
     s32 pad;
     f32 sp48;
-    xyz_t sp3C;
-    s32 sp38;
-    s32 sp34;
 
     sp48 = func_80072F9C_jp(&this->actor.world.pos);
     if (this->unk_18C == 0) {
+        xyz_t sp3C;
+        s32 sp38;
+        s32 sp34;
+
         func_800884E0_jp(&sp3C, this->actor.world.pos);
         if ((common_data.unk_10080 != NULL) && (common_data.unk_10080->unk_38 != 0) && func_80088344_jp(&sp38, &sp34, sp3C)) {
             common_data.unk_10080->unk_30(0x251C, sp38, sp34, 1);
             this->unk_18C = 1;
-        };
-        // ^ FAKE ?
+        }
     }
     if (this->unk_18C == 1) {
         if (this->actor.world.pos.y > (sp48 + 500.0f)) {
@@ -330,7 +326,6 @@ void func_80AADF10_jp(Fuusen* this, Game_Play* game_play) {
 }
 
 extern s32 D_80106E10_jp;
-extern void Debug_Display_new(f32, f32, f32, s32, s32, s32, f32, f32, f32, s32, s32, s32, s32, s32, GraphicsContext*);
 
 void aFSN_actor_move(Actor* thisx, Game_Play* game_play) {
     s32 pad;
@@ -356,6 +351,7 @@ void aFSN_actor_move(Actor* thisx, Game_Play* game_play) {
 Gfx* func_80AAE10C_jp(u8 arg0, u8 arg1, u8 arg2, u8 arg3, Game_Play* game_play) {
     GraphicsContext* gfxCtx = game_play->state.gfxCtx;
     Gfx* gfx;
+
     gfx = GRAPH_ALLOC(gfxCtx, 1);
     if (gfx) {
         gDPSetPrimColor(gfx, 0, 0xFF, arg0, arg1, arg2, arg3);
@@ -364,11 +360,6 @@ Gfx* func_80AAE10C_jp(u8 arg0, u8 arg1, u8 arg2, u8 arg3, Game_Play* game_play) 
     }
     return NULL;
 }
-
-extern void _texture_z_light_fog_prim(GraphicsContext*);
-extern s32 func_80060970_jp();
-extern s32 func_80060B18_jp(f32, f32, f32);
-extern void mAc_ActorShadowDraw_ShadowDrawFlagOn(Actor*, Game_Play*, s32, xyz_t, f32);
 
 extern s32 D_4009580;
 extern s32 D_4009620;
@@ -395,6 +386,7 @@ void aFSN_actor_draw(Actor* thisx, Game_Play* game_play) {
     s16 objBankIndex;
     Gfx* sp48;
     Gfx* sp44;
+
     sp58 = game_play->state.unk_A0 & 1;
     objBankIndex = this->actor.unk_026;
     sp48 = game_play->objectExchangeBank.status[objBankIndex].segment;

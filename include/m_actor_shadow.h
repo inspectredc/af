@@ -22,13 +22,13 @@
 // void mAc_DecideShadowRadius_IamNotFish();
 // void mAc_DecideShadowRadius_IamFish();
 // void mAc_ActorShadowDraw_ShadowDrawFlagOff();
-// void mAc_ActorShadowDraw_ShadowDrawFlagOn();
+void mAc_ActorShadowDraw_ShadowDrawFlagOn(Actor*, struct Game_Play*, s32, xyz_t, f32);
 // void mAc_ActorShadowDraw();
 // void mActorShadow_SetForceShadowPos();
 // void mActorShadow_UnSetForceShadowPos();
 // void mAc_NormalActorShadow();
 // void mAc_UnagiActorShadow();
-// void mAc_ActorShadowCircle();
+void mAc_ActorShadowCircle(Actor*, struct LightsN*, struct Game_Play*);
 // void mAc_ActorShadowEllipse();
 
 #endif
