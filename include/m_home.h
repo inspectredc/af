@@ -56,11 +56,31 @@ typedef struct mHm_goki_c {
   /* 0x05 */ u8 pad;
 } mHm_goki_c; // size = 0x6
 
+typedef struct mHm_unk_struct_1 {
+    u32 unk0:18;  // [31:19]
+    u32 unk1:2; // [17:15]
+    u32 unk2:1; // [15:7]
+    u32 unk3:2; // [15:7]
+    u32 unk4:9; // [7:0]
+} mHm_unk_struct_1; // size = 0x4
+
+typedef struct mHm_unk_struct_2 {
+    UNK_TYPE1 unk_0[0x2];
+    u8 unk_2;
+    UNK_TYPE1 unk_3;
+} mHm_unk_struct_2; // size = 0x4
+
+typedef struct mHm_unk_struct {
+    union {
+        mHm_unk_struct_1 bitfield;
+        mHm_unk_struct_2 data;
+    } unk_020_union;
+} mHm_unk_struct;
+
 typedef struct mHm_hs_c {
     /* 0x000 */ PersonalID unk_000;
-    /* 0x010 */ UNK_TYPE1 unk_010[0x12];
-    /* 0x022 */ u8 unk_022;
-    /* 0x023 */ UNK_TYPE1 unk023[0x1];
+    /* 0x010 */ UNK_TYPE1 unk_010[0x10];
+    /* 0x022 */ mHm_unk_struct unk_020;
     /* 0x024 */ u8 unk_024;
     /* 0x025 */ UNK_TYPE1 unk025[0xABB];
     /* 0xAE0 */ Haniwa_c haniwa;
