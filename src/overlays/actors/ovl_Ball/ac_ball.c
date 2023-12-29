@@ -27,6 +27,8 @@ void func_80969FD8_jp(Ball* this, Game_Play* game_play);
 void func_8096A0CC_jp(Ball* this, Game_Play* game_play);
 void func_8096A0EC_jp(Ball* this, Game_Play* game_play);
 
+Ball* B_8096A980_jp;
+
 Gfx* D_8096A8B0_jp[3] = {
     0x060001A8,
     0x06000368,
@@ -125,9 +127,9 @@ s32 func_80968B9C_jp(xyz_t* arg0) {
     s32 temp_v0;
     s32 temp_v0_2;
     s32 var_s0;
-    s32 j;
     s32 var_s2;
     s32 i;
+    s32 j;
 
     temp_fp = func_80087E58_jp();
     temp_s3 = func_80087E94_jp();
@@ -157,8 +159,6 @@ s32 func_80968B9C_jp(xyz_t* arg0) {
     }
     return 0;
 }
-
-extern Ball* B_8096A980_jp;
 
 void aBALL_actor_ct(Actor* thisx, Game_Play* game_play) {
     Ball* this = (Ball*)thisx;
