@@ -119,7 +119,7 @@ void func_80968AF4_jp(Ball* this, s32 arg0) {
     }
 }
 
-s32 func_80968B9C_jp(xyz_t* arg0) {
+s32 aBALL_Random_pos_set(xyz_t* arg0) {
     s32 temp_fp;
     s32 temp_s3;
     s32 sp64;
@@ -131,14 +131,14 @@ s32 func_80968B9C_jp(xyz_t* arg0) {
     s32 i;
     s32 j;
 
-    temp_fp = func_80087E58_jp();
-    temp_s3 = func_80087E94_jp();
+    temp_fp = mFI_GetBlockXMax();
+    temp_s3 = mFI_GetBlockZMax();
     var_s2 = RANDOM_F(temp_fp);
     var_s0 = RANDOM_F(temp_s3);
     for (i = 0; i < temp_fp; i++) {
         for (j = 0; j < temp_s3; j++) {
-            if ((func_80089404_jp(var_s2, var_s0, 0x8023) == 0) && (mNpc_GetMakeUtNuminBlock_hard_area(&sp64, &sp60, var_s2, var_s0, 2) == 1)) {
-                func_80088C74_jp(arg0, var_s2, var_s0, sp64, sp60);
+            if ((mFI_CheckBlockKind_OR(var_s2, var_s0, 0x8023) == 0) && (mNpc_GetMakeUtNuminBlock_hard_area(&sp64, &sp60, var_s2, var_s0, 2) == 1)) {
+                mFI_BkandUtNum2CenterWpos(arg0, var_s2, var_s0, sp64, sp60);
                 return 1;
             }
             temp_v0 = var_s0 + 1;
@@ -167,7 +167,7 @@ void aBALL_actor_ct(Actor* thisx, Game_Play* game_play) {
     B_8096A980_jp = this;
     if ((common_data.unk_10A6C.x == 0.0f) && (common_data.unk_10A6C.y == 0.0f) && (common_data.unk_10A6C.z == 0.0f)) {
 
-        if (func_80968B9C_jp(&this->actor.world.pos) == 0) {
+        if (aBALL_Random_pos_set(&this->actor.world.pos) == 0) {
             this->actor.world.pos = this->actor.home.pos;
         }
         common_data.unk_10A78 = RANDOM_F(3.0f);
@@ -314,9 +314,9 @@ void func_809693EC_jp(Ball* this) {
         this->collider.base.prop.ocFlags1 &= ~2;
 
         sp88 = this->collider.base.oc;
-        if (func_800BC528_jp(this->unk_1DC) != 0) {
+        if (mQst_CheckSoccerTarget(this->unk_1DC) != 0) {
 
-            func_800BC5D4_jp(this->unk_1DC);
+            mQst_NextSoccer(this->unk_1DC);
             this->actor.speed = 0.0f;
             this->actor.velocity = ZeroVec;
         } else if ((sp88 != NULL) && (!(this->unk_208 & 2)) && ((sp8C != 1) && (sp8C != 2))) {
@@ -531,6 +531,7 @@ void func_809699D8_jp(Ball* this, Game_Play* game_play) {
 
 // RO_FLT_8096A96C_jp 0.200000003
 
+// angl_add_table
 s16 D_8096A8FC_jp[2] = {
     0x100,
     0x400,
@@ -610,7 +611,7 @@ void func_8096A0CC_jp(Ball* this, Game_Play* game_play) {
 void func_8096A0EC_jp(Ball* this, Game_Play* game_play) {
     f32 var_fv1;
     u32 unitAttribute;
-    Ball* new_var = this;
+    xyz_t* var;
 
     unitAttribute = this->actor.colResult.unk5;
 
@@ -629,10 +630,13 @@ void func_8096A0EC_jp(Ball* this, Game_Play* game_play) {
     } else {
         func_80969FBC_jp(this, game_play);
     }
+    
     if ((unitAttribute == 0xB) || (unitAttribute == 0x16)) {
-        new_var->actor.world.pos.y += 0.5f * this->unk_1D0.y;
+        var = &this->unk_1D0;
+        this->actor.world.pos.y += (0.5f * var->y);
+
         if (unitAttribute == 0x16) {
-            var_fv1 = ABS_2(this->unk_1D0.y);
+            var_fv1 = ABS_2(var->y);
 
             if (var_fv1 < 1.0f) {
                 func_80969998_jp(this, game_play);
@@ -653,7 +657,7 @@ void func_8096A23C_jp(Ball* this) {
     func_800CE7E4_jp(&this->actor, &this->unk_200, sp1A);
 }
 
-s32 func_8096A334_jp(Ball* this, Player* player) {
+s32 aBALL_player_angle_distance_check(Ball* this, Player* player) {
     f32 sp2C;
     s16 temp_v1;
     s32 var_v0;
@@ -677,7 +681,7 @@ void func_8096A3D8_jp(Ball* this, Game_Play* game_play) {
         Player* player;
         player = get_player_actor_withoutCheck(game_play);
         this->unk_208 &= ~4;
-        if ((func_8096A334_jp(this, player) != 0) || (fabsf(this->actor.speed) < 0.008f)) {
+        if ((aBALL_player_angle_distance_check(this, player)) || (fabsf(this->actor.speed) < 0.008f)) {
             this->actor.world.rot.y = player->actor.shape.rot.y;
             this->actor.speed = 2.0f;
             this->actor.velocity.y = 4.5f;
@@ -694,7 +698,7 @@ void func_8096A3D8_jp(Ball* this, Game_Play* game_play) {
         if (!(this->unk_208 & 2)) {
             Player* player;
             player = get_player_actor_withoutCheck(game_play);
-            if ((func_8096A334_jp(this, player) != 0) || (fabsf(this->actor.speed) < 0.008f)) {
+            if ((aBALL_player_angle_distance_check(this, player)) || (fabsf(this->actor.speed) < 0.008f)) {
                 this->actor.world.rot.y = player->actor.shape.rot.y + 0x2000;
                 this->actor.speed = 4.5f;
                 this->actor.velocity.y = 3.0f;
