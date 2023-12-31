@@ -395,7 +395,7 @@ void aBALL_House_Tree_Rev_Check(Ball* this) {
     }
 }
 
-void func_8096983C_jp(Ball* this, Game_Play* game_play) {
+void aBALL_process_air_init(Ball* this, Game_Play* game_play) {
     void* sp2C;
     f32 temp;
 
@@ -507,7 +507,7 @@ void func_809699D8_jp(Ball* this, Game_Play* game_play) {
         }
     } else if (this->actor.colResult.unk0 == 0) {
         this->unk_206 = 0;
-        func_8096983C_jp(this, game_play);
+        aBALL_process_air_init(this, game_play);
         return;
     }
 
@@ -598,7 +598,7 @@ void func_80969FD8_jp(Ball* this, Game_Play* game_play) {
             func_80969998_jp(this, game_play);
         }
     } else if (!this->actor.colResult.unk7) {
-        func_8096983C_jp(this, game_play);
+        aBALL_process_air_init(this, game_play);
     }
 }
 
@@ -626,7 +626,7 @@ void func_8096A0EC_jp(Ball* this, Game_Play* game_play) {
             func_80969998_jp(this, game_play);
         }
     } else if (!this->actor.colResult.unk7) {
-        func_8096983C_jp(this, game_play);
+        aBALL_process_air_init(this, game_play);
     } else {
         func_80969FBC_jp(this, game_play);
     }
