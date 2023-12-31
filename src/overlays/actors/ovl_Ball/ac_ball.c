@@ -289,7 +289,7 @@ void aBALL_BGcheck(Ball* this) {
     }
 }
 
-void func_809693EC_jp(Ball* this) {
+void aBALL_OBJcheck(Ball* this) {
     s32 sp8C;
     Actor* sp88;
     s16 sp86;
@@ -301,7 +301,7 @@ void func_809693EC_jp(Ball* this) {
     char pad[0x4];
     f32 sp68;
     
-    sp8C = func_8008C120_jp();
+    sp8C = mFI_GetPlayerWade();
 
     if (this->collider.base.prop.ocFlags1 & 2) {
         xyz_t sp5C;
@@ -740,7 +740,7 @@ void aBALL_actor_move(Actor* thisx, Game_Play* game_play) {
     aBALL_position_move(this);
     this->unk_1E0(this, game_play);
     aBALL_BGcheck(this);
-    func_809693EC_jp(this);
+    aBALL_OBJcheck(this);
 
     CollisionCheck_Uty_ActorWorldPosSetPipeC(&this->actor, &this->collider);
     CollisionCheck_setOC(game_play, &game_play->unk_2138, &this->collider.base);

@@ -164,7 +164,7 @@ s32 func_8008BE00_jp(struct FieldMakeMoveActor*, s32);
 // void func_8008BFC4_jp();
 // void func_8008C058_jp();
 s32 mFI_CheckPlayerWade(s32);
-s32 func_8008C120_jp(void);
+s32 mFI_GetPlayerWade(void);
 // void func_8008C130_jp();
 u16* mFI_GetDepositP(s32,s32);
 // void func_8008C344_jp();

@@ -257,7 +257,7 @@
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_field_info/mFI_CheckPlayerWade.s")
 
-#pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_field_info/func_8008C120_jp.s")
+#pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_field_info/mFI_GetPlayerWade.s")
 
 #pragma GLOBAL_ASM("asm/jp/nonmatchings/code/m_field_info/func_8008C130_jp.s")
 
