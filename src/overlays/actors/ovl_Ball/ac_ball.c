@@ -388,8 +388,8 @@ void aBALL_OBJcheck(Ball* this) {
     }
 }
 
-void func_80969800_jp(Ball* this) {
-    if (func_800CEB1C_jp() != 1) {
+void aBALL_House_Tree_Rev_Check(Ball* this) {
+    if (mRlib_HeightGapCheck_And_ReversePos() != 1) {
         this->unk_208 |= 1;
         Actor_delete(&this->actor);
     }
@@ -726,7 +726,7 @@ void aBALL_actor_move(Actor* thisx, Game_Play* game_play) {
     char pad[0x4];
     Ball* this = (Ball*)thisx;
 
-    func_80969800_jp(this);
+    aBALL_House_Tree_Rev_Check(this);
     if (!((this->actor.flags) & 0x40)) {
         if ((this->actor.colResult.unk7) || (this->unk_208 & 2)) {
             Actor_delete(&this->actor);

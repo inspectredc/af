@@ -11,7 +11,7 @@ void func_800CE7E4_jp(struct Actor*, void*, s16);
 s16 mRlib_Get_HitWallAngleY(struct Actor*);
 void mRlib_Station_step_modify_to_wall(struct Actor*);
 s32 mRlib_Set_Position_Check(struct Actor*);
-s32 func_800CEB1C_jp(void);
+s32 mRlib_HeightGapCheck_And_ReversePos(void);
 // void func_800CEC30_jp();
 s32 func_800CEC98_jp(struct Actor*, xyz_t*, f32*, s16*, s16*, f32);
 // void func_800CEE24_jp();
