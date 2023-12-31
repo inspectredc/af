@@ -287,12 +287,12 @@ void mCoBG_SetPluss5PointOffset_file(xyz_t pos, mCoBG_unkStruct2 arg1, char* fil
 // void func_80075A10_jp();
 // void func_80075AB4_jp();
 // void func_80075B28_jp();
-f32 func_80075EA0_jp(xyz_t, char*, s32);
+f32 mCoBG_GetWaterHeight_File(xyz_t, char*, s32);
 // void func_8007620C_jp();
 // void func_80076248_jp();
 // void func_80076270_jp();
 // void func_80076280_jp();
-void func_80076290_jp(xyz_t*, u32);
+void mCoBG_GetWaterFlow(xyz_t*, u32);
 s32 func_80076358_jp(u32 attribute);
 // void func_8007638C_jp();
 // void func_800763F0_jp();

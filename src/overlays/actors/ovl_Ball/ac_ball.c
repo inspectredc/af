@@ -537,16 +537,16 @@ s16 D_8096A8FC_jp[2] = {
     0x400,
 };
 
-void func_80969DE8_jp(Ball* this, Game_Play* game_play) {
+void aBALL_set_spd_relations_in_water(Ball* this, Game_Play* game_play) {
     char pad[0x4];
     xyz_t sp50;
     s16 temp_v0_2;
     f32 sp48;
     s32 var_a3;
 
-    sp48 = func_80075EA0_jp(this->actor.world.pos, "../ac_ball.c", 0x3B5);
+    sp48 = mCoBG_GetWaterHeight_File(this->actor.world.pos, "../ac_ball.c", 0x3B5);
     add_calc0(&this->unk_1E8, 0.5f, 100.0f);
-    func_80076290_jp(&sp50, this->actor.colResult.unk5);
+    mCoBG_GetWaterFlow(&sp50, this->actor.colResult.unk5);
     temp_v0_2 = atans_table(sp50.z, sp50.x);
     var_a3 = ABS_2((s16) (this->actor.world.rot.y - temp_v0_2));
 
@@ -576,7 +576,7 @@ void func_80969FBC_jp(Ball* this, Game_Play* game_play) {
 void func_80969FD8_jp(Ball* this, Game_Play* game_play) {
     
 
-    func_80969DE8_jp(this, game_play);
+    aBALL_set_spd_relations_in_water(this, game_play);
     add_calc0(&this->unk_1E8, 0.5f, 100.0f);
     
     {
@@ -615,7 +615,7 @@ void func_8096A0EC_jp(Ball* this, Game_Play* game_play) {
 
     unitAttribute = this->actor.colResult.unk5;
 
-    func_80969DE8_jp(this, game_play);
+    aBALL_set_spd_relations_in_water(this, game_play);
     this->unk_1F4 = this->actor.speed;
 
     if (common_data.unk_100B4 != NULL) {
