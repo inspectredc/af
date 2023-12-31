@@ -19,7 +19,7 @@ void aBALL_actor_move(Actor* thisx, Game_Play* game_play);
 void aBALL_actor_draw(Actor* thisx, Game_Play* game_play);
 
 void func_8096A86C_jp(void);
-void func_809698E8_jp(Ball* this, Game_Play* game_play);
+void aBALL_process_air(Ball* this, Game_Play* game_play);
 void func_809699D8_jp(Ball* this, Game_Play* game_play);
 void func_80969998_jp(Ball* this, Game_Play* game_play);
 void func_80969FBC_jp(Ball* this, Game_Play* game_play);
@@ -254,7 +254,7 @@ void aBALL_BGcheck(Ball* this) {
         mRlib_Station_step_modify_to_wall(&this->actor);
     }
 
-    if (((this->unk_1E0 == func_809698E8_jp) || (this->unk_1E0 == func_80969FD8_jp)) && this->actor.colResult.unk0) {
+    if (((this->unk_1E0 == aBALL_process_air) || (this->unk_1E0 == func_80969FD8_jp)) && this->actor.colResult.unk0) {
         if (this->unk_206 < 3) {
             do {
                 this->unk_206++;
@@ -405,10 +405,10 @@ void aBALL_process_air_init(Ball* this, Game_Play* game_play) {
     if ((this->unk_1E0 == func_809699D8_jp) && ((this->actor.world.pos.y - temp) > 20.0f)) {
         sAdo_OngenTrgStart(0x43D, sp2C);
     }
-    this->unk_1E0 = func_809698E8_jp;
+    this->unk_1E0 = aBALL_process_air;
 }
 
-void func_809698E8_jp(Ball* this, Game_Play* game_play) {
+void aBALL_process_air(Ball* this, Game_Play* game_play) {
 
     this->unk_1F0 = 0.0f;
     add_calc0(&this->unk_1E8, 0.5f, 100.0f);
@@ -429,7 +429,7 @@ void func_809698E8_jp(Ball* this, Game_Play* game_play) {
 void func_80969998_jp(Ball* this, Game_Play* game_play) {
     this->actor.shape.unk_2C = 1;
     if (this->actor.velocity.y > 0.0f) {
-        this->unk_1E0 = func_809698E8_jp;
+        this->unk_1E0 = aBALL_process_air;
     } else {
         this->unk_1E0 = func_809699D8_jp;
     }
