@@ -27,7 +27,7 @@ void func_80969FD8_jp(Ball* this, Game_Play* game_play);
 void func_8096A0CC_jp(Ball* this, Game_Play* game_play);
 void func_8096A0EC_jp(Ball* this, Game_Play* game_play);
 
-static Ball* B_8096A980_jp;
+static Ball* Global_Actor_p;
 
 Gfx* D_8096A8B0_jp[3] = {
     0x060001A8,
@@ -164,10 +164,10 @@ void aBALL_actor_ct(Actor* thisx, Game_Play* game_play) {
     Ball* this = (Ball*)thisx;
     char pad[0x4];
 
-    B_8096A980_jp = this;
+    Global_Actor_p = this;
     if ((common_data.unk_10A6C.x == 0.0f) && (common_data.unk_10A6C.y == 0.0f) && (common_data.unk_10A6C.z == 0.0f)) {
 
-        if (aBALL_Random_pos_set(&this->actor.world.pos) == 0) {
+        if (!aBALL_Random_pos_set(&this->actor.world.pos)) {
             this->actor.world.pos = this->actor.home.pos;
         }
         common_data.unk_10A78 = RANDOM_F(3.0f);
@@ -202,7 +202,7 @@ void aBALL_actor_ct(Actor* thisx, Game_Play* game_play) {
 void aBALL_actor_dt(Actor* thisx, Game_Play* game_play) {
     Ball* this = (Ball*)thisx;
 
-    if ((this->unk_208 & 1) || (this->unk_208 & 2) || (func_800CE9C4_jp(&this->actor) == 0)) {
+    if ((this->unk_208 & 1) || (this->unk_208 & 2) || !mRlib_Set_Position_Check(&this->actor)) {
         common_data.unk_10A6C = ZeroVec;
     } else {
         common_data.unk_10A6C = this->actor.world.pos;
@@ -211,18 +211,18 @@ void aBALL_actor_dt(Actor* thisx, Game_Play* game_play) {
     ClObjPipe_dt(game_play, &this->collider);
 }
 
-void func_80969040_jp(Ball* this) {
+void aBALL_position_move(Ball* this) {
     xyz_t sp2C;
 
-    func_80071884_jp(&sp2C, this->actor.world.pos, 0.0f);
+    mCoBG_GetBgY_AngleS_FromWpos(&sp2C, this->actor.world.pos, 0.0f);
 
     if (this->actor.colResult.unk0 || this->actor.colResult.unk7) {
         chase_f(&this->actor.speed, this->unk_1EC, this->unk_1F0);
     }
     if (!(this->unk_208 & 2)) {
-        func_800CE4F4_jp(&this->actor.velocity, &this->actor.speed, &this->actor.world.rot.y);
+        mRlib_spdF_Angle_to_spdXZ(&this->actor.velocity, &this->actor.speed, &this->actor.world.rot.y);
         chase_f(&this->actor.velocity.y, this->actor.terminalVelocity, this->actor.gravity);
-        func_800CE554_jp(&this->actor, &sp2C);
+        mRlib_position_move_for_sloop(&this->actor, &sp2C);
         if (this->actor.world.pos.z < 840.0f) {
             this->actor.world.pos.z = 840.0f;
         }
@@ -400,7 +400,7 @@ void func_8096983C_jp(Ball* this, Game_Play* game_play) {
     f32 temp;
 
     sp2C = &this->actor.world.pos;
-    temp = func_80071884_jp(NULL, this->actor.world.pos, 0.0f);
+    temp = mCoBG_GetBgY_AngleS_FromWpos(NULL, this->actor.world.pos, 0.0f);
     this->actor.shape.unk_2C = 1;
     if ((this->unk_1E0 == func_809699D8_jp) && ((this->actor.world.pos.y - temp) > 20.0f)) {
         sAdo_OngenTrgStart(0x43D, sp2C);
@@ -737,7 +737,7 @@ void aBALL_actor_move(Actor* thisx, Game_Play* game_play) {
     }
     
     common_data.unk_10A6C = this->actor.world.pos;
-    func_80969040_jp(this);
+    aBALL_position_move(this);
     this->unk_1E0(this, game_play);
     func_80969114_jp(this);
     func_809693EC_jp(this);
@@ -790,7 +790,7 @@ void aBALL_actor_draw(Actor* thisx, Game_Play* game_play) {
 }
 
 void func_8096A86C_jp(void) {
-    if ((common_data.unk_100DC != NULL) && (B_8096A980_jp != NULL)) {
-        func_80968AF4_jp(B_8096A980_jp, B_8096A980_jp->unk_1F8);
+    if ((common_data.unk_100DC != NULL) && (Global_Actor_p != NULL)) {
+        func_80968AF4_jp(Global_Actor_p, Global_Actor_p->unk_1F8);
     }
 }
