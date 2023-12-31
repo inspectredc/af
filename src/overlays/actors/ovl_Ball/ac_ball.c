@@ -21,7 +21,7 @@ void aBALL_actor_draw(Actor* thisx, Game_Play* game_play);
 void func_8096A86C_jp(void);
 void aBALL_process_air(Ball* this, Game_Play* game_play);
 void func_809699D8_jp(Ball* this, Game_Play* game_play);
-void func_80969998_jp(Ball* this, Game_Play* game_play);
+void aBALL_process_ground_init(Ball* this, Game_Play* game_play);
 void func_80969FBC_jp(Ball* this, Game_Play* game_play);
 void func_80969FD8_jp(Ball* this, Game_Play* game_play);
 void func_8096A0CC_jp(Ball* this, Game_Play* game_play);
@@ -185,7 +185,7 @@ void aBALL_actor_ct(Actor* thisx, Game_Play* game_play) {
     ClObjPipe_set5(game_play, &this->collider, &this->actor, &aBALL_CoInfoData);
     CollisionCheck_Status_set3(&this->actor.colStatus, &aBALL_StatusData);
     this->unk_206 = 3;
-    func_80969998_jp(this, game_play);
+    aBALL_process_ground_init(this, game_play);
     this->unk_1DC = 0;
     this->actor.terminalVelocity = -20.0f;
     this->actor.gravity = 0.6f;
@@ -419,14 +419,14 @@ void aBALL_process_air(Ball* this, Game_Play* game_play) {
         if (this->actor.colResult.unk7) {
             func_8096A0CC_jp(this, game_play);
         } else {
-            func_80969998_jp(this, game_play);
+            aBALL_process_ground_init(this, game_play);
         }
     } else if (this->actor.colResult.unk7) {
         func_80969FBC_jp(this, game_play);
     }
 }
 
-void func_80969998_jp(Ball* this, Game_Play* game_play) {
+void aBALL_process_ground_init(Ball* this, Game_Play* game_play) {
     this->actor.shape.unk_2C = 1;
     if (this->actor.velocity.y > 0.0f) {
         this->unk_1E0 = aBALL_process_air;
@@ -595,7 +595,7 @@ void func_80969FD8_jp(Ball* this, Game_Play* game_play) {
         if (this->actor.colResult.unk7) {
             func_8096A0CC_jp(this, game_play);
         } else if (this->actor.colResult.unk5 != 0xB) {
-            func_80969998_jp(this, game_play);
+            aBALL_process_ground_init(this, game_play);
         }
     } else if (!this->actor.colResult.unk7) {
         aBALL_process_air_init(this, game_play);
@@ -623,7 +623,7 @@ void func_8096A0EC_jp(Ball* this, Game_Play* game_play) {
     }
     if (this->actor.colResult.unk0) {
         if (!this->actor.colResult.unk7 && (unitAttribute != 0xB) && (unitAttribute != 0x16)) {
-            func_80969998_jp(this, game_play);
+            aBALL_process_ground_init(this, game_play);
         }
     } else if (!this->actor.colResult.unk7) {
         aBALL_process_air_init(this, game_play);
@@ -639,7 +639,7 @@ void func_8096A0EC_jp(Ball* this, Game_Play* game_play) {
             var_fv1 = ABS_2(var->y);
 
             if (var_fv1 < 1.0f) {
-                func_80969998_jp(this, game_play);
+                aBALL_process_ground_init(this, game_play);
             }
         }
     }
