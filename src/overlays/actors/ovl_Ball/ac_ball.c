@@ -20,7 +20,7 @@ void aBALL_actor_draw(Actor* thisx, Game_Play* game_play);
 
 void func_8096A86C_jp(void);
 void aBALL_process_air(Ball* this, Game_Play* game_play);
-void func_809699D8_jp(Ball* this, Game_Play* game_play);
+void aBALL_process_ground(Ball* this, Game_Play* game_play);
 void aBALL_process_ground_init(Ball* this, Game_Play* game_play);
 void func_80969FBC_jp(Ball* this, Game_Play* game_play);
 void func_80969FD8_jp(Ball* this, Game_Play* game_play);
@@ -402,7 +402,7 @@ void aBALL_process_air_init(Ball* this, Game_Play* game_play) {
     sp2C = &this->actor.world.pos;
     temp = mCoBG_GetBgY_AngleS_FromWpos(NULL, this->actor.world.pos, 0.0f);
     this->actor.shape.unk_2C = 1;
-    if ((this->unk_1E0 == func_809699D8_jp) && ((this->actor.world.pos.y - temp) > 20.0f)) {
+    if ((this->unk_1E0 == aBALL_process_ground) && ((this->actor.world.pos.y - temp) > 20.0f)) {
         sAdo_OngenTrgStart(0x43D, sp2C);
     }
     this->unk_1E0 = aBALL_process_air;
@@ -431,11 +431,11 @@ void aBALL_process_ground_init(Ball* this, Game_Play* game_play) {
     if (this->actor.velocity.y > 0.0f) {
         this->unk_1E0 = aBALL_process_air;
     } else {
-        this->unk_1E0 = func_809699D8_jp;
+        this->unk_1E0 = aBALL_process_ground;
     }
 }
 
-void func_809699D8_jp(Ball* this, Game_Play* game_play) {
+void aBALL_process_ground(Ball* this, Game_Play* game_play) {
     char pad[0x4];
     xyz_t sp58;
     f32 sp54;
@@ -445,8 +445,8 @@ void func_809699D8_jp(Ball* this, Game_Play* game_play) {
     f32 var_fv1_2;
     f32 var_fv1_3;
 
-    func_80071C1C_jp(&sp58, this->actor.world.pos);
-    if (func_800CEC98_jp(&this->actor, &sp58, &sp54, &sp50, &sp52, 1.0f)) {
+    mCoBG_GetBgNorm_FromWpos(&sp58, this->actor.world.pos);
+    if (mRlib_Get_ground_norm_inHole(&this->actor, &sp58, &sp54, &sp50, &sp52, 1.0f)) {
         f32 var_fv1;
 
         var_fv1 = (sp54 - 40.0f) - 5.0f;
@@ -474,7 +474,7 @@ void func_809699D8_jp(Ball* this, Game_Play* game_play) {
             }
         }
     } else {
-        func_800CE694_jp(&this->actor, &sp58);
+        mRlib_Get_norm_Clif(&this->actor, &sp58);
         add_calc0(&this->unk_1E8, 0.5f, 100.0f);
     }
 
