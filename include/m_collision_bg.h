@@ -299,7 +299,7 @@ s32 func_80076358_jp(u32 attribute);
 // void func_800763FC_jp();
 // void func_8007648C_jp();
 // void func_800764CC_jp();
-void func_800765AC_jp(xyz_t*, struct Actor*, f32, f32, s32, s32, s32);
+void mCoBG_BgCheckControll(xyz_t*, struct Actor*, f32, f32, s32, s32, s32);
 // void func_80076778_jp();
 // void func_800768C8_jp();
 // void func_80076A04_jp();

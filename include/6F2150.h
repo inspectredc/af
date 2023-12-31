@@ -3,13 +3,13 @@
 
 #include "ultra64.h"
 
-void func_800CE4B0_jp(xyz_t*, f32*, s16*);
+void mRlib_spdXZ_to_spdF_Angle(xyz_t*, f32*, s16*);
 void mRlib_spdF_Angle_to_spdXZ(xyz_t*, f32*, s16*);
 void mRlib_position_move_for_sloop(struct Actor*, xyz_t*);
 void func_800CE694_jp(struct Actor*, xyz_t*);
 void func_800CE7E4_jp(struct Actor*, void*, s16);
-s16 func_800CE874_jp(struct Actor*);
-void func_800CE8F0_jp(struct Actor*);
+s16 mRlib_Get_HitWallAngleY(struct Actor*);
+void mRlib_Station_step_modify_to_wall(struct Actor*);
 s32 mRlib_Set_Position_Check(struct Actor*);
 s32 func_800CEB1C_jp(void);
 // void func_800CEC30_jp();

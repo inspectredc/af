@@ -229,7 +229,7 @@ void aBALL_position_move(Ball* this) {
     }
 }
 
-void func_80969114_jp(Ball* this) {
+void aBALL_BGcheck(Ball* this) {
     char pad[0x4];
     f32 sp68;
     s32 var_v0;
@@ -246,12 +246,12 @@ void func_80969114_jp(Ball* this) {
     sp68 = this->actor.velocity.y;
 
     if ((this->unk_1E0 == func_80969FD8_jp) || (this->unk_1E0 == func_8096A0EC_jp) || (this->actor.colResult.unk5 == 0xB)) {
-        func_800765AC_jp(&this->unk_1D0, &this->actor, 12.0f, -12.0f, 0, 1, 0);
+        mCoBG_BgCheckControll(&this->unk_1D0, &this->actor, 12.0f, -12.0f, 0, 1, 0);
         this->actor.world.pos.x += this->unk_1D0.x;
         this->actor.world.pos.z += this->unk_1D0.z;
     } else {
-        func_800765AC_jp(&this->unk_1D0, &this->actor, 12.0f, -12.0f, 0, 0, 0);
-        func_800CE8F0_jp(&this->actor);
+        mCoBG_BgCheckControll(&this->unk_1D0, &this->actor, 12.0f, -12.0f, 0, 0, 0);
+        mRlib_Station_step_modify_to_wall(&this->actor);
     }
 
     if (((this->unk_1E0 == func_809698E8_jp) || (this->unk_1E0 == func_80969FD8_jp)) && this->actor.colResult.unk0) {
@@ -269,7 +269,7 @@ void func_80969114_jp(Ball* this) {
     }
     var_v0 = this->actor.colResult.unk2;
     if (var_v0 & 1) {
-        sp62 = func_800CE874_jp(&this->actor);
+        sp62 = mRlib_Get_HitWallAngleY(&this->actor);
         sp60 = (this->actor.world.rot.y - sp62) - 0x8000;
         var_v1 = ABS_2(sp60);
         if (var_v1 < 0x4000) {
@@ -284,7 +284,7 @@ void func_80969114_jp(Ball* this) {
             }
             this->actor.velocity.z = ((1.0f - (sp40 * sp4C * sp4C)) * sp54.z) - (sp54.x * sp40 * sp48);
             this->actor.velocity.x = (-sp54.z * sp40 * sp48) + (sp54.x * (1.0f - (sp40 * sp50 * sp50)));
-            func_800CE4B0_jp(&this->actor.velocity, &this->actor.speed, &this->actor.world.rot.y);
+            mRlib_spdXZ_to_spdF_Angle(&this->actor.velocity, &this->actor.speed, &this->actor.world.rot.y);
         }
     }
 }
@@ -482,7 +482,7 @@ void func_809699D8_jp(Ball* this, Game_Play* game_play) {
         if (Math3d_normalizeXyz_t(&sp58)) {
             this->actor.velocity.x += 1.35f * sp58.x;
             this->actor.velocity.z += 1.35f * sp58.z;
-            func_800CE4B0_jp(&this->actor.velocity, &this->unk_1EC, &this->actor.world.rot.y);
+            mRlib_spdXZ_to_spdF_Angle(&this->actor.velocity, &this->unk_1EC, &this->actor.world.rot.y);
             if (this->unk_1EC < 8.0f) {
                 this->unk_1EC = this->unk_1EC;
             } else {
@@ -739,7 +739,7 @@ void aBALL_actor_move(Actor* thisx, Game_Play* game_play) {
     common_data.unk_10A6C = this->actor.world.pos;
     aBALL_position_move(this);
     this->unk_1E0(this, game_play);
-    func_80969114_jp(this);
+    aBALL_BGcheck(this);
     func_809693EC_jp(this);
 
     CollisionCheck_Uty_ActorWorldPosSetPipeC(&this->actor, &this->collider);
