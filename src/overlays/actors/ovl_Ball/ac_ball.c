@@ -22,10 +22,10 @@ void func_8096A86C_jp(void);
 void aBALL_process_air(Ball* this, Game_Play* game_play);
 void aBALL_process_ground(Ball* this, Game_Play* game_play);
 void aBALL_process_ground_init(Ball* this, Game_Play* game_play);
-void func_80969FBC_jp(Ball* this, Game_Play* game_play);
-void func_80969FD8_jp(Ball* this, Game_Play* game_play);
-void func_8096A0CC_jp(Ball* this, Game_Play* game_play);
-void func_8096A0EC_jp(Ball* this, Game_Play* game_play);
+void aBALL_process_air_water_init(Ball* this, Game_Play* game_play);
+void aBALL_process_air_water(Ball* this, Game_Play* game_play);
+void aBALL_process_ground_water_init(Ball* this, Game_Play* game_play);
+void aBALL_process_ground_water(Ball* this, Game_Play* game_play);
 
 static Ball* Global_Actor_p;
 
@@ -245,7 +245,7 @@ void aBALL_BGcheck(Ball* this) {
 
     sp68 = this->actor.velocity.y;
 
-    if ((this->unk_1E0 == func_80969FD8_jp) || (this->unk_1E0 == func_8096A0EC_jp) || (this->actor.colResult.unk5 == 0xB)) {
+    if ((this->unk_1E0 == aBALL_process_air_water) || (this->unk_1E0 == aBALL_process_ground_water) || (this->actor.colResult.unk5 == 0xB)) {
         mCoBG_BgCheckControll(&this->unk_1D0, &this->actor, 12.0f, -12.0f, 0, 1, 0);
         this->actor.world.pos.x += this->unk_1D0.x;
         this->actor.world.pos.z += this->unk_1D0.z;
@@ -254,7 +254,7 @@ void aBALL_BGcheck(Ball* this) {
         mRlib_Station_step_modify_to_wall(&this->actor);
     }
 
-    if (((this->unk_1E0 == aBALL_process_air) || (this->unk_1E0 == func_80969FD8_jp)) && this->actor.colResult.unk0) {
+    if (((this->unk_1E0 == aBALL_process_air) || (this->unk_1E0 == aBALL_process_air_water)) && this->actor.colResult.unk0) {
         if (this->unk_206 < 3) {
             do {
                 this->unk_206++;
@@ -417,12 +417,12 @@ void aBALL_process_air(Ball* this, Game_Play* game_play) {
     this->unk_1F4 = this->actor.speed;
     if (this->actor.colResult.unk0) {
         if (this->actor.colResult.unk7) {
-            func_8096A0CC_jp(this, game_play);
+            aBALL_process_ground_water_init(this, game_play);
         } else {
             aBALL_process_ground_init(this, game_play);
         }
     } else if (this->actor.colResult.unk7) {
-        func_80969FBC_jp(this, game_play);
+        aBALL_process_air_water_init(this, game_play);
     }
 }
 
@@ -500,10 +500,10 @@ void aBALL_process_ground(Ball* this, Game_Play* game_play) {
     this->unk_1F4 = this->actor.speed;
     if (this->actor.colResult.unk7 || this->actor.colResult.unk5 == 0xB) {
         if (this->actor.colResult.unk0 != 0) {
-            func_8096A0CC_jp(this, game_play);
+            aBALL_process_ground_water_init(this, game_play);
         } else {
             this->unk_206 = 0;
-            func_80969FBC_jp(this, game_play);
+            aBALL_process_air_water_init(this, game_play);
         }
     } else if (this->actor.colResult.unk0 == 0) {
         this->unk_206 = 0;
@@ -568,14 +568,13 @@ void aBALL_set_spd_relations_in_water(Ball* this, Game_Play* game_play) {
     this->unk_1EC = 1.0f;
 }
 
-void func_80969FBC_jp(Ball* this, Game_Play* game_play) {
+void aBALL_process_air_water_init(Ball* this, Game_Play* game_play) {
     this->actor.shape.unk_2C = 0;
-    this->unk_1E0 = func_80969FD8_jp;
+    this->unk_1E0 = aBALL_process_air_water;
 }
 
-void func_80969FD8_jp(Ball* this, Game_Play* game_play) {
+void aBALL_process_air_water(Ball* this, Game_Play* game_play) {
     
-
     aBALL_set_spd_relations_in_water(this, game_play);
     add_calc0(&this->unk_1E8, 0.5f, 100.0f);
     
@@ -593,7 +592,7 @@ void func_80969FD8_jp(Ball* this, Game_Play* game_play) {
     
     if (this->actor.colResult.unk0) {
         if (this->actor.colResult.unk7) {
-            func_8096A0CC_jp(this, game_play);
+            aBALL_process_ground_water_init(this, game_play);
         } else if (this->actor.colResult.unk5 != 0xB) {
             aBALL_process_ground_init(this, game_play);
         }
@@ -602,13 +601,13 @@ void func_80969FD8_jp(Ball* this, Game_Play* game_play) {
     }
 }
 
-void func_8096A0CC_jp(Ball* this, Game_Play* game_play) {
+void aBALL_process_ground_water_init(Ball* this, Game_Play* game_play) {
     this->actor.shape.unk_2C = 0;
     this->unk_1FC = 0;
-    this->unk_1E0 = func_8096A0EC_jp;
+    this->unk_1E0 = aBALL_process_ground_water;
 }
 
-void func_8096A0EC_jp(Ball* this, Game_Play* game_play) {
+void aBALL_process_ground_water(Ball* this, Game_Play* game_play) {
     f32 var_fv1;
     u32 unitAttribute;
     xyz_t* var;
@@ -628,7 +627,7 @@ void func_8096A0EC_jp(Ball* this, Game_Play* game_play) {
     } else if (!this->actor.colResult.unk7) {
         aBALL_process_air_init(this, game_play);
     } else {
-        func_80969FBC_jp(this, game_play);
+        aBALL_process_air_water_init(this, game_play);
     }
     
     if ((unitAttribute == 0xB) || (unitAttribute == 0x16)) {
@@ -645,16 +644,16 @@ void func_8096A0EC_jp(Ball* this, Game_Play* game_play) {
     }
 }
 
-void func_8096A23C_jp(Ball* this) {
+void aBALL_calc_axis(Ball* this) {
     f32 temp_f;
     s16 sp1A;
 
     sp1A = this->actor.speed * 869.63904f;
-    if ((this->unk_1E0 == func_80969FD8_jp) || (this->unk_1E0 == func_8096A0EC_jp)) {
+    if ((this->unk_1E0 == aBALL_process_air_water) || (this->unk_1E0 == aBALL_process_ground_water)) {
         temp_f = ((-1.0f) - this->actor.velocity.y) / (-2.0f);
         sp1A *= sin_s(DEG_TO_BINANG((60.0f * temp_f) + 30.0f));
     }
-    func_800CE7E4_jp(&this->actor, &this->unk_200, sp1A);
+    mRlib_Roll_Matrix_to_s_xyz(&this->actor, &this->unk_200, sp1A);
 }
 
 s32 aBALL_player_angle_distance_check(Ball* this, Player* player) {
@@ -744,7 +743,7 @@ void aBALL_actor_move(Actor* thisx, Game_Play* game_play) {
 
     CollisionCheck_Uty_ActorWorldPosSetPipeC(&this->actor, &this->collider);
     CollisionCheck_setOC(game_play, &game_play->unk_2138, &this->collider.base);
-    func_8096A23C_jp(this);
+    aBALL_calc_axis(this);
     func_8096A3D8_jp(this, game_play);
 }
 
