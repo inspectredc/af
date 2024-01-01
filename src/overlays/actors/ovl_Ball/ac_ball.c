@@ -673,7 +673,7 @@ s32 aBALL_player_angle_distance_check(Ball* this, Player* player) {
     return 0;
 }
 
-void func_8096A3D8_jp(Ball* this, Game_Play* game_play) {
+void aBALL_status_check(Ball* this, Game_Play* game_play) {
     s32 i;
 
     if (this->unk_208 & 4) {
@@ -744,7 +744,7 @@ void aBALL_actor_move(Actor* thisx, Game_Play* game_play) {
     CollisionCheck_Uty_ActorWorldPosSetPipeC(&this->actor, &this->collider);
     CollisionCheck_setOC(game_play, &game_play->unk_2138, &this->collider.base);
     aBALL_calc_axis(this);
-    func_8096A3D8_jp(this, game_play);
+    aBALL_status_check(this, game_play);
 }
 
 #define AC_GCN_OPEN_DISP(gfxCtx)            \
