@@ -29,7 +29,7 @@ void aBALL_process_ground_water(Ball* this, Game_Play* game_play);
 
 static Ball* Global_Actor_p;
 
-Gfx* D_8096A8B0_jp[3] = {
+Gfx* ball_model_tbl[3] = {
     0x060001A8,
     0x06000368,
     0x06000708,
@@ -531,8 +531,7 @@ void aBALL_process_ground(Ball* this, Game_Play* game_play) {
 
 // RO_FLT_8096A96C_jp 0.200000003
 
-// angl_add_table
-s16 D_8096A8FC_jp[2] = {
+s16 angl_add_table[2] = {
     0x100,
     0x400,
 };
@@ -550,7 +549,7 @@ void aBALL_set_spd_relations_in_water(Ball* this, Game_Play* game_play) {
     temp_v0_2 = atans_table(sp50.z, sp50.x);
     var_a3 = ABS_2((s16) (this->actor.world.rot.y - temp_v0_2));
 
-    chase_angle(&this->actor.world.rot.y, temp_v0_2, D_8096A8FC_jp[((var_a3 > 0x4000))]);
+    chase_angle(&this->actor.world.rot.y, temp_v0_2, angl_add_table[((var_a3 > 0x4000))]);
     if (this->actor.world.pos.y < sp48) {
         this->actor.terminalVelocity = 1.0f;
     } else {
@@ -726,7 +725,7 @@ void aBALL_actor_move(Actor* thisx, Game_Play* game_play) {
     Ball* this = (Ball*)thisx;
 
     aBALL_House_Tree_Rev_Check(this);
-    if (!((this->actor.flags) & 0x40)) {
+    if (!((this->actor.flags) & ACTOR_FLAG_40)) {
         if ((this->actor.colResult.unk7) || (this->unk_208 & 2)) {
             Actor_delete(&this->actor);
         }
@@ -781,7 +780,7 @@ void aBALL_actor_draw(Actor* thisx, Game_Play* game_play) {
     Matrix_rotateXYZ(this->unk_200.x, this->unk_200.y, this->unk_200.z, MTXMODE_APPLY);
     gDPPipeSync(__polyOpa++);
     gSPMatrix(__polyOpa++, _Matrix_to_Mtx_new(gfxCtx), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-    gSPDisplayList(__polyOpa++, D_8096A8B0_jp[this->unk_1F8]);
+    gSPDisplayList(__polyOpa++, ball_model_tbl[this->unk_1F8]);
     CLOSE_CUSTOM_POLY_OPA();
     AC_GCN_CLOSE_DISP(gfxCtx);
     // FAKE: two extra if (1) {}s are needed somewhere (can be any line + split apart) to match?
