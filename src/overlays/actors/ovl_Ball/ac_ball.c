@@ -202,7 +202,7 @@ void aBALL_actor_ct(Actor* thisx, Game_Play* game_play) {
 void aBALL_actor_dt(Actor* thisx, Game_Play* game_play) {
     Ball* this = (Ball*)thisx;
 
-    if ((this->unk_208 & 1) || (this->unk_208 & 2) || !mRlib_Set_Position_Check(&this->actor)) {
+    if ((this->unk_208 & BALL_208_FLAG_1) || (this->unk_208 & BALL_208_FLAG_2) || !mRlib_Set_Position_Check(&this->actor)) {
         common_data.unk_10A6C = ZeroVec;
     } else {
         common_data.unk_10A6C = this->actor.world.pos;
@@ -219,7 +219,7 @@ void aBALL_position_move(Ball* this) {
     if (this->actor.colResult.unk0 || this->actor.colResult.unk7) {
         chase_f(&this->actor.speed, this->unk_1EC, this->unk_1F0);
     }
-    if (!(this->unk_208 & 2)) {
+    if (!(this->unk_208 & BALL_208_FLAG_2)) {
         mRlib_spdF_Angle_to_spdXZ(&this->actor.velocity, &this->actor.speed, &this->actor.world.rot.y);
         chase_f(&this->actor.velocity.y, this->actor.terminalVelocity, this->actor.gravity);
         mRlib_position_move_for_sloop(&this->actor, &sp2C);
@@ -319,7 +319,7 @@ void aBALL_OBJcheck(Ball* this) {
             mQst_NextSoccer(this->unk_1DC);
             this->actor.speed = 0.0f;
             this->actor.velocity = ZeroVec;
-        } else if ((sp88 != NULL) && (!(this->unk_208 & 2)) && ((sp8C != 1) && (sp8C != 2))) {
+        } else if ((sp88 != NULL) && (!(this->unk_208 & BALL_208_FLAG_2)) && ((sp8C != 1) && (sp8C != 2))) {
 
             if (sp88 != this->unk_1DC) {
 
@@ -390,7 +390,7 @@ void aBALL_OBJcheck(Ball* this) {
 
 void aBALL_House_Tree_Rev_Check(Ball* this) {
     if (mRlib_HeightGapCheck_And_ReversePos() != 1) {
-        this->unk_208 |= 1;
+        this->unk_208 |= BALL_208_FLAG_1;
         Actor_delete(&this->actor);
     }
 }
@@ -464,7 +464,7 @@ void aBALL_process_ground(Ball* this, Game_Play* game_play) {
                 var_fv1_3 = ABS_F(this->actor.velocity.z);
 
                 if (var_fv1_3 < 1.0f) {
-                    this->unk_208 |= 2;
+                    this->unk_208 |= BALL_208_FLAG_2;
                     this->collider.attribute.dim.unk_2 = 0x14;
                     this->collider.attribute.dim.radius = 0x12;
                     this->actor.colStatus.mass = 0xFE;
@@ -675,25 +675,25 @@ s32 aBALL_player_angle_distance_check(Ball* this, Player* player) {
 void aBALL_status_check(Ball* this, Game_Play* game_play) {
     s32 i;
 
-    if (this->unk_208 & 4) {
+    if (this->unk_208 & BALL_208_FLAG_4) {
         Player* player;
         player = get_player_actor_withoutCheck(game_play);
-        this->unk_208 &= ~4;
+        this->unk_208 &= ~BALL_208_FLAG_4;
         if ((aBALL_player_angle_distance_check(this, player)) || (fabsf(this->actor.speed) < 0.008f)) {
             this->actor.world.rot.y = player->actor.shape.rot.y;
             this->actor.speed = 2.0f;
             this->actor.velocity.y = 4.5f;
-            if (this->unk_208 & 2) {
+            if (this->unk_208 & BALL_208_FLAG_2) {
                 this->collider.attribute.dim.unk_2 = 0x1E;
                 this->collider.attribute.dim.radius = 0xD;
-                this->unk_208 &= ~2;
+                this->unk_208 &= ~BALL_208_FLAG_2;
                 this->actor.colStatus.mass = 0x64;
             }
         }
     }
-    if (this->unk_208 & 8) {
-        this->unk_208 &= ~8;
-        if (!(this->unk_208 & 2)) {
+    if (this->unk_208 & BALL_208_FLAG_8) {
+        this->unk_208 &= ~BALL_208_FLAG_8;
+        if (!(this->unk_208 & BALL_208_FLAG_2)) {
             Player* player;
             player = get_player_actor_withoutCheck(game_play);
             if ((aBALL_player_angle_distance_check(this, player)) || (fabsf(this->actor.speed) < 0.008f)) {
@@ -703,10 +703,10 @@ void aBALL_status_check(Ball* this, Game_Play* game_play) {
             }
         }
     }
-    if (!(this->unk_208 & 1)) {
+    if (!(this->unk_208 & BALL_208_FLAG_1)) {
         if (this->actor.colResult.unk7) {
             sAdo_OngenTrgStart(0x27, &this->actor.world.pos);
-            this->unk_208 |= 1;
+            this->unk_208 |= BALL_208_FLAG_1;
             if (common_data.unk_100B4 != NULL) {
                 common_data.unk_100B4->unk_C(&this->actor.world.pos, 20.0f, 0);
             }
@@ -726,7 +726,7 @@ void aBALL_actor_move(Actor* thisx, Game_Play* game_play) {
 
     aBALL_House_Tree_Rev_Check(this);
     if (!((this->actor.flags) & ACTOR_FLAG_40)) {
-        if ((this->actor.colResult.unk7) || (this->unk_208 & 2)) {
+        if ((this->actor.colResult.unk7) || (this->unk_208 & BALL_208_FLAG_2)) {
             Actor_delete(&this->actor);
         }
         if (this->actor.speed == 0.0f) {

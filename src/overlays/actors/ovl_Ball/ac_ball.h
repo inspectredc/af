@@ -10,6 +10,11 @@
 struct Game_Play;
 struct Ball;
 
+#define BALL_208_FLAG_1 (1 << 0)
+#define BALL_208_FLAG_2 (1 << 1)
+#define BALL_208_FLAG_4 (1 << 2)
+#define BALL_208_FLAG_8 (1 << 3)
+
 typedef void (*BallActionFunc)(struct Ball*, struct Game_Play*);
 
 typedef struct Ball {
