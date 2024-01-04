@@ -12,6 +12,7 @@
 #include "sys_math_atan.h"
 #include "m_player_lib.h"
 #include "macros.h"
+#include "segment_symbols.h"
 
 void aBALL_actor_ct(Actor* thisx, Game_Play* game_play);
 void aBALL_actor_dt(Actor* thisx, Game_Play* game_play);
@@ -57,65 +58,57 @@ ClObjPipe_Init aBALL_CoInfoData = {
 
 CollisionCheck_Status_Init aBALL_StatusData = { 0, 0xD, 0x1E, -0xA, 100, };
 
-extern UNK_TYPE D_1100000;
-extern UNK_TYPE D_11003C0;
-extern UNK_TYPE D_1101000;
-extern UNK_TYPE D_1101770;
-extern UNK_TYPE D_1102000;
-extern UNK_TYPE D_11029E0;
-
 s32 func_80968A10_jp(Ball* this, Game_Play* game_play, s32 arg0) {
+    size_t romSize;
     s32 sp18;
-    s32 temp_v1;
-    s32 var_a2;
 
-    temp_v1 = game_play->objectExchangeBank.num;
+    sp18 = game_play->objectExchangeBank.num;
     switch (arg0) {
         case 0:
-            var_a2 = (s32)&D_11003C0 - (s32)&D_1100000;
+            romSize = SEGMENT_ROM_SIZE(segment_01100000);
             break;
         case 1:
-            var_a2 = (s32)&D_1101770 - (s32)&D_1101000;
+            romSize = SEGMENT_ROM_SIZE(segment_01101000);
             break;
         case 2:
-            var_a2 = (s32)&D_11029E0 - (s32)&D_1102000;
+            romSize = SEGMENT_ROM_SIZE(segment_01102000);
             break;
         default:
-            var_a2 = (s32)&D_11003C0 - (s32)&D_1100000;
+            romSize = SEGMENT_ROM_SIZE(segment_01100000);
             break;
     }
-    sp18 = temp_v1;
-    if (mSc_secure_exchange_keep_bank(&game_play->objectExchangeBank, 0, var_a2) != 0) {
-        this->unk_1E4 = game_play->objectExchangeBank.status[temp_v1].segment;
+    
+    if (mSc_secure_exchange_keep_bank(&game_play->objectExchangeBank, 0, romSize) != 0) {
+        this->unk_1E4 = game_play->objectExchangeBank.status[sp18].segment;
         return 1;
     }
     return 0;
 }
 
 void func_80968AF4_jp(Ball* this, s32 arg0) {
-    s32 var_a1;
-    s32 var_v0;
+    RomOffset romStart;
+    RomOffset romEnd;
 
     switch (arg0) {
         case 0:
-            var_a1 = &D_1100000;
-            var_v0 = &D_11003C0;
+            romStart = SEGMENT_ROM_START(segment_01100000);
+            romEnd = SEGMENT_ROM_END(segment_01100000);
             break;
         case 1:
-            var_a1 = &D_1101000;
-            var_v0 = &D_1101770;
+            romStart = SEGMENT_ROM_START(segment_01101000);
+            romEnd = SEGMENT_ROM_END(segment_01101000);
             break;
         case 2:
-            var_a1 = &D_1102000;
-            var_v0 = &D_11029E0;
+            romStart = SEGMENT_ROM_START(segment_01102000);
+            romEnd = SEGMENT_ROM_END(segment_01102000);
             break;
         default:
-            var_a1 = &D_1100000;
-            var_v0 = &D_11003C0;
+            romStart = SEGMENT_ROM_START(segment_01100000);
+            romEnd = SEGMENT_ROM_END(segment_01100000);
             break;
     }
-    if ((var_a1 != NULL) && (var_v0 != NULL)) {
-        DmaMgr_RequestSyncDebug(this->unk_1E4, var_a1, var_v0 - var_a1, "../ac_ball.c", 0x11D);
+    if ((romStart != NULL) && (romEnd != NULL)) {
+        DmaMgr_RequestSyncDebug(this->unk_1E4, romStart, romEnd - romStart, "../ac_ball.c", 0x11D);
     }
 }
 
@@ -170,7 +163,7 @@ void aBALL_actor_ct(Actor* thisx, Game_Play* game_play) {
         if (!aBALL_Random_pos_set(&this->actor.world.pos)) {
             this->actor.world.pos = this->actor.home.pos;
         }
-        common_data.unk_10A78 = RANDOM_F(3.0f);
+        common_data.unk_10A78 = RANDOM_F(3);
         common_data.unk_10A6C = this->actor.world.pos;
         this->unk_1F8 = common_data.unk_10A78;
     } else {
