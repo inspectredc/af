@@ -54,7 +54,7 @@ void Global_kankyo_ct(struct Game_Play* game_play, struct Kankyo* kankyo);
 // void func_8009802C_jp();
 // void func_800980C0_jp();
 // void func_80098158_jp();
-// void func_800981B8_jp();
+void func_800981B8_jp(struct Game_Play*);
 // void func_8009836C_jp();
 // void func_800983F0_jp();
 void Global_kankyo_set(struct Game_Play* game_play, struct Kankyo* kankyo, struct Global_light* arg2);

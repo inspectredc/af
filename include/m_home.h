@@ -59,7 +59,10 @@ typedef struct mHm_goki_c {
 // Original name, taken from m_flashrom
 typedef struct mHm_hs_c {
     /* 0x000 */ PersonalID_c ownerID;
-    /* 0x010 */ UNK_TYPE1 unk_010[0x12];
+    /* 0x010 */ UNK_TYPE1 unk_010[0x4];
+    /* 0x014 */ u8 unk_014;
+    /* 0x015 */ u8 unk_015;
+    /* 0x016 */ UNK_TYPE1 unk_016[0xC];
     /* 0x022 */ u8 unk_022;
     /* 0x023 */ UNK_TYPE1 unk_023[0x1];
     /* 0x024 */ u8 unk_024;

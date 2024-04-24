@@ -9,7 +9,7 @@ struct Game;
 // void func_8009CA54_jp();
 // void func_8009CA94_jp();
 // void func_8009CB5C_jp();
-// void func_8009CC00_jp();
+void func_8009CC00_jp(void);
 // void func_8009CC94_jp();
 void mMkRm_MarkRoom(struct Game* game);
 void mMld_SetDefaultMelody(void);

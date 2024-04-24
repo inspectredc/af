@@ -149,11 +149,15 @@ typedef struct Clip_unk_090 {
     /* 0x30 */ Clip_unk_090_unk_30 unk_30;
 } Clip_unk_090; // size >= 0x34
 
+typedef u16 (*Clip_unk_09C_unk_4)(u16);
 typedef void (*Clip_unk_09C_unk_C)(void);
 typedef struct Clip_unk_09C {
-    /* 0x00 */ UNK_TYPE1 unk_00[0xC];
-    /* 0x0C */ Clip_unk_09C_unk_C unk_C;
-} Clip_unk_09C; // size >= 0x10
+    /* 0x00 */ struct Actor* actor;
+    /* 0x04 */ Clip_unk_09C_unk_4 unk_04;
+    /* 0x08 */ Clip_unk_09C_unk_4 unk_08;
+    /* 0x0C */ Clip_unk_09C_unk_C unk_0C;
+    /* 0x10 */ Clip_unk_09C_unk_C unk_10;
+} Clip_unk_09C; // size >= 0x14
 
 typedef void (*Clip_unk_0A4_unk_4)(void);
 

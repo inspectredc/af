@@ -1363,7 +1363,7 @@
     bss_size: 0x0
     subsegments:
       - [0x846860, c, overlays/actors/ovl_My_Indoor/ac_my_indoor]
-      - [0x8475A0, data, overlays/actors/ovl_My_Indoor/ac_my_indoor]
+      - [0x8475A0, .data, overlays/actors/ovl_My_Indoor/ac_my_indoor]
       - [0x847630, .rodata, overlays/actors/ovl_My_Indoor/ac_my_indoor]
   - name: ovl_My_Indoor_reloc
     type: code

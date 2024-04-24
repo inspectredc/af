@@ -420,7 +420,7 @@ void mSc_dmacopy_all_exchange_bank(ObjectExchangeBank* exchange) {
         common_data.clip.unk_080->unk_24();
     }
     if (common_data.clip.unk_09C != NULL) {
-        common_data.clip.unk_09C->unk_C();
+        common_data.clip.unk_09C->unk_0C();
     }
     if (common_data.clip.unk_0B8 != NULL) {
         common_data.clip.unk_0B8->unk_4();
