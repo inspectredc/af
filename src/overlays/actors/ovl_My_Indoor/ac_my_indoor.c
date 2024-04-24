@@ -83,54 +83,44 @@ s32 func_80951A70_jp(u8 arg0) {
     return false;
 }
 
+#define UNK_SIZE_1 (size_t)0x2020
+#define UNK_SIZE_2 (size_t)0x1020
+
 void func_80951A9C_jp(My_Indoor* this, Game_Play* game_play) {
-    void* segment;
-    ObjectExchangeBank* objectExchangeBank;
-    ObjectStatus* var_s1;
     s32 i;
-    unk_struct* temp_v0;
-    unk_struct* new_var_2;
-    s32 temp;
+    unk_struct* temp = D_80952804_jp[this->unk_1A4];
+    s32 num = game_play->objectExchangeBank.num;
+    ObjectStatus* var_s1 = &game_play->objectExchangeBank.status[num];
 
-    objectExchangeBank = &game_play->objectExchangeBank;
-    var_s1 = objectExchangeBank->status;
-    temp = objectExchangeBank->num;
-    temp_v0 = D_80952804_jp[this->unk_1A4];
-    var_s1 += temp;
-    // FAKE!
-dummy_label:
+    //! FAKE
+    num = 0;
 
-    temp = temp_v0->romStart - (new_var_2 = temp_v0)->romEnd;
-    // FAKE!
-    if (!game_play) {}
+    {
+        size_t size = temp->romEnd - temp->romStart;
     
-    if (mSc_secure_exchange_keep_bank(objectExchangeBank, /* FAKE! */(new_var_2->romStart - new_var_2->romEnd) * 0, ALIGN8(temp)) != 0) {
-        this->unk_17C = var_s1->segment;
-        var_s1++;
-    }
-
-    for (i = 0; i < 2; i++) {
-        if (mSc_secure_exchange_keep_bank(objectExchangeBank, 0, 0x1020) == 0) {
-            break;
-        } else {
+        if (mSc_secure_exchange_keep_bank(&game_play->objectExchangeBank, 0, ALIGN8(size)) != 0) {
+            this->unk_17C = var_s1->segment;
+            var_s1++;
+        }
+    
+        for (i = 0; i < 2; i++) {
+            if (mSc_secure_exchange_keep_bank(&game_play->objectExchangeBank, 0, UNK_SIZE_2) == 0) {
+                break;
+            }
             this->unk_188[i] = var_s1->segment;
             var_s1++;
         }
-    }
-
-    for (i = 0; i < 2; i++) {
-        if (mSc_secure_exchange_keep_bank(objectExchangeBank, 0, 0x2020) != 0) {
+    
+        for (i = 0; i < 2; i++) {
+            if (mSc_secure_exchange_keep_bank(&game_play->objectExchangeBank, 0, UNK_SIZE_1) == 0) {
+                break;
+            }
             this->unk_180[i] = var_s1->segment;
-            // FAKE!
-            if (this) {}
             var_s1++;
-        } else {
-            break;
         }
     }
 }
 
-#define UNK_SIZE_1 (size_t)0x2020
 
 void func_80951BC4_jp(My_Indoor* this, s16 arg0, s16 arg1) {
     s32 i;
@@ -146,8 +136,6 @@ void func_80951BC4_jp(My_Indoor* this, s16 arg0, s16 arg1) {
         DmaMgr_RequestSyncDebug(vramPtr[arg1], SEGMENT_ROM_START(object_017A1000) + (arg0 * UNK_SIZE_1), UNK_SIZE_1, "../ac_my_indoor.c", 372);
     }
 }
-
-#define UNK_SIZE_2 (size_t)0x1020
 
 void func_80951CDC_jp(My_Indoor* this, s16 arg1, s16 arg2) {
     s32 i;
@@ -167,13 +155,11 @@ void func_80951CDC_jp(My_Indoor* this, s16 arg1, s16 arg2) {
 void func_80951DF4_jp(Actor* thisx) {
     My_Indoor* this = (My_Indoor*)thisx;
     unk_struct* temp_v0 = D_80952804_jp[this->unk_1A4];
-    RomOffset end;
-    size_t size;
 
     if (this->unk_17C != 0) {
-        end = temp_v0->romEnd;
-        size = temp_v0->romStart - end;
-        DmaMgr_RequestSyncDebug(this->unk_17C, end, ALIGN8(size), "../ac_my_indoor.c", 0x1BA);
+        RomOffset start = temp_v0->romStart;
+        size_t size = temp_v0->romEnd - start;
+        DmaMgr_RequestSyncDebug(this->unk_17C, start, ALIGN8(size), "../ac_my_indoor.c", 0x1BA);
     }
 }
 
@@ -264,7 +250,7 @@ void func_8095205C_jp(My_Indoor* this, Game_Play* game_play) {
     sp4C = (uintptr_t)(this->unk_180[temp_a2]) + 0x1020;
     sp48 = (uintptr_t)(this->unk_180[temp_a2]) + 0x1820;
     func_800981B8_jp(game_play);
-    // FAKE!
+    //! FAKE
     if (this) {}
     if ((this->unk_180[temp_a2] != NULL) && (this->unk_17C != NULL)) {
         OPEN_DISPS(game_play->state.gfxCtx);
